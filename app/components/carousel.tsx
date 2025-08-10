@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const slides = [
-  { id: 1, image: "/slides/1.png", titleFr: "Système HIVE", titleEn: "HIVE System" },
-  { id: 2, image: "/slides/2.png", titleFr: "Mode Inspection", titleEn: "Inspection Mode" },
-  { id: 3, image: "/slides/3.png", titleFr: "Changement de batterie", titleEn: "Battery Swap" },
+  { id: 1, image: "/slides/1.png", title: "Smart Agriculture" },
+  { id: 2, image: "/slides/2.png", title: "Industrial Inspection" },
+  { id: 3, image: "/slides/3.png", title: "Military & Defense" },
 ];
 
 export default function Carousel({ lang }: { lang: "fr" | "en" }) {
