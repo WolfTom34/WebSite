@@ -28,7 +28,7 @@ export default function Page() {
       {/* BOUTON NAV FIXE */}
       <img
         src="/button.png"
-        className="nav-btn"
+        className="nav-btn focusable"
         alt={lang === "fr" ? "Ouvrir la navigation" : "Open navigation"}
         role="button"
         aria-label={lang === "fr" ? "Ouvrir la navigation" : "Open navigation"}
@@ -96,8 +96,8 @@ export default function Page() {
         <footer className="footer">
           <div className="footer-content container">
             <p>
-              &copy; {new Date().getFullYear()} Mon Site.{" "}
-              {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved"}
+              &copy; {new Date().getFullYear()} Safe Valley - SVE | {" "} 
+              {lang === "fr" ? "All Rights Reserved." : "All Rights Reserved."}
             </p>
           </div>
         </footer>
@@ -268,23 +268,19 @@ export default function Page() {
         /* ===========================
            NAV BUTTON FIXE
         =========================== */
+            /* Nav button */
         .nav-btn {
           position: fixed;
           top: max(16px, env(safe-area-inset-top));
           right: max(16px, env(safe-area-inset-right));
           width: 32px;
           cursor: pointer;
-          transition: transform 0.2s ease, filter 0.2s ease;
+          transition: transform .2s ease, filter .2s ease;
           z-index: 110;
           transform: translateZ(0);
         }
         .nav-btn:hover { filter: drop-shadow(0 0 8px white); }
-        .nav-btn:active { transform: scale(0.9); }
-        .nav-btn:focus-visible {
-          outline: 2px solid var(--text);
-          outline-offset: 4px;
-          border-radius: 8px;
-        }
+        .nav-btn:active { transform: scale(.9); }
 
         /* ===========================
            ANIMATIONS

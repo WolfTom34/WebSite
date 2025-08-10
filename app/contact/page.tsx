@@ -47,7 +47,7 @@ export default function ContactPage() {
       >
         <img
           src="/logo.png"
-          alt="Logo"
+          alt="Logo Safe Valley – SVE"
           className="logo"
           decoding="async"
           fetchPriority="high"
@@ -111,8 +111,8 @@ export default function ContactPage() {
       <footer className="footer">
         <div className="footer-content container">
           <p>
-            &copy; {new Date().getFullYear()} Mon Site.{" "}
-            {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved"}
+            &copy; {new Date().getFullYear()} Safe Valley - SVE |{" "}
+            {lang === "fr" ? "All Rights Reserved." : "All Rights Reserved."}
           </p>
         </div>
       </footer>
@@ -128,6 +128,7 @@ export default function ContactPage() {
           --bg-soft: rgba(0,0,0,0.25);
           --border: rgba(255,255,255,0.20);
           --shadow-glow-sm: 0 0 12px rgba(255,255,255,0.15), 0 0 24px rgba(106,106,255,0.18);
+          --shadow-glow-strong: 0 0 16px rgba(255,255,255,0.25), 0 0 32px rgba(106,106,255,0.35);
           --radius: 20px;
 
           --container-w: min(92vw, 1200px);
@@ -188,7 +189,17 @@ export default function ContactPage() {
         }
         .logo { width: 100px; margin-bottom: 30px; display: block; pointer-events: none; }
 
-        .contact-box { width: min(92vw, 720px); padding: clamp(24px, 4vw, 40px) clamp(20px, 3vw, 30px); }
+        /* 🔥 Glow appliqué ici */
+        .contact-box {
+          width: min(92vw, 720px);
+          padding: clamp(24px, 4vw, 40px) clamp(20px, 3vw, 30px);
+          box-shadow: var(--shadow-glow-sm);
+          will-change: transform, box-shadow;
+          transition: box-shadow .25s ease;
+        }
+        .contact-box:hover {
+          box-shadow: var(--shadow-glow-strong);
+        }
 
         .title { font-size: var(--fs-h1); margin: 0 0 16px; }
 

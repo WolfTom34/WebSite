@@ -89,8 +89,8 @@ export default function PartnersPage() {
       <footer className="footer">
         <div className="footer-content container">
           <p>
-            &copy; {new Date().getFullYear()} Mon Site.{" "}
-            {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved"}
+            &copy; {new Date().getFullYear()} Safe Valley - SVE | {" "}
+            {lang === "fr" ? "All Rights Reserved." : "All Rights Reserved."}
           </p>
         </div>
       </footer>
@@ -106,6 +106,7 @@ export default function PartnersPage() {
           --border: rgba(255,255,255,0.20);
           --border-soft: rgba(255,255,255,0.15);
           --shadow-glow-sm: 0 0 12px rgba(255,255,255,0.15), 0 0 24px rgba(106,106,255,0.18);
+          --shadow-glow-strong: 0 0 16px rgba(255,255,255,0.25), 0 0 32px rgba(106,106,255,0.35); /* 💡 ajout */
           --radius: 20px;
           --radius-sm: 12px;
 
@@ -172,11 +173,19 @@ export default function PartnersPage() {
           text-align: left;
         }
 
+
         .partner {
-          display: flex; align-items: center; gap: 20px;
+          display: flex;
+          align-items: center;
+          gap: 20px;
           padding: 24px;
           box-shadow: var(--shadow-glow-sm);
           will-change: transform, box-shadow;
+          transition: box-shadow .25s ease; /* 💡 transition fluide */
+        }
+
+        .partner:hover {
+          box-shadow: var(--shadow-glow-strong); /* 💡 glow plus intense au hover */
         }
 
         .logo-box {
