@@ -57,8 +57,8 @@ export default function Carousel({ lang }: { lang: "fr" | "en" }) {
                 <div className="caption">
                   <h3>
                     {lang === "fr"
-                      ? slides[index].titleFr
-                      : slides[index].titleEn}
+                      ? slides[index].title
+                      : slides[index].title}
                   </h3>
                 </div>
               </motion.div>

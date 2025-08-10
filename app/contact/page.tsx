@@ -19,13 +19,12 @@ export default function ContactPage() {
       <LanguageSwitcher lang={lang} setLang={setLang} />
 
       {/* NAV BUTTON (fixed) */}
-      <img
+      <img      
         src="/button.png"
         className="nav-btn focusable"
-        alt={lang === "fr" ? "Ouvrir la navigation" : "Open navigation"}
-        role="button"
-        aria-label={lang === "fr" ? "Ouvrir la navigation" : "Open navigation"}
-        tabIndex={0}
+        alt="Button"
+        decoding="async"
+        fetchPriority="high"
         onClick={() => setShowNav((prev) => !prev)}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {

@@ -26,13 +26,12 @@ export default function Page() {
       <LanguageSwitcher lang={lang} setLang={setLang} />
 
       {/* BOUTON NAV FIXE */}
-      <img
+      <img      
         src="/button.png"
         className="nav-btn focusable"
-        alt={lang === "fr" ? "Ouvrir la navigation" : "Open navigation"}
-        role="button"
-        aria-label={lang === "fr" ? "Ouvrir la navigation" : "Open navigation"}
-        tabIndex={0}
+        alt="Button"
+        decoding="async"
+        fetchPriority="high"
         onClick={() => setShowNav((prev) => !prev)}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -70,13 +69,9 @@ export default function Page() {
           <img
             src="/arrow.png"
             className="arrow focusable"
-            alt={lang === "fr" ? "Faire défiler" : "Scroll down"}
-            role="button"
-            aria-label={lang === "fr" ? "Aller à la section suivante" : "Go to next section"}
-            onClick={() =>
-              document.getElementById("section2")?.scrollIntoView({ behavior: "smooth" })
-            }
+            alt="Arrow"
             decoding="async"
+            fetchPriority="high"
           />
         </section>
 
