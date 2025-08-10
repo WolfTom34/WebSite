@@ -2,9 +2,6 @@
 import { useState } from "react";
 import { motion, useScroll } from "framer-motion";
 
-import contentFr from "./data/content_fr";
-import contentEn from "./data/content_en";
-
 import LanguageSwitcher from "./components/language_switcher";
 import CustomCursor from "./components/custom_cursor";
 import Carousel from "./components/carousel";
@@ -50,13 +47,14 @@ export default function Page() {
         {/* HERO */}
         <section className="front-page">
           <div className="video-box card glow-animated">
-            <video autoPlay loop muted playsInline preload="metadata">
-              <source src="/videos/1.mp4" type="video/mp4" />
-              <source src="/videos/1.MOV" type="video/quicktime" />
-              {lang === "fr"
-                ? "Votre navigateur ne supporte pas la vidéo HTML5."
-                : "Your browser does not support HTML5 video."}
-            </video>
+            <iframe
+              className="yt-embed"
+              src="https://www.youtube.com/embed/3MYuCC2M1Cs?autoplay=1&mute=1&loop=1&playlist=3MYuCC2M1Cs&controls=0&modestbranding=1&rel=0&playsinline=1"
+              title={lang === "fr" ? "Vidéo YouTube" : "YouTube video"}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+            />
           </div>
 
           {/* Logo */}
@@ -199,7 +197,14 @@ export default function Page() {
           background: rgba(0, 0, 0, 0.4);
           will-change: transform, box-shadow;
         }
-        .video-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* L'iframe remplit le conteneur */
+        .video-box .yt-embed {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
 
         .glow-animated {
           box-shadow: var(--shadow-glow-sm);
