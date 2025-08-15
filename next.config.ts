@@ -2,8 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'export',
-  images: { unoptimized: true },
+  images: { unoptimized: true, loader: 'default' },
   trailingSlash: true,
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
 
   // 👉 ignore les erreurs TypeScript au build
   typescript: { ignoreBuildErrors: true },
