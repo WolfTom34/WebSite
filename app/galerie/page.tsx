@@ -123,6 +123,15 @@ export default function VideoGallery() {
           padding-left: max(0px, env(safe-area-inset-left));
           padding-right: max(0px, env(safe-area-inset-right));
         }
+        /* Application ciblée de la couleur blanche seulement sur le contenu principal */
+        .content, .content * {
+          color: #ffffff;
+        }
+        
+        footer, footer * {
+          color: #ffffff;
+        }
+        
         .nav-btn { 
           position: fixed; 
           top: max(16px, env(safe-area-inset-top)); 

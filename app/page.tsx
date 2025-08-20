@@ -50,8 +50,8 @@ export default function Page() {
           <div className="video-box card glow-animated">
             <iframe
               className="yt-embed"
-              src={`${videos[0].src}?autoplay=1&mute=1&loop=1&playlist=${videos[0].id}&controls=0&modestbranding=1&rel=0&playsinline=1`}
-              title={videos[0].title}
+              src={`${videos[1].src}?autoplay=1&mute=1&loop=1&playlist=${videos[1].id}&controls=0&modestbranding=1&rel=0&playsinline=1`}
+              title={videos[1].title}
               allow="autoplay; encrypted-media; picture-in-picture"
               allowFullScreen
               loading="lazy"
