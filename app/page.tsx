@@ -9,6 +9,8 @@ import Navbar from "./components/navbar";
 import Section from "./components/section";
 import Background from "./components/background";
 
+import videos from "./data/video.json";
+
 export default function Page() {
   const [lang, setLang] = useState<"fr" | "en">("fr");
   const { scrollYProgress } = useScroll();
@@ -48,8 +50,8 @@ export default function Page() {
           <div className="video-box card glow-animated">
             <iframe
               className="yt-embed"
-              src="https://www.youtube.com/embed/3MYuCC2M1Cs?autoplay=1&mute=1&loop=1&playlist=3MYuCC2M1Cs&controls=0&modestbranding=1&rel=0&playsinline=1"
-              title={lang === "fr" ? "Vidéo YouTube" : "YouTube video"}
+              src={`${videos[0].src}?autoplay=1&mute=1&loop=1&playlist=${videos[0].id}&controls=0&modestbranding=1&rel=0&playsinline=1`}
+              title={videos[0].title}
               allow="autoplay; encrypted-media; picture-in-picture"
               allowFullScreen
               loading="lazy"
