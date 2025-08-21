@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Interdire l'indexation des fichiers techniques Next.js
+Disallow: /_next/
+Disallow: /api/
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://www.safevalleysve.com/sitemap.xml
