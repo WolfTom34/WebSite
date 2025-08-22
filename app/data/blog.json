@@ -1,0 +1,48 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": {
+        "fr": "Titre de votre post LinkedIn",
+        "en": "Title of your LinkedIn post"
+      },
+      "excerpt": {
+        "fr": "Extrait ou début de votre post LinkedIn (150-200 caractères max)",
+        "en": "Excerpt or beginning of your LinkedIn post (150-200 characters max)"
+      },
+      "date": "2025-01-15",
+      "category": {
+        "fr": "Technologie",
+        "en": "Technology"
+      },
+      "readTime": "3 min",
+      "linkedinUrl": "https://www.linkedin.com/posts/activity-xxxxxxxxxx",
+      "image": "/blog-thumb-1.jpg",
+      "tags": ["drone", "ia", "technologie"]
+    },
+    {
+      "id": "2", 
+      "title": {
+        "fr": "Autre post LinkedIn",
+        "en": "Another LinkedIn post"
+      },
+      "excerpt": {
+        "fr": "Extrait du deuxième post...",
+        "en": "Excerpt of the second post..."
+      },
+      "date": "2025-01-10",
+      "category": {
+        "fr": "Réglementation",
+        "en": "Regulation"
+      },
+      "readTime": "4 min",
+      "linkedinUrl": "https://www.linkedin.com/posts/activity-xxxxxxxxxx",
+      "image": "/blog-thumb-2.jpg",
+      "tags": ["réglementation", "dgac", "sécurité"]
+    }
+  ],
+  "categories": {
+    "fr": ["Tous", "Technologie", "Réglementation", "Cas d'usage", "Marché", "Innovation"],
+    "en": ["All", "Technology", "Regulation", "Use case", "Market", "Innovation"]
+  }
+}

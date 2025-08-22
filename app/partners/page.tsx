@@ -1,63 +1,28 @@
 "use client";
 import { useState } from "react";
-import Head from "next/head";
+import Image from "next/image";
 import partners from "../data/partners.json";
 import Navbar from "../components/navbar";
 import LanguageSwitcher from "../components/language_switcher";
 import CustomCursor from "../components/custom_cursor";
 import Background from "../components/background";
+import SEOHead from "../components/seo_head";
+import { partnersSEO, generatePartnersSchema } from "../data/seo";
 
 export default function PartnersPage() {
   const [lang, setLang] = useState<"fr" | "en">("fr");
   const [showNav, setShowNav] = useState(false);
 
-  const seo = {
-    fr: {
-      title: "Partenaires Safe Valley | Mountain Edge | Chiron Solutions",
-      description: "Nos partenaires technologiques : Mountain Edge (Edge AI), Chiron Solutions (formations sécurité). Écosystème complet pour vos projets drones.",
-      h1: "Nos partenaires technologiques"
-    },
-    en: {
-      title: "Safe Valley Partners | Mountain Edge | Chiron Solutions",
-      description: "Our technology partners: Mountain Edge (Edge AI), Chiron Solutions (security training). Complete ecosystem for your drone projects.",
-      h1: "Our technology partners"
-    }
-  }[lang];
+  const currentSEO = partnersSEO[lang];
+  const structuredData = generatePartnersSchema(partners, lang);
 
   return (
     <>
-      <Head>
-        <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.safevalleysve.com/partners/" />
-        
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content="https://www.safevalleysve.com/logo.png" />
-        <meta property="og:url" content="https://www.safevalleysve.com/partners/" />
-        <meta property="og:type" content="website" />
-        
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": seo.title,
-            "description": seo.description,
-            "publisher": {
-              "@type": "Organization",
-              "name": "Safe Valley SVE",
-              "url": "https://www.safevalleysve.com"
-            },
-            "about": partners.map(partner => ({
-              "@type": "Organization",
-              "name": partner.name,
-              "description": lang === "fr" ? partner.descriptionFr : partner.descriptionEn,
-              "url": partner.link
-            }))
-          })
-        }} />
-      </Head>
+      <SEOHead 
+        seoData={currentSEO} 
+        lang={lang} 
+        structuredData={structuredData}
+      />
 
       <div className="page partners" data-lang={lang}>
         <Background />
@@ -65,23 +30,35 @@ export default function PartnersPage() {
         <Navbar showNav={showNav} setShowNav={setShowNav} lang={lang} />
         <LanguageSwitcher lang={lang} setLang={setLang} />
 
-        <img      
-          src="/button.png"
+        <button      
           className="nav-btn focusable"
-          alt="Menu navigation"
+          aria-label="Menu navigation"
           onClick={() => setShowNav(prev => !prev)}
-        />
+        >
+          <Image 
+            src="/button.png"
+            alt=""
+            width={32}
+            height={32}
+            priority
+          />
+        </button>
 
-        <img
-          src="/logo.png"
-          alt="Safe Valley SVE - Drones autonomes de surveillance"
-          className="logo"
-        />
+        <div className="logo-container">
+          <Image
+            src="/logo.png"
+            alt="Safe Valley SVE - Drones autonomes de surveillance"
+            className="logo"
+            width={120}
+            height={60}
+            priority
+          />
+        </div>
 
         <main className="partners-content">
           <div className="container">
             <header>
-              <h1 className="title">{seo.h1}</h1>
+              <h1 className="title">{currentSEO.h1}</h1>
               <p className="lead">
                 {lang === "fr"
                   ? "Safe Valley s'associe avec les leaders technologiques pour vous offrir des solutions complètes et innovantes"
@@ -94,12 +71,13 @@ export default function PartnersPage() {
               {partners.map((partner: any, index: number) => (
                 <article className="card partner" key={partner?.name ?? index}>
                   <div className="logo-box">
-                    <img
+                    <Image
                       src={partner.logo}
                       alt={`Logo ${partner.name}`}
                       className="partner-logo"
+                      width={140}
+                      height={140}
                       loading="lazy"
-                      decoding="async"
                     />
                   </div>
                   <div className="info">
@@ -129,12 +107,12 @@ export default function PartnersPage() {
             </address>
             <p>
               &copy; {new Date().getFullYear()} Safe Valley - SVE | {" "} 
-              {lang === "fr" ? "All Rights Reserved." : "All Rights Reserved."}
+              {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved."}
             </p>
           </div>
         </footer>
 
-        <style>{`
+        <style jsx>{`
           :root {
             --accent: #6a6aff;
             --accent-600: #5959e0;
@@ -162,14 +140,16 @@ export default function PartnersPage() {
 
           .nav-btn {
             position: fixed; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
-            width: 32px; cursor: pointer; z-index: 110; transition: transform .2s ease, filter .2s ease;
+            background: none; border: none; cursor: pointer; z-index: 110; 
+            transition: transform .2s ease, filter .2s ease;
           }
           .nav-btn:hover { filter: drop-shadow(0 0 8px white); }
 
-          .logo {
-            position: relative; top: 40px; left: 50%; transform: translateX(-50%);
-            width: 120px; margin-bottom: 40px; z-index: 10; pointer-events: none;
+          .logo-container {
+            position: relative; top: 40px; text-align: center;
+            margin-bottom: 40px; z-index: 10;
           }
+          .logo { pointer-events: none; }
 
           .partners-content { padding: 140px 0 80px; position: relative; z-index: 10; }
 
@@ -194,7 +174,7 @@ export default function PartnersPage() {
             flex: 0 0 140px; height: 140px; display: flex; align-items: center; justify-content: center;
             background: rgba(255,255,255,0.06); border-radius: var(--radius-sm); overflow: hidden;
           }
-          .partner-logo { max-width: 100%; max-height: 100%; display: block; }
+          .partner-logo { object-fit: contain; }
 
           .info { flex: 1; min-width: 0; }
           .name { font-size: var(--fs-h3); margin: 0 0 8px; line-height: 1.2; }

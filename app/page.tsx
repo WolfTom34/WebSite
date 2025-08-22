@@ -1,15 +1,17 @@
 "use client";
 import { useState } from "react";
 import { motion, useScroll } from "framer-motion";
-import Head from "next/head";
 
 import LanguageSwitcher from "./components/language_switcher";
 import CustomCursor from "./components/custom_cursor";
 import Carousel from "./components/carousel";
 import Navbar from "./components/navbar";
-import Section from "./components/section";
+import Section from "./components/solution";
 import Background from "./components/background";
+import TechInnovation from "./components/tech_innovation";
+import SEOHead from "./components/seo_head";
 
+import { homepageSEO } from "./data/seo";
 import videos from "./data/video.json";
 
 export default function Page() {
@@ -17,51 +19,12 @@ export default function Page() {
   const { scrollYProgress } = useScroll();
   const [showNav, setShowNav] = useState(false);
 
-  const seo = {
-    fr: {
-      title: "Drones Autonomes de Surveillance | Solutions de Sécurité | Safe Valley",
-      description: "Solutions de drones autonomes pour surveillance, inspection et sécurité périmétrique. Écosystème Maverick avec station Ruche. Devis gratuit.",
-      h1: "Solutions de Drones Autonomes"
-    },
-    en: {
-      title: "Autonomous Surveillance Drones | Security Solutions | Safe Valley",
-      description: "Autonomous drone solutions for surveillance, inspection and perimeter security. Maverick ecosystem with Hive station. Free quote.",
-      h1: "Autonomous Drone Solutions"
-    }
-  }[lang];
+  // Récupération des données SEO pour la langue actuelle
+  const currentSEO = homepageSEO[lang];
 
   return (
     <>
-      <Head>
-        <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.safevalleysve.com/" />
-        
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content="https://www.safevalleysve.com/logo.png" />
-        <meta property="og:url" content="https://www.safevalleysve.com" />
-        <meta property="og:type" content="website" />
-        
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Safe Valley SVE",
-            "url": "https://www.safevalleysve.com",
-            "logo": "https://www.safevalleysve.com/logo.png",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "345 Rte de Carpentras",
-              "addressLocality": "Villes-sur-Auzon",
-              "postalCode": "84570",
-              "addressCountry": "FR"
-            },
-            "description": seo.description
-          })
-        }} />
-      </Head>
+      <SEOHead seoData={currentSEO} lang={lang} />
       
       <div className="page-container" data-lang={lang}>
         <motion.div className="scroll-bar" style={{ scaleX: scrollYProgress }} />
@@ -80,7 +43,7 @@ export default function Page() {
 
         <main className="content">
           <section className="front-page">
-            <h1 className="sr-only">{seo.h1}</h1>
+            <h1 className="sr-only">{currentSEO.h1}</h1>
             
             <div className="video-box card glow-animated">
               <iframe
@@ -115,7 +78,8 @@ export default function Page() {
             </div>
           </section>
 
-          {/* CTA Principal - Section séparée */}
+          <TechInnovation lang={lang} />
+
           <section className="cta-section">
             <div className="container">
               <div className="hero-cta">
@@ -143,11 +107,13 @@ export default function Page() {
         <footer className="footer">
           <div className="footer-content container">
             <address>
-              <strong>Safe Valley SVE</strong><br />
               345 Rte de Carpentras<br />
               84570 Villes-sur-Auzon, France
             </address>
-            <p>&copy; {new Date().getFullYear()} Safe Valley SVE</p>
+            <p>
+              &copy; {new Date().getFullYear()} Safe Valley - SVE | {" "} 
+              {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved."}
+            </p>
           </div>
         </footer>
 
@@ -159,6 +125,7 @@ export default function Page() {
             --bg-card: rgba(0,0,0,0.35);
             --bg-soft: rgba(0,0,0,0.25);
             --border: rgba(255,255,255,0.20);
+            --border-soft: rgba(255,255,255,0.15);
             --shadow-glow-sm: 0 0 12px rgba(255,255,255,0.15), 0 0 24px rgba(106,106,255,0.18);
             --shadow-glow-md: 0 0 20px rgba(255,255,255,0.25), 0 0 40px rgba(106,106,255,0.28);
             --radius: 20px;
@@ -230,7 +197,6 @@ export default function Page() {
             margin-bottom: 40px; font-weight: 600;
           }
 
-          /* CTA Section - Maintenant dans le flux normal */
           .cta-section {
             padding: 80px 0; background: var(--bg-soft);
             border-top: 1px solid var(--border);

@@ -1,11 +1,13 @@
 "use client";
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import Head from "next/head";
+import Image from "next/image";
 import Navbar from "../components/navbar";
 import LanguageSwitcher from "../components/language_switcher";
 import CustomCursor from "../components/custom_cursor";
 import Background from "../components/background";
+import SEOHead from "../components/seo_head";
+import { contactSEO, generateContactSchema } from "../data/seo";
 
 export default function ContactPage() {
   const [lang, setLang] = useState<"fr" | "en">("fr");
@@ -14,38 +16,30 @@ export default function ContactPage() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const seo = {
-    fr: {
-      title: "Contact Safe Valley | Devis Drones Autonomes | Vaucluse",
-      description: "Contactez Safe Valley pour vos projets de drones autonomes. Devis gratuit pour surveillance, inspection et sécurité. Villes-sur-Auzon, Vaucluse.",
-      h1: "Contactez nos experts en drones autonomes"
-    },
-    en: {
-      title: "Contact Safe Valley | Autonomous Drone Quote | Vaucluse", 
-      description: "Contact Safe Valley for your autonomous drone projects. Free quote for surveillance, inspection and security. Villes-sur-Auzon, Vaucluse.",
-      h1: "Contact our autonomous drone experts"
-    }
-  }[lang];
+  const currentSEO = contactSEO[lang];
+  const structuredData = generateContactSchema(lang);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-      // Debug : voir les données du formulaire
+    
     const formData = new FormData(formRef.current!);
-    console.log('Données du formulaire:');
-    for (let [key, value] of formData.entries()) {
-      console.log(key + ': ' + value);
-    }
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      // Vérifier si EmailJS est chargé, sinon le charger dynamiquement
+      // Configuration EmailJS sécurisée avec variables d'environnement
+      const emailjsConfig = {
+        serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      };
+
+      // Charger EmailJS dynamiquement si nécessaire
       if (!(window as any).emailjs) {
-        // Charger EmailJS dynamiquement
         const script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
         script.onload = () => {
-          (window as any).emailjs.init('YOUR_PUBLIC_KEY'); // Remplace par ta vraie clé
+          (window as any).emailjs.init(emailjsConfig.publicKey);
           sendEmail();
         };
         document.head.appendChild(script);
@@ -57,10 +51,10 @@ export default function ContactPage() {
         const emailjs = (window as any).emailjs;
         
         const result = await emailjs.sendForm(
-          'service_0bu64to',
-          'template_pvdnufs',
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId,
           formRef.current,
-          'vkDhcBEBj8AUBP6EE'
+          emailjsConfig.publicKey
         );
 
         if (result.status === 200) {
@@ -81,50 +75,11 @@ export default function ContactPage() {
 
   return (
     <>
-      <Head>
-        <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.safevalleysve.com/contact/" />
-        
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content="https://www.safevalleysve.com/logo.png" />
-        <meta property="og:url" content="https://www.safevalleysve.com/contact/" />
-        <meta property="og:type" content="website" />
-        
-        {/* EmailJS Script - chargement optimisé */}
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            // Charger EmailJS et l'initialiser
-            (function() {
-              const script = document.createElement('script');
-              script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-              script.onload = function() {
-                emailjs.init('YOUR_PUBLIC_KEY'); // Remplace par ta vraie Public Key
-              };
-              document.head.appendChild(script);
-            })();
-          `
-        }} />
-        
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "Safe Valley SVE",
-            "description": seo.description,
-            "url": "https://www.safevalleysve.com",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "345 Rte de Carpentras",
-              "addressLocality": "Villes-sur-Auzon",
-              "postalCode": "84570",
-              "addressCountry": "FR"
-            }
-          })
-        }} />
-      </Head>
+      <SEOHead 
+        seoData={currentSEO} 
+        lang={lang} 
+        structuredData={structuredData}
+      />
 
       <div className="page contact" data-lang={lang}>
         <Background />
@@ -132,17 +87,37 @@ export default function ContactPage() {
         <Navbar showNav={showNav} setShowNav={setShowNav} lang={lang} />
         <LanguageSwitcher lang={lang} setLang={setLang} />
 
-        <img src="/button.png" className="nav-btn focusable" alt="Menu navigation" 
-             onClick={() => setShowNav(prev => !prev)} />
+        <button 
+          className="nav-btn focusable" 
+          aria-label="Menu navigation" 
+          onClick={() => setShowNav(prev => !prev)}
+        >
+          <Image 
+            src="/button.png"
+            alt=""
+            width={32}
+            height={32}
+            priority
+          />
+        </button>
 
         <div className="overlay-fade" />
 
         <main className="contact-content">
-          <img src="/logo.png" alt="Safe Valley SVE - Drones autonomes de surveillance" className="logo" />
+          <div className="logo-container">
+            <Image 
+              src="/logo.png" 
+              alt="Safe Valley SVE - Drones autonomes de surveillance" 
+              className="logo"
+              width={100}
+              height={50}
+              priority
+            />
+          </div>
 
           <div className="card contact-box">
             <header>
-              <h1 className="title">{seo.h1}</h1>
+              <h1 className="title">{currentSEO.h1}</h1>
               <p className="subtitle">
                 {lang === "fr" 
                   ? "Obtenez un devis personnalisé pour vos besoins en surveillance et sécurité"
@@ -151,23 +126,34 @@ export default function ContactPage() {
             </header>
 
             {submitStatus === 'success' && (
-              <div className="success-message">
+              <motion.div 
+                className="success-message"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
                 <h2>{lang === "fr" ? "Message envoyé avec succès !" : "Message sent successfully!"}</h2>
                 <p>{lang === "fr" ? "Nous vous recontacterons dans les plus brefs délais." : "We will contact you as soon as possible."}</p>
-              </div>
+              </motion.div>
             )}
 
             {submitStatus === 'error' && (
-              <div className="error-message">
+              <motion.div 
+                className="error-message"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
                 <h2>{lang === "fr" ? "Erreur lors de l'envoi" : "Error sending message"}</h2>
                 <p>{lang === "fr" ? "Veuillez réessayer ou nous contacter directement." : "Please try again or contact us directly."}</p>
-              </div>
+              </motion.div>
             )}
 
             <form 
               ref={formRef}
               className="form" 
               onSubmit={handleSubmit}
+              noValidate
             >
               <input 
                 type="text" 
@@ -176,6 +162,7 @@ export default function ContactPage() {
                 className="input" 
                 required 
                 disabled={isSubmitting}
+                aria-label={lang === "fr" ? "Nom complet" : "Full name"}
               />
               
               <input 
@@ -185,6 +172,7 @@ export default function ContactPage() {
                 className="input" 
                 required 
                 disabled={isSubmitting}
+                aria-label="Email"
               />
               
               <input 
@@ -193,6 +181,7 @@ export default function ContactPage() {
                 placeholder={lang === "fr" ? "Téléphone" : "Phone"} 
                 className="input" 
                 disabled={isSubmitting}
+                aria-label={lang === "fr" ? "Téléphone" : "Phone"}
               />
               
               <textarea 
@@ -201,6 +190,7 @@ export default function ContactPage() {
                 className="textarea" 
                 required 
                 disabled={isSubmitting}
+                aria-label={lang === "fr" ? "Description du projet" : "Project description"}
               />
               
               {/* Champs cachés pour plus d'infos */}
@@ -212,6 +202,7 @@ export default function ContactPage() {
                 type="submit" 
                 className="btn btn-primary focusable" 
                 disabled={isSubmitting}
+                aria-describedby={submitStatus !== 'idle' ? 'form-status' : undefined}
               >
                 {isSubmitting 
                   ? (lang === "fr" ? "Envoi en cours..." : "Sending...")
@@ -239,15 +230,17 @@ export default function ContactPage() {
         <footer className="footer">
           <div className="footer-content container">
             <address>
-              <strong>Safe Valley SVE</strong><br />
               345 Rte de Carpentras<br />
               84570 Villes-sur-Auzon, France
             </address>
-            <p>&copy; {new Date().getFullYear()} Safe Valley SVE</p>
+            <p>
+              &copy; {new Date().getFullYear()} Safe Valley - SVE | {" "} 
+              {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved."}
+            </p>
           </div>
         </footer>
 
-        <style>{`
+        <style jsx>{`
           :root {
             --accent: #6a6aff; --accent-600: #5959e0; --success: #22c55e; --error: #ef4444;
             --text: #ffffff; --bg-card: rgba(0,0,0,0.35); --border: rgba(255,255,255,0.20);
@@ -260,6 +253,7 @@ export default function ContactPage() {
           .btn-primary { background: var(--accent); color: #fff; padding: 14px 18px; transition: all .2s; }
           .btn-primary:hover:not(:disabled) { background: var(--accent-600); }
           .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+          .focusable:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; border-radius: 8px; }
           
           .page { 
             min-height: 100vh; position: relative; overflow-x: hidden; color: var(--text); 
@@ -267,7 +261,7 @@ export default function ContactPage() {
           }
           .nav-btn { 
             position: fixed; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right)); 
-            width: 32px; cursor: pointer; z-index: 110; transition: filter .2s ease; 
+            background: none; border: none; cursor: pointer; z-index: 110; transition: filter .2s ease; 
           }
           .nav-btn:hover { filter: drop-shadow(0 0 8px white); }
           .overlay-fade { 
@@ -278,7 +272,8 @@ export default function ContactPage() {
             min-height: 60vh; display: flex; flex-direction: column; align-items: center; 
             padding: 60px 20px 30px; position: relative; z-index: 10; text-align: center; 
           }
-          .logo { width: 100px; margin-bottom: 30px; pointer-events: none; }
+          .logo-container { margin-bottom: 30px; }
+          .logo { pointer-events: none; }
           .contact-box { 
             width: min(92vw, 720px); padding: clamp(24px, 4vw, 40px) clamp(20px, 3vw, 30px); 
             box-shadow: var(--shadow-glow-sm); 
@@ -314,6 +309,11 @@ export default function ContactPage() {
           }
           .footer-content { display: flex; flex-direction: column; gap: 10px; align-items: center; }
           address { font-style: normal; margin-bottom: 10px; }
+
+          @media (max-width: 768px) {
+            .contact-content { padding: 40px 16px 20px; }
+            .contact-box { padding: 20px 16px; }
+          }
         `}</style>
       </div>
     </>

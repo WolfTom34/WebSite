@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import Head from "next/head";
+import Image from "next/image";
 import videos from "../data/video.json";
 import Navbar from "../components/navbar";
 import LanguageSwitcher from "../components/language_switcher";
 import CustomCursor from "../components/custom_cursor";
 import Background from "../components/background";
+import SEOHead from "../components/seo_head";
+import { videoSEO, generateVideoGallerySchema } from "../data/seo";
 
 interface Video {
   id: string;
@@ -19,18 +21,8 @@ export default function VideoGallery() {
   const [showNav, setShowNav] = useState(false);
   const [lightboxVideo, setLightboxVideo] = useState<Video | null>(null);
 
-  const seo = {
-    fr: {
-      title: "Démonstrations Drones Autonomes | Vidéos Techniques | Safe Valley",
-      description: "Découvrez nos drones autonomes en action : surveillance, inspection, sécurité. Vidéos techniques et démonstrations de l'écosystème Maverick.",
-      h1: "Nos drones autonomes en action"
-    },
-    en: {
-      title: "Autonomous Drone Demonstrations | Technical Videos | Safe Valley",
-      description: "Discover our autonomous drones in action: surveillance, inspection, security. Technical videos and Maverick ecosystem demonstrations.",
-      h1: "Our autonomous drones in action"
-    }
-  }[lang];
+  const currentSEO = videoSEO[lang];
+  const structuredData = generateVideoGallerySchema(videos, lang);
 
   useEffect(() => {
     document.body.style.overflow = lightboxVideo ? "hidden" : "auto";
@@ -46,45 +38,12 @@ export default function VideoGallery() {
 
   return (
     <>
-      <Head>
-        <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.safevalleysve.com/galerie/" />
-        
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content="https://www.safevalleysve.com/logo.png" />
-        <meta property="og:url" content="https://www.safevalleysve.com/galerie/" />
-        <meta property="og:type" content="website" />
-        
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "VideoGallery",
-            "name": seo.title,
-            "description": seo.description,
-            "publisher": {
-              "@type": "Organization",
-              "name": "Safe Valley SVE",
-              "url": "https://www.safevalleysve.com"
-            },
-            "video": videos.map(video => ({
-              "@type": "VideoObject",
-              "name": video.title,
-              "description": video.description,
-              "thumbnailUrl": video.thumbnail,
-              "embedUrl": `https://www.youtube.com/embed/${video.id}`,
-              "uploadDate": "2024-01-01",
-              "duration": "PT3M",
-              "publisher": {
-                "@type": "Organization",
-                "name": "Safe Valley SVE"
-              }
-            }))
-          })
-        }} />
-      </Head>
+      <SEOHead 
+        seoData={currentSEO} 
+        lang={lang} 
+        structuredData={structuredData}
+        pageType="video"
+      />
 
       <div className="page" data-lang={lang}>
         <Background />
@@ -92,23 +51,35 @@ export default function VideoGallery() {
         <Navbar showNav={showNav} setShowNav={setShowNav} lang={lang} />
         <LanguageSwitcher lang={lang} setLang={setLang} />
 
-        <img
-          src="/button.png"
+        <button
           className="nav-btn"
-          alt="Menu navigation"
+          aria-label="Menu navigation"
           onClick={() => setShowNav(prev => !prev)}
-        />
+        >
+          <Image 
+            src="/button.png"
+            alt=""
+            width={32}
+            height={32}
+            priority
+          />
+        </button>
 
-        <img 
-          src="/logo.png" 
-          alt="Safe Valley SVE - Drones autonomes de surveillance" 
-          className="logo" 
-        />
+        <div className="logo-container">
+          <Image 
+            src="/logo.png" 
+            alt="Safe Valley SVE - Drones autonomes de surveillance" 
+            className="logo"
+            width={120}
+            height={60}
+            priority
+          />
+        </div>
 
         <main className="content">
           <div className="container">
             <header>
-              <h1>{seo.h1}</h1>
+              <h1>{currentSEO.h1}</h1>
               <p>
                 {lang === "fr" 
                   ? "Découvrez la technologie Safe Valley à travers nos démonstrations vidéo : écosystème Maverick, station Ruche, et essaims de drones en mission."
@@ -120,11 +91,25 @@ export default function VideoGallery() {
             <section className="grid" aria-label={lang === "fr" ? "Galerie vidéo" : "Video gallery"}>
               {videos.map((video: Video) => (
                 <article className="card" key={video.id}>
-                  <div className="thumbnail" onClick={() => setLightboxVideo(video)}>
-                    <img 
+                  <div 
+                    className="thumbnail" 
+                    onClick={() => setLightboxVideo(video)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setLightboxVideo(video);
+                      }
+                    }}
+                  >
+                    <Image 
                       src={video.thumbnail} 
                       alt={`Démonstration ${video.title} - Safe Valley`}
-                      loading="lazy" 
+                      width={400}
+                      height={225}
+                      loading="lazy"
+                      className="thumbnail-img"
                     />
                     <div className="play" aria-label="Lire la vidéo">▶</div>
                   </div>
@@ -134,6 +119,7 @@ export default function VideoGallery() {
                     <button 
                       onClick={() => setLightboxVideo(video)}
                       aria-label={`Regarder ${video.title}`}
+                      className="watch-btn"
                     >
                       {lang === "fr" ? "Regarder" : "Watch"}
                     </button>
@@ -145,7 +131,13 @@ export default function VideoGallery() {
         </main>
 
         {lightboxVideo && (
-          <div className="lightbox" onClick={() => setLightboxVideo(null)}>
+          <div 
+            className="lightbox" 
+            onClick={() => setLightboxVideo(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="video-title"
+          >
             <div className="modal" onClick={(e) => e.stopPropagation()}>
               <button 
                 className="close" 
@@ -159,25 +151,29 @@ export default function VideoGallery() {
                 title={lightboxVideo.title}
                 allow="autoplay; fullscreen"
                 allowFullScreen
+                width="100%"
+                height="400"
               />
-              <h3>{lightboxVideo.title}</h3>
+              <h3 id="video-title">{lightboxVideo.title}</h3>
               <p>{lightboxVideo.description}</p>
             </div>
           </div>
         )}
 
-        <footer>
-          <address>
-            345 Rte de Carpentras<br />
-            84570 Villes-sur-Auzon, France
-          </address>
-          <p>
-            &copy; {new Date().getFullYear()} Safe Valley - SVE | {" "} 
-            {lang === "fr" ? "All Rights Reserved." : "All Rights Reserved."}
-          </p>
+        <footer className="footer">
+          <div className="footer-content container">
+            <address>
+              345 Rte de Carpentras<br />
+              84570 Villes-sur-Auzon, France
+            </address>
+            <p>
+              &copy; {new Date().getFullYear()} Safe Valley - SVE | {" "} 
+              {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved."}
+            </p>
+          </div>
         </footer>
 
-        <style>{`
+        <style jsx>{`
           :root {
             --accent: #6a6aff;
             --accent-600: #5959e0;
@@ -202,8 +198,7 @@ export default function VideoGallery() {
             padding: max(0px, env(safe-area-inset-top)) max(0px, env(safe-area-inset-right)) 0 max(0px, env(safe-area-inset-left));
           }
           
-          /* Force white text on all content */
-          .content, .content *, footer, footer * {
+          .content, .content *, .footer, .footer * {
             color: #ffffff !important;
           }
           
@@ -211,7 +206,8 @@ export default function VideoGallery() {
             position: fixed; 
             top: max(16px, env(safe-area-inset-top)); 
             right: max(16px, env(safe-area-inset-right)); 
-            width: 32px; 
+            background: none;
+            border: none;
             cursor: pointer; 
             z-index: 110; 
             transition: transform .2s ease, filter .2s ease;
@@ -220,16 +216,14 @@ export default function VideoGallery() {
           .nav-btn:hover { filter: drop-shadow(0 0 8px white); }
           .nav-btn:active { transform: scale(.9); }
           
-          .logo { 
+          .logo-container { 
             position: relative; 
             top: 40px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 120px; 
+            text-align: center;
             margin-bottom: 40px; 
-            z-index: 10; 
-            pointer-events: none; 
+            z-index: 10;
           }
+          .logo { pointer-events: none; }
           
           .content { padding: 140px 0 80px; z-index: 10; position: relative; }
           .container { width: var(--container-w); margin: 0 auto; }
@@ -263,13 +257,13 @@ export default function VideoGallery() {
             overflow: hidden; 
             cursor: pointer; 
           }
-          .thumbnail img { 
+          .thumbnail-img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
             transition: transform 0.3s; 
           }
-          .card:hover img { transform: scale(1.05); }
+          .card:hover .thumbnail-img { transform: scale(1.05); }
           
           .play { 
             position: absolute; 
@@ -301,7 +295,7 @@ export default function VideoGallery() {
             opacity: 0.95; 
             color: #ffffff;
           }
-          .info button { 
+          .watch-btn { 
             background: var(--accent); 
             color: white; 
             padding: 10px 20px; 
@@ -311,8 +305,8 @@ export default function VideoGallery() {
             font-weight: 700; 
             transition: all 0.15s; 
           }
-          .info button:hover { background: var(--accent-600); }
-          .info button:active { transform: translateY(1px) scale(.99); }
+          .watch-btn:hover { background: var(--accent-600); }
+          .watch-btn:active { transform: translateY(1px) scale(.99); }
           
           .lightbox { 
             position: fixed; 
@@ -366,7 +360,7 @@ export default function VideoGallery() {
             color: #ffffff;
           }
           
-          footer { 
+          .footer { 
             background: rgba(0,0,0,0.3); 
             backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
