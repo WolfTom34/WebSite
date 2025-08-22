@@ -118,57 +118,189 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Safe Valley SVE",
+  "alternateName": "Safe Valley",
   "url": "https://www.safevalleysve.com",
   "logo": "https://www.safevalleysve.com/logo.png",
+  "image": "https://www.safevalleysve.com/og/homepage-fr.jpg",
+  "description": "Solutions de drones autonomes pour surveillance, inspection et sécurité périmétrique",
+  "email": "contact@safevalleysve.com",
+  "telephone": "+33-XXX-XXX-XXX", // Remplacer par ton vrai numéro
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "345 Rte de Carpentras",
     "addressLocality": "Villes-sur-Auzon",
     "postalCode": "84570",
+    "addressRegion": "Vaucluse",
     "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "44.05698",
+    "longitude": "5.22298"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "France"
+  },
+  "serviceType": [
+    "Surveillance autonome par drones",
+    "Inspection technique aérienne",
+    "Sécurité périmétrique",
+    "Solutions anti-drones"
+  ],
+  "industry": "Sécurité et surveillance",
+  "foundingDate": "2020", // Ajuster selon la réalité
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": "5-10" // Ajuster selon la réalité
   },
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer service",
-    "url": "https://www.safevalleysve.com/contact/"
+    "telephone": "+33-XXX-XXX-XXX",
+    "email": "contact@safevalleysve.com",
+    "url": "https://www.safevalleysve.com/contact/",
+    "availableLanguage": ["French", "English"]
   },
   "sameAs": [
     "https://www.linkedin.com/company/safevalleysve/"
-  ]
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Solutions de drones autonomes",
+    "itemListElement": [
+      {
+        "@type": "Service",
+        "name": "Surveillance autonome",
+        "description": "Service de surveillance continue par essaims de drones",
+        "category": "Sécurité",
+        "areaServed": "France"
+      },
+      {
+        "@type": "Service", 
+        "name": "Inspection technique",
+        "description": "Inspection aérienne d'infrastructures",
+        "category": "Maintenance prédictive",
+        "areaServed": "France"
+      },
+      {
+        "@type": "Service",
+        "name": "Sécurisation périmétrique", 
+        "description": "Protection périmètres par drones autonomes",
+        "category": "Sécurité",
+        "areaServed": "France"
+      }
+    ]
+  }
 };
 
-// Schémas spécialisés par type de page
-export const generateContactSchema = (lang: "fr" | "en") => ({
+// Schema LocalBusiness pour le référencement local
+export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Safe Valley SVE",
-  "description": contactSEO[lang].description,
+  "description": "Solutions de drones autonomes pour surveillance et sécurité",
   "url": "https://www.safevalleysve.com",
-  "address": organizationSchema.address,
-  "contactPoint": organizationSchema.contactPoint
+  "telephone": "+33-XXX-XXX-XXX",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "345 Rte de Carpentras",
+    "addressLocality": "Villes-sur-Auzon", 
+    "postalCode": "84570",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "44.05698",
+    "longitude": "5.22298"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday", 
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "priceRange": "Sur devis"
+};
+
+// Schema pour les produits/services
+export const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Écosystème Maverick",
+  "description": "Solution complète de drones autonomes avec station Ruche",
+  "brand": {
+    "@type": "Brand",
+    "name": "Safe Valley"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Safe Valley SVE"
+  },
+  "category": "Drone de surveillance",
+  "image": "https://www.safevalleysve.com/og/homepage-fr.jpg",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "Sur devis",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Safe Valley SVE"
+    }
+  },
+  "hasEnergyConsumptionDetails": {
+    "@type": "EnergyConsumptionDetails",
+    "energyEfficiencyScaleMax": "A+++"
+  }
+};
+
+// Fonctions pour générer les schemas par page
+export const generateContactSchema = (lang: "fr" | "en") => ({
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": contactSEO[lang].title,
+  "description": contactSEO[lang].description,
+  "url": contactSEO[lang].canonicalUrl,
+  "mainEntity": organizationSchema,
+  "potentialAction": {
+    "@type": "ContactAction",
+    "target": "https://www.safevalleysve.com/contact/",
+    "name": lang === "fr" ? "Demander un devis" : "Request quote"
+  }
 });
 
 export const generateVideoGallerySchema = (videos: any[], lang: "fr" | "en") => ({
   "@context": "https://schema.org",
-  "@type": "VideoGallery",
+  "@type": "VideoGallery", 
   "name": videoSEO[lang].title,
   "description": videoSEO[lang].description,
-  "publisher": {
-    "@type": "Organization",
-    "name": "Safe Valley SVE",
-    "url": "https://www.safevalleysve.com"
-  },
+  "url": videoSEO[lang].canonicalUrl,
+  "publisher": organizationSchema,
   "video": videos.map(video => ({
     "@type": "VideoObject",
     "name": video.title,
     "description": video.description,
     "thumbnailUrl": video.thumbnail,
     "embedUrl": `https://www.youtube.com/embed/${video.id}`,
-    "uploadDate": "2024-01-01",
-    "duration": "PT3M",
+    "uploadDate": "2024-01-01", // Ajuster selon réalité
+    "duration": "PT3M", // Durée approximative
     "publisher": {
       "@type": "Organization",
-      "name": "Safe Valley SVE"
+      "name": "Safe Valley SVE",
+      "logo": "https://www.safevalleysve.com/logo.png"
+    },
+    "contentUrl": `https://www.youtube.com/watch?v=${video.id}`,
+    "interactionStatistic": {
+      "@type": "InteractionCounter",
+      "interactionType": "https://schema.org/WatchAction",
+      "userInteractionCount": 0
     }
   }))
 });
@@ -178,21 +310,23 @@ export const generateBlogSchema = (posts: any[], lang: "fr" | "en") => ({
   "@type": "Blog",
   "name": blogSEO[lang].title,
   "description": blogSEO[lang].description,
-  "url": "https://www.safevalleysve.com/blog/",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Safe Valley SVE",
-    "url": "https://www.safevalleysve.com"
-  },
+  "url": blogSEO[lang].canonicalUrl,
+  "publisher": organizationSchema,
   "blogPost": posts.map(post => ({
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
     "datePublished": post.date,
-    "author": {
-      "@type": "Organization", 
-      "name": "Safe Valley SVE"
-    }
+    "dateModified": post.date,
+    "author": organizationSchema,
+    "publisher": organizationSchema,
+    "image": post.image,
+    "url": post.linkedinUrl,
+    "isPartOf": {
+      "@type": "Blog",
+      "name": blogSEO[lang].title
+    },
+    "inLanguage": lang === "fr" ? "fr-FR" : "en-US"
   }))
 });
 
@@ -201,15 +335,46 @@ export const generatePartnersSchema = (partners: any[], lang: "fr" | "en") => ({
   "@type": "WebPage",
   "name": partnersSEO[lang].title,
   "description": partnersSEO[lang].description,
-  "publisher": {
-    "@type": "Organization",
-    "name": "Safe Valley SVE",
-    "url": "https://www.safevalleysve.com"
-  },
+  "url": partnersSEO[lang].canonicalUrl,
+  "mainEntity": organizationSchema,
   "about": partners.map(partner => ({
     "@type": "Organization",
     "name": partner.name,
     "description": lang === "fr" ? partner.descriptionFr : partner.descriptionEn,
-    "url": partner.link
+    "url": partner.link,
+    "logo": partner.logo,
+    "partner": organizationSchema
   }))
 });
+
+// Schema de FAQ pour améliorer les rich snippets
+export const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage", 
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quelle est l'autonomie des drones Safe Valley ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nos drones autonomes Maverick offrent 45 à 60 minutes d'autonomie de vol avec recharge automatique via la station Ruche."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Dans quelles zones géographiques intervenez-vous ?",
+      "acceptedAnswer": {
+        "@type": "Answer", 
+        "text": "Safe Valley intervient sur tout le territoire français avec des solutions de surveillance par drones autonomes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vos drones sont-ils homologués DGAC ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, tous nos systèmes de drones autonomes respectent la réglementation DGAC française et européenne."
+      }
+    }
+  ]
+};

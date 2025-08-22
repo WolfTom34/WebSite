@@ -1,0 +1,140 @@
+/* styles/contact.module.css */
+.overlayFade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.contactContent {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px 30px;
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.logoContainer {
+  margin-bottom: 30px;
+}
+
+.logo {
+  pointer-events: none;
+}
+
+.contactBox {
+  width: min(92vw, 720px);
+  padding: clamp(24px, 4vw, 40px) clamp(20px, 3vw, 30px);
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.title {
+  font-size: var(--fs-h1);
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  opacity: 0.9;
+}
+
+.successMessage,
+.errorMessage {
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.successMessage {
+  background: rgba(34, 197, 94, 0.1);
+  border: 2px solid var(--success);
+}
+
+.successMessage h2 {
+  color: var(--success);
+  margin: 0 0 8px;
+}
+
+.errorMessage {
+  background: rgba(239, 68, 68, 0.1);
+  border: 2px solid var(--error);
+}
+
+.errorMessage h2 {
+  color: var(--error);
+  margin: 0 0 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.input,
+.textarea {
+  padding: 14px;
+  width: 100%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.input:disabled,
+.textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mapSection {
+  width: 100%;
+  padding: 40px 20px 60px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.mapBox {
+  width: min(92vw, 1100px);
+  height: clamp(320px, 50vh, 520px);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .contactContent {
+    padding: 40px 16px 20px;
+  }
+
+  .contactBox {
+    padding: 20px 16px;
+  }
+}

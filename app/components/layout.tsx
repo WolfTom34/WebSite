@@ -1,10 +1,17 @@
 "use client";
 import { useState, ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import Navbar from "./navbar";
 import LanguageSwitcher from "./language_switcher";
 import CustomCursor from "./custom_cursor";
-import Background from "./background";
+
+// Lazy load Background uniquement pour homepage
+const Background = dynamic(() => import("./background"), {
+  ssr: false,
+  loading: () => null
+});
 
 interface LayoutProps {
   children: ReactNode;
@@ -24,7 +31,11 @@ export default function Layout({
   logoSize = "medium"
 }: LayoutProps) {
   const [showNav, setShowNav] = useState(false);
-
+  const pathname = usePathname();
+  
+  // Charger Background Three.js uniquement sur homepage
+  const isHomepage = pathname === "/" || pathname === "/en";
+  
   const logoSizes = {
     small: { width: 80, height: 40 },
     medium: { width: 120, height: 60 },
@@ -33,7 +44,12 @@ export default function Layout({
 
   return (
     <div className={`page-layout ${className}`} data-lang={lang}>
-      <Background />
+      {/* Background conditionnel */}
+      <Background 
+        enableThreeJS={isHomepage} 
+        forceDisable={!isHomepage}
+      />
+      
       <CustomCursor />
       <Navbar showNav={showNav} setShowNav={setShowNav} lang={lang} />
       <LanguageSwitcher lang={lang} setLang={setLang} />
@@ -49,6 +65,7 @@ export default function Layout({
           width={32}
           height={32}
           priority
+          sizes="32px"
         />
       </button>
 
@@ -61,6 +78,7 @@ export default function Layout({
             width={logoSizes[logoSize].width}
             height={logoSizes[logoSize].height}
             priority
+            sizes={`${logoSizes[logoSize].width}px`}
           />
         </div>
       )}
