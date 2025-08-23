@@ -216,7 +216,7 @@ export default function Page() {
           </section>
 
           {/* Services Section améliorée */}
-          <section id="services">
+          <section id="services" className={styles.servicesSection}>
             <div className={styles.container}>
               <div className={styles.sectionHeader}>
                 <motion.span 

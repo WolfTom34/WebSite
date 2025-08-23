@@ -40,12 +40,12 @@
   
   /* Layout 2 colonnes */
   .heroWrapper {
-    max-width: 1400px;
+    width: 100%;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 40px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    grid-template-columns: 40% 60%;
     align-items: center;
     position: relative;
     z-index: 2;
@@ -54,13 +54,16 @@
   /* Colonne gauche : Contenu */
   .heroContent {
     text-align: left;
+    padding-left: 10px;
   }
   
   /* Colonne droite : Video */
   .heroMedia {
     position: relative;
     width: 100%;
-    margin-right: -40px;
+    padding-right: 0;
+    display: flex;
+    justify-content: flex-end;
   }
   
   /* Badge animé */
@@ -255,6 +258,10 @@
   /* Video Container */
   .videoContainer {
     position: relative;
+    height: 100%;
+    max-height: 421px;
+    width: 100%;
+    max-width: 750px;
     aspect-ratio: 16/9;
     border-radius: 20px;
     overflow: hidden;
@@ -264,6 +271,7 @@
     box-shadow: 
       0 20px 60px rgba(0, 0, 0, 0.4),
       0 0 40px rgba(0, 102, 255, 0.2);
+    margin-top: -50px;
   }
   
   .videoContainer:hover {
@@ -369,7 +377,7 @@
   .logoContainer {
     position: absolute;
     top: 20px;
-    left: 50%;
+    left: 46vw;
     transform: translateX(-50%);
     z-index: 100;
   }
@@ -388,7 +396,7 @@
   .scrollIndicator {
     position: absolute;
     bottom: 40px;
-    left: 50%;
+    left: 47,5vw;
     transform: translateX(-50%);
     background: none;
     border: none;
@@ -414,13 +422,30 @@
   }
   
   .scrollArrow {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
   
   .scrollArrow svg {
     width: 100%;
     height: 100%;
+  }
+
+  /* ========================================
+   SERVICES SECTION
+   ======================================== */
+  .servicesSection {
+    padding: 100px 0;
+    position: relative;
+  }
+
+  .servicesSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
   }
   
   /* ========================================
@@ -570,160 +595,261 @@
     font-size: 18px;
   }
   
-  /* ========================================
-     RESPONSIVE
-     ======================================== */
+    /* ========================================
+   RESPONSIVE
+   ======================================== */
+
+  @media (min-width: 1600px) {
+    .videoContainer {
+      max-width: 800px;
+    }
+  }
+
   @media (max-width: 1200px) {
     .heroWrapper {
       gap: 60px;
       padding: 0 30px;
     }
-  
+    
+    .heroContent {
+      padding-left: 20px;
+    }
+
     .heroStats {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    .videoContainer {
+      max-width: 650px;
+    }
   }
-  
+
   @media (max-width: 968px) {
     .heroWrapper {
       grid-template-columns: 1fr;
       gap: 50px;
-      text-align: center;
+      padding: 0 20px;
     }
-  
+
     .heroContent {
       text-align: center;
+      padding-left: 0;
     }
-  
+
     .heroDescription {
       margin: 0 auto 40px;
     }
-  
+
     .heroActions {
       justify-content: center;
     }
-  
+
     .heroStats {
       grid-template-columns: repeat(2, 1fr);
       max-width: 400px;
       margin: 0 auto;
     }
-  
+
     .statItem {
       text-align: center;
     }
-  
+
     .heroMedia {
+      padding-right: 0;
+      justify-content: center;
       max-width: 600px;
       margin: 0 auto;
     }
+    
+    
+    .videoContainer {
+      max-width: 100%;
+    }
+    
+    /* Logo et scroll restent centrés */
+    .logoContainer,
+    .scrollIndicator {
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
-  
+
   @media (max-width: 768px) {
     .heroSection {
       padding: 100px 0 60px;
       min-height: auto;
     }
-  
+
     .heroWrapper {
       padding: 0 20px;
     }
-  
+
     .heroTitle {
       font-size: clamp(2rem, 8vw, 3rem);
     }
-  
+
     .heroDescription {
       font-size: 1rem;
     }
-  
+
     .heroActions {
       flex-direction: column;
       width: 100%;
       max-width: 300px;
       margin: 0 auto 40px;
     }
-  
+
     .btnPrimary,
     .btnSecondary {
       width: 100%;
       justify-content: center;
     }
-  
+
     .heroStats {
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
     }
-  
+
     .statNumber {
       font-size: 1.8rem;
     }
-  
+
     .scrollIndicator {
       bottom: 20px;
     }
-  
-    .servicesSection,
-    .ctaSection,
-    .carouselSection {
+
+    /* Sections CTA */
+    .ctaSection {
       padding: 60px 0;
     }
-  
+
     .ctaContent {
       padding: 40px 20px;
       border-radius: 20px;
     }
-  
+
     .ctaButtons {
       flex-direction: column;
       width: 100%;
     }
-  
-    .ctaButton,
-    .ctaSecondary {
+
+    .ctaButton {
       width: 100%;
       justify-content: center;
     }
-  
+
     .sectionTitle {
       font-size: clamp(1.5rem, 6vw, 2rem);
     }
   }
-  
+
   @media (max-width: 480px) {
+    .heroSection {
+      padding: 80px 0 40px;
+    }
+
     .heroBadge {
       font-size: 12px;
       padding: 6px 16px;
     }
-  
+
+    .heroTitle {
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
+    }
+
     .heroStats {
       gap: 12px;
     }
-  
+
     .statItem {
       padding: 12px;
     }
-  
+
     .statNumber {
       font-size: 1.5rem;
     }
-  
+
     .statLabel {
       font-size: 0.75rem;
     }
-  
+
     .videoContainer {
       border-radius: 16px;
     }
-  
+
     .playButton {
       width: 60px;
       height: 60px;
     }
-  
+
     .playButton svg {
       width: 24px;
       height: 24px;
+    }
+    
+    .scrollIndicator {
+      bottom: 15px;
+    }
+    
+    .scrollText {
+      font-size: 12px;
+    }
+    
+    .scrollArrow {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* CTA responsive */
+    .ctaSection {
+      padding: 40px 0;
+    }
+    
+    .ctaContent {
+      padding: 30px 15px;
+    }
+    
+    .ctaTitle {
+      font-size: 1.5rem;
+    }
+    
+    .ctaSubtitle {
+      font-size: 0.95rem;
+    }
+    
+    .ctaButton {
+      padding: 16px 30px;
+      font-size: 16px;
+    }
+  }
+
+  /* Petits écrans */
+  @media (max-width: 380px) {
+    .heroWrapper {
+      padding: 0 15px;
+    }
+    
+    .heroActions {
+      max-width: 280px;
+    }
+    
+    .btnPrimary,
+    .btnSecondary {
+      padding: 14px 24px;
+      font-size: 15px;
+    }
+    
+    .statItem {
+      padding: 10px;
+    }
+    
+    .statNumber {
+      font-size: 1.3rem;
+    }
+    
+    .statLabel {
+      font-size: 0.7rem;
+      letter-spacing: 0.3px;
     }
   }
   

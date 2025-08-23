@@ -1,8 +1,7 @@
 /* tech.module.css - Tech Innovation Design */
 
 .techSection {
-  padding: 100px 0;
-  background: linear-gradient(180deg, rgba(10, 14, 39, 0.6) 0%, rgba(5, 5, 16, 0.4) 100%);
+  padding: 80px 0;
   position: relative;
   overflow: hidden;
 }
@@ -14,7 +13,6 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
 }
 
 .container {
