@@ -13,6 +13,7 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
+  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
   const currentSEO = contactSEO[lang];
   const structuredData = generateContactSchema(lang);
 
@@ -20,6 +21,28 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
+
+    const form = formRef.current;
+    if (!form) return;
+
+    // Vérification des champs obligatoires
+    const newErrors: { [key: string]: boolean } = {};
+    const requiredFields = ["name", "email", "message"];
+
+    requiredFields.forEach((field) => {
+      const input = form.elements.namedItem(field) as HTMLInputElement | HTMLTextAreaElement;
+      if (!input?.value.trim()) {
+        newErrors[field] = true;
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setIsSubmitting(false);
+      return; // On bloque l'envoi
+    }
+
+    setErrors({}); // aucune erreur → on continue
 
     try {
       const emailjsConfig = {
@@ -122,8 +145,8 @@ export default function ContactPage() {
                     <input 
                       type="text" 
                       name="name" 
-                      placeholder={lang === "fr" ? "Nom complet *" : "Full name *"} 
-                      className={styles.input} 
+                      placeholder={lang === "fr" ? "Nom complet" : "Full name"} 
+                      className={`${styles.input} ${errors.message ? styles.inputError : ""}`}   
                       required 
                       disabled={isSubmitting} 
                       aria-label={lang === "fr" ? "Nom complet" : "Full name"} 
@@ -134,8 +157,8 @@ export default function ContactPage() {
                     <input 
                       type="email" 
                       name="email" 
-                      placeholder="Email *" 
-                      className={styles.input} 
+                      placeholder="Email" 
+                      className={`${styles.input} ${errors.message ? styles.inputError : ""}`}
                       required 
                       disabled={isSubmitting} 
                       aria-label="Email" 
@@ -147,7 +170,7 @@ export default function ContactPage() {
                       type="tel" 
                       name="phone" 
                       placeholder={lang === "fr" ? "Téléphone" : "Phone"} 
-                      className={styles.input} 
+                      className={`${styles.input} ${errors.message ? styles.inputError : ""}`}
                       disabled={isSubmitting} 
                       aria-label={lang === "fr" ? "Téléphone" : "Phone"} 
                     />
@@ -159,7 +182,7 @@ export default function ContactPage() {
                       placeholder={lang === "fr" 
                         ? "Décrivez votre projet (type de site, superficie, besoins spécifiques)" 
                         : "Describe your project (site type, area, specific needs)"} 
-                      className={styles.textarea} 
+                      className={`${styles.textarea} ${errors.message ? styles.inputError : ""}`}
                       required 
                       disabled={isSubmitting} 
                       aria-label={lang === "fr" ? "Description du projet" : "Project description"} 
@@ -192,8 +215,8 @@ export default function ContactPage() {
                   <div className={styles.infoContent}>
                     <h3>Email</h3>
                     <p>
-                      <a href="mailto:contact@safevalleysve.com">
-                        contact@safevalleysve.com
+                      <a href="mailto:wolftom@safevalleysve.com">
+                        wolftom@safevalleysve.com
                       </a>
                     </p>
                   </div>
@@ -204,8 +227,8 @@ export default function ContactPage() {
                   <div className={styles.infoContent}>
                     <h3>{lang === "fr" ? "Téléphone" : "Phone"}</h3>
                     <p>
-                      <a href="tel:+33XXXXXXXXX">
-                        +33 (0)X XX XX XX XX
+                      <a href="tel:+33 (0)6 70 67 78 44">
+                        +33 (0)6 70 67 78 44
                       </a>
                     </p>
                   </div>

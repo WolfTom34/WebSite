@@ -1,4 +1,8 @@
-/* layout.module.css */
+/* layout.module.css - Version complète avec tous les styles */
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
 
 .pageLayout {
   min-height: 100vh;
@@ -14,53 +18,372 @@
   padding: 0 20px;
 }
 
-/* Bouton de navigation (pour les pages autres que homepage) */
-.navBtn {
+/* ========================================
+   HEADER PRINCIPAL
+   ======================================== */
+
+.header {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(10, 14, 39, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
   transition: all 0.3s ease;
-  z-index: 150;
+  animation: slideDown 0.5s ease;
 }
 
-.navBtn:hover {
-  border-color: rgba(0, 102, 255, 0.5);
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.headerContainer {
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ========================================
+   SECTION GAUCHE - LANGUAGE SWITCHER
+   ======================================== */
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  width: 100px;
+}
+
+/* Language Switcher intégré */
+.languageSwitcher {
+  position: relative;
+  width: 72px;
+  height: 36px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.languageSwitcher:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12));
+  border-color: rgba(0, 102, 255, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 102, 255, 0.2);
+}
+
+.languageSwitcher:focus-visible {
+  outline: 2px solid #0066FF;
+  outline-offset: 3px;
+}
+
+.languageSwitcher:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.languageTrack {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #0066FF, #00D4FF);
+  border-radius: 14px;
+  box-shadow: 
+    0 2px 8px rgba(0, 102, 255, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.languageLabel {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 1;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.languageLabelActive {
+  color: white;
+}
+
+.languageAnimating {
+  animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+}
+
+/* ========================================
+   SECTION CENTRE - LOGO
+   ======================================== */
+
+.headerCenter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.logoLink:hover {
   transform: scale(1.05);
 }
 
-.navBtn:focus-visible {
-  outline: 2px solid #6a6aff;
-  outline-offset: 2px;
+.headerLogo {
+  width: 100px !important;
+  height: 50px !important;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.1));
 }
 
-.logoContainer {
-  top: 20px;
-  left: 50px;
-  transform: translateX(-50%);
-  z-index: 100;
-  pointer-events: none;
+/* ========================================
+   SECTION DROITE - NAVIGATION
+   ======================================== */
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.logo {
-  filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.2));
+.desktopNav {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.navLink {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  padding: 5px 0;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0066FF, #00D4FF);
+  transition: width 0.3s ease;
+}
+
+.navLink:hover {
+  color: #00D4FF;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.navLinkActive {
+  color: #00D4FF;
+}
+
+.navLinkActive::after {
+  width: 100%;
+}
+
+/* Bouton Contact spécial */
+.navLinkContact {
+  padding: 6px 16px !important;
+  background: linear-gradient(135deg, #0066FF, #00D4FF);
+  border-radius: 20px;
+  color: white !important;
+  font-size: 14px;
   transition: all 0.3s ease;
 }
+
+.navLinkContact::after {
+  display: none !important;
+}
+
+.navLinkContact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+  color: white !important;
+}
+
+/* ========================================
+   MENU MOBILE
+   ======================================== */
+
+.mobileMenuBtn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.mobileMenuBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 102, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.menuLine {
+  width: 18px;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  border-radius: 1px;
+}
+
+.menuLine1Active {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+
+.menuLine2Active {
+  opacity: 0;
+}
+
+.menuLine3Active {
+  transform: rotate(-45deg) translate(4px, -4px);
+}
+
+/* Menu mobile sliding */
+.mobileMenu {
+  position: fixed;
+  top: 70px;
+  right: -100%;
+  width: 280px;
+  height: calc(100vh - 70px);
+  background: rgba(10, 14, 39, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  z-index: 999;
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.mobileMenuActive {
+  right: 0;
+}
+
+.mobileNav {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobileNavLink {
+  padding: 12px 16px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.mobileNavLink:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #00D4FF;
+  transform: translateX(5px);
+  border-color: rgba(0, 102, 255, 0.2);
+}
+
+.mobileNavLinkActive {
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 212, 255, 0.15));
+  color: #00D4FF;
+  border-color: rgba(0, 102, 255, 0.3);
+}
+
+/* Overlay pour mobile menu */
+.mobileMenuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 998;
+}
+
+.mobileMenuOverlayActive {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ========================================
+   CONTENU PRINCIPAL
+   ======================================== */
 
 .mainContent {
   position: relative;
   z-index: 1;
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 120px);
+  padding-top: 90px; /* Espace pour le header fixe */
 }
 
+/* ========================================
+   FOOTER
+   ======================================== */
+
 .footer {
-  backdrop-filter: blur(7px);
+  background: rgba(10, 14, 39, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 40px 0;
   margin-top: 80px;
@@ -81,6 +404,7 @@
   font-style: normal;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
+  font-size: 14px;
 }
 
 .copyright {
@@ -88,28 +412,189 @@
   font-size: 14px;
 }
 
-/* Responsive */
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablettes */
+@media (max-width: 1024px) {
+  .headerContainer {
+    padding: 0 15px;
+  }
+
+  .desktopNav {
+    gap: 18px;
+  }
+
+  .navLink {
+    font-size: 13px;
+  }
+
+  .navLinkContact {
+    padding: 5px 14px !important;
+    font-size: 13px;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
+  .header {
+    height: 60px;
+  }
+
+  .headerContainer {
+    padding: 0 15px;
+  }
+
+  .headerLeft {
+    width: auto;
+  }
+
+  .languageSwitcher {
+    width: 64px;
+    height: 32px;
+  }
+  
+  .languageTrack {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .languageLabel {
+    font-size: 12px;
+  }
+
+  .headerLogo {
+    width: 80px !important;
+    height: 40px !important;
+  }
+
+  .desktopNav {
+    display: none;
+  }
+
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  .mobileMenu {
+    top: 60px;
+    height: calc(100vh - 60px);
+  }
+
+  .mainContent {
+    padding-top: 75px;
+  }
+
   .footerContent {
     flex-direction: column;
     text-align: center;
   }
-  
-  .logoContainer {
-    top: 10px;
-  }
-  
-  .navBtn {
-    top: 16px;
-    right: 16px;
-    width: 40px;
-    height: 40px;
-  }
 }
 
+/* Petit mobile */
 @media (max-width: 480px) {
+  .header {
+    height: 55px;
+  }
+
+  .headerContainer {
+    gap: 10px;
+  }
+
+  .languageSwitcher {
+    width: 60px;
+    height: 30px;
+    padding: 3px;
+  }
+  
+  .languageTrack {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .languageLabel {
+    font-size: 11px;
+  }
+
+  .headerLogo {
+    width: 70px !important;
+    height: 35px !important;
+  }
+
+  .mobileMenu {
+    width: 100%;
+    top: 55px;
+    height: calc(100vh - 55px);
+  }
+
+  .mainContent {
+    padding-top: 70px;
+  }
+
   .footer {
     padding: 30px 0;
     margin-top: 60px;
   }
+
+  .address,
+  .copyright {
+    font-size: 13px;
+  }
+}
+
+/* ========================================
+   ANIMATIONS & TRANSITIONS
+   ======================================== */
+
+/* Réduction de mouvement pour l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .pageLayout,
+  .header,
+  .headerContainer,
+  .languageSwitcher,
+  .languageTrack,
+  .languageLabel,
+  .logoLink,
+  .navLink,
+  .mobileMenuBtn,
+  .mobileMenu,
+  .menuLine {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+
+/* Ancien bouton de navigation (si besoin pour compatibilité) */
+.navBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 150;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.navBtn:hover {
+  border-color: rgba(0, 102, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.navBtn:focus-visible {
+  outline: 2px solid #6a6aff;
+  outline-offset: 2px;
 }

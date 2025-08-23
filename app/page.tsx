@@ -179,23 +179,6 @@ export default function Page() {
               </motion.div>
             </div>
 
-            {/* Logo avec effet */}
-            <motion.div 
-              className={styles.logoContainer}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 1 }}
-            >
-              <Image 
-                src="/logo.png" 
-                className={styles.heroLogo} 
-                alt="Safe Valley SVE"
-                width={120}
-                height={60}
-                priority
-              />
-            </motion.div>
-
             {/* Indicateur de scroll amélioré */}
             <motion.button 
               className={styles.scrollIndicator}

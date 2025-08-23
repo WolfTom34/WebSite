@@ -1,11 +1,12 @@
-// components/layout.tsx - Version corrigée
+// components/layout.tsx - Version avec Header permanent
 "use client";
 import { useState, ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import dynamic from "next/dynamic";
-import Navbar from "./navbar";
-import LanguageSwitcher from "./language_switcher";
 import CustomCursor from "./custom_cursor";
+import LanguageSwitcher from "./language_switcher";
+import { navContent } from "../data/nav_content";
 import styles from "../styles/layout.module.css";
 
 // Lazy load Background uniquement pour homepage
@@ -19,9 +20,7 @@ interface LayoutProps {
   lang: "fr" | "en";
   setLang: (lang: string) => void;
   className?: string;
-  showLogo?: boolean;
-  showNavButton?: boolean; // Nouveau prop pour contrôler le bouton
-  logoSize?: "small" | "medium" | "large";
+  currentPage?: string;
 }
 
 export default function Layout({ 
@@ -29,60 +28,87 @@ export default function Layout({
   lang, 
   setLang, 
   className = "", 
-  showLogo = true,
-  showNavButton = true, // Par défaut true pour les autres pages
-  logoSize = "medium"
+  currentPage = "/"
 }: LayoutProps) {
-  const [showNav, setShowNav] = useState(false);
-  
-  const logoSizes = {
-    small: { width: 80, height: 40 },
-    medium: { width: 120, height: 60 },
-    large: { width: 160, height: 80 }
-  };
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
     <div className={`${styles.pageLayout} ${className}`} data-lang={lang}>
-      {/* Background conditionnel */}
-      {<Background />}
+      {/* Background */}
+      <Background />
       
       <CustomCursor />
-      <Navbar showNav={showNav} setShowNav={setShowNav} lang={lang} />
-      <LanguageSwitcher lang={lang} setLang={setLang} />
+      
+      {/* Header toujours affiché */}
+      <header className={styles.header}>
+        <div className={styles.headerContainer}>
+          {/* Sélecteur de langue à gauche - on utilise le composant existant */}
+          <div className={styles.headerLeft}>
+            <LanguageSwitcher lang={lang} setLang={setLang} />
+          </div>
 
-      {/* Bouton de navigation optionnel - pour les pages autres que homepage */}
-      {showNavButton && (
-        <button      
-          className={styles.navBtn}
-          aria-label="Menu navigation"
-          onClick={() => setShowNav(prev => !prev)}
-        >
-          <Image 
-            src="/button.png"
-            alt=""
-            width={32}
-            height={32}
-            priority
-            sizes="32px"
-          />
-        </button>
-      )}
+          {/* Logo centré */}
+          <div className={styles.headerCenter}>
+            <Link href="/" className={styles.logoLink}>
+              <Image
+                src="/logo.png"
+                alt="Safe Valley SVE"
+                width={120}
+                height={60}
+                priority
+                className={styles.headerLogo}
+              />
+            </Link>
+          </div>
 
-      {/* Logo optionnel */}
-      {showLogo && (
-        <div className={styles.logoContainer}>
-          <Image
-            src="/logo.png"
-            alt="Safe Valley SVE - Drones autonomes de surveillance"
-            className={styles.logo}
-            width={logoSizes[logoSize].width}
-            height={logoSizes[logoSize].height}
-            priority
-            sizes={`${logoSizes[logoSize].width}px`}
-          />
+          {/* Navigation à droite */}
+          <div className={styles.headerRight}>
+            {/* Navigation desktop */}
+            <nav className={styles.desktopNav}>
+              {navContent.links.map((link) => (
+                <Link
+                  key={link.id}
+                  href={link.id}
+                  className={`${styles.navLink} ${
+                    currentPage === link.id ? styles.navLinkActive : ""
+                  } ${link.id === "/contact" ? styles.navLinkContact : ""}`}
+                >
+                  {lang === "fr" ? link.labelFr : link.labelEn}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Bouton menu mobile */}
+            <button
+              className={styles.mobileMenuBtn}
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              aria-label="Menu mobile"
+            >
+              <span className={`${styles.menuLine} ${showMobileMenu ? styles.menuLine1Active : ""}`} />
+              <span className={`${styles.menuLine} ${showMobileMenu ? styles.menuLine2Active : ""}`} />
+              <span className={`${styles.menuLine} ${showMobileMenu ? styles.menuLine3Active : ""}`} />
+            </button>
+          </div>
         </div>
-      )}
 
+        {/* Menu mobile */}
+        <div className={`${styles.mobileMenu} ${showMobileMenu ? styles.mobileMenuActive : ""}`}>
+          <nav className={styles.mobileNav}>
+            {navContent.links.map((link) => (
+              <Link
+                key={link.id}
+                href={link.id}
+                className={`${styles.mobileNavLink} ${
+                  currentPage === link.id ? styles.mobileNavLinkActive : ""
+                }`}
+                onClick={() => setShowMobileMenu(false)}
+              >
+                {lang === "fr" ? link.labelFr : link.labelEn}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </header>
       <main className={styles.mainContent}>
         {children}
       </main>

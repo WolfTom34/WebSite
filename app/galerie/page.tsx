@@ -15,10 +15,6 @@ interface Video {
   description: string;
   thumbnail: string;
   category?: string;
-  duration?: string;
-  views?: string;
-  date?: string;
-  isNew?: boolean;
 }
 
 // Catégories de vidéos
@@ -38,11 +34,7 @@ export default function VideoGallery() {
   const enrichedVideos = useMemo(() => {
     return videos.map((video: any, index: number) => ({
       ...video,
-      category: ["Démonstrations", "Missions", "Technologies"][index % 3],
-      duration: ["5:42", "8:15", "3:28", "6:30"][index % 4],
-      views: ["2.3k", "5.1k", "1.8k", "3.2k"][index % 4],
-      date: ["Il y a 2 jours", "Il y a 1 semaine", "Il y a 2 semaines", "Il y a 1 mois"][index % 4],
-      isNew: index === 0
+      category: ["Démonstrations", "Missions", "Technologies"][index % 3]
     }));
   }, []);
 
@@ -79,9 +71,6 @@ export default function VideoGallery() {
     const text = `Découvrez cette vidéo : ${video.title}`;
     
     switch(platform) {
-      case 'twitter':
-        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-        break;
       case 'linkedin':
         window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
         break;
@@ -177,16 +166,6 @@ export default function VideoGallery() {
                         loading="lazy" 
                         className={styles.thumbnailImg} 
                       />
-                      {video.isNew && (
-                        <span className={styles.newBadge}>
-                          {lang === "fr" ? "Nouveau" : "New"}
-                        </span>
-                      )}
-                      {video.duration && (
-                        <span className={styles.videoDuration}>
-                          {video.duration}
-                        </span>
-                      )}
                       <div className={styles.play} aria-label="Lire la vidéo">
                         <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
                           <path d="M8 5v14l11-7z" />
@@ -195,13 +174,6 @@ export default function VideoGallery() {
                     </div>
                     <div className={styles.info}>
                       <h2>{video.title}</h2>
-                      {video.views && video.date && (
-                        <div className={styles.videoMeta}>
-                          <span>👁 {video.views} vues</span>
-                          <span>•</span>
-                          <span>{video.date}</span>
-                        </div>
-                      )}
                       <p>{video.description}</p>
                       <button 
                         onClick={() => setLightboxVideo(video)} 
@@ -270,13 +242,6 @@ export default function VideoGallery() {
               
               {/* Boutons de partage */}
               <div className={styles.shareButtons}>
-                <button 
-                  className={styles.shareBtn}
-                  onClick={() => handleShare('twitter', lightboxVideo)}
-                  aria-label="Partager sur Twitter"
-                >
-                  🐦 Twitter
-                </button>
                 <button 
                   className={styles.shareBtn}
                   onClick={() => handleShare('linkedin', lightboxVideo)}

@@ -373,25 +373,6 @@
     margin-left: 4px;
   }
   
-  /* Logo */
-  .logoContainer {
-    position: absolute;
-    top: 20px;
-    left: 46vw;
-    transform: translateX(-50%);
-    z-index: 100;
-  }
-  
-  .heroLogo {
-    filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.2));
-    transition: all 0.3s ease;
-  }
-  
-  .heroLogo:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 6px 30px rgba(255, 255, 255, 0.3));
-  }
-  
   /* Scroll Indicator */
   .scrollIndicator {
     position: absolute;
@@ -667,8 +648,7 @@
       margin-top: 0;
     }
     
-    /* Logo et scroll restent centrés */
-    .logoContainer,
+    /* scroll restent centrés */
     .scrollIndicator {
       left: 50%;
       transform: translateX(-50%);

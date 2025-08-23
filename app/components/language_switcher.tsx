@@ -1,7 +1,7 @@
-// components/language_switcher.tsx - Version modernisée
+// components/language_switcher.tsx - Version adaptée pour le nouveau CSS unifié
 "use client";
 import { useState } from "react";
-import styles from "../styles/language.module.css";
+import styles from "../styles/layout.module.css";
 
 interface Props {
   lang: "fr" | "en";
@@ -22,31 +22,24 @@ export default function LanguageSwitcher({ lang, setLang }: Props) {
   };
 
   return (
-    <>
-      <button
-        onClick={handleSwitch}
-        className={`${styles.switcher} ${isAnimating ? styles.animating : ''}`}
-        aria-label={`Changer la langue vers ${lang === "fr" ? "anglais" : "français"}`}
-        disabled={isAnimating}
-      >
-        <div 
-          className={styles.track}
-          style={{
-            transform: `translateX(${lang === "fr" ? "0" : "28px"})`
-          }}
-        />
-        <span className={`${styles.label} ${lang === "fr" ? styles.active : ''}`}>
-          FR
-        </span>
-        <span className={`${styles.label} ${lang === "en" ? styles.active : ''}`}>
-          EN
-        </span>
-      </button>
-
-      <div
-        className={`${styles.fadeOverlay} ${isAnimating ? styles.fadeActive : ''}`}
-        aria-hidden="true"
+    <button
+      onClick={handleSwitch}
+      className={`${styles.languageSwitcher} ${isAnimating ? styles.languageAnimating : ''}`}
+      aria-label={`Changer la langue vers ${lang === "fr" ? "anglais" : "français"}`}
+      disabled={isAnimating}
+    >
+      <div 
+        className={styles.languageTrack}
+        style={{
+          transform: `translateX(${lang === "fr" ? "0" : "36px"})`
+        }}
       />
-    </>
+      <span className={`${styles.languageLabel} ${lang === "fr" ? styles.languageLabelActive : ''}`}>
+        FR
+      </span>
+      <span className={`${styles.languageLabel} ${lang === "en" ? styles.languageLabelActive : ''}`}>
+        EN
+      </span>
+    </button>
   );
 }

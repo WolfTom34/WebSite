@@ -15,8 +15,6 @@ export default function BlogPage() {
 
   const posts = blogData.posts.map(post => ({
     ...post,
-    title: post.title[lang],
-    excerpt: post.excerpt[lang],
     category: post.category[lang]
   }));
 
@@ -100,7 +98,7 @@ export default function BlogPage() {
                     <div className={styles.postImage}>
                       <Image 
                         src={post.image} 
-                        alt={post.title} 
+                        alt=""
                         width={400} 
                         height={225} 
                         loading="lazy" 
@@ -110,21 +108,6 @@ export default function BlogPage() {
                       <span className={styles.categoryTag}>{post.category}</span>
                     </div>
                     <div className={styles.postContent}>
-                      <header>
-                        <h2>{post.title}</h2>
-                        <div className={styles.postMeta}>
-                          <time dateTime={post.date}>
-                            {new Date(post.date).toLocaleDateString(lang, {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric'
-                            })}
-                          </time>
-                          <span aria-hidden="true">•</span>
-                          <span>{post.readTime}</span>
-                        </div>
-                      </header>
-                      <p>{post.excerpt}</p>
                       <footer className={styles.postFooter}>
                         <a 
                           href={post.linkedinUrl} 
