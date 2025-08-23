@@ -45,7 +45,10 @@ const BackgroundMaterial = shaderMaterial(
       vec2 uv = vUv;
       uv += (mouse - 0.5) * 0.06;
 
-      vec3 baseColor = vec3(0.08,0.08,0.09);
+      // Couleur de base légèrement plus claire avec teinte bleue
+      vec3 baseColor = vec3(0.04, 0.04, 0.06);
+      
+      // Ondes sonar
       float s1 = sonar(uv, vec2(0.3,0.3),0.025,50.0);
       float s2 = sonar(uv, vec2(0.7,0.6),0.02,48.0);
       float s3 = sonar(uv, vec2(0.5,0.8),0.022,52.0);
@@ -53,7 +56,20 @@ const BackgroundMaterial = shaderMaterial(
       float s5 = sonar(uv, vec2(0.8,0.2),0.02,51.0);
 
       float pulse = clamp(s1 + s2 + s3 + s4 + s5, 0.0, 0.6);
-      vec3 pulseColor = vec3(0.18,0.18,0.2);
+      
+      // Couleur des pulses avec gradient bleu -> cyan
+      vec3 pulseColor1 = vec3(0.0, 0.4, 1.0);  // Bleu #0066FF
+      vec3 pulseColor2 = vec3(0.0, 0.83, 1.0); // Cyan #00D4FF
+      
+      // Mix entre les deux couleurs selon l'intensité
+      vec3 pulseColor = mix(pulseColor1, pulseColor2, pulse * 0.5);
+      
+      // Diminuer l'intensité pour garder l'effet subtil
+      pulseColor *= 0.15;
+      
+      // Ajouter un peu de variation selon la position
+      float colorVariation = noise(uv * 10.0 + time * 0.05);
+      pulseColor += vec3(0.0, 0.02, 0.03) * colorVariation;
 
       gl_FragColor = vec4(mix(baseColor, pulseColor, pulse),1.0);
     }
@@ -82,7 +98,6 @@ function BackgroundPlane() {
   return (
     <mesh scale={[2, 2, 1]}>
       <planeGeometry args={[2, 2, 200, 200]} />
-      {/* le shader custom */}
       <backgroundMaterial ref={ref} />
     </mesh>
   );
@@ -90,7 +105,14 @@ function BackgroundPlane() {
 
 export default function Background() {
   return (
-    <Canvas camera={{ position: [0, 0, 1] }} style={{ position: "fixed", zIndex: -10 }}>
+    <Canvas 
+      camera={{ position: [0, 0, 1] }} 
+      style={{ 
+        position: "fixed", 
+        zIndex: -10,
+        background: "#0A0A0F" // Fond légèrement plus clair
+      }}
+    >
       <BackgroundPlane />
     </Canvas>
   );

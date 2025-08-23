@@ -1,7 +1,6 @@
 // components/layout.tsx - Version corrigée
 "use client";
 import { useState, ReactNode } from "react";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import Navbar from "./navbar";
@@ -35,10 +34,6 @@ export default function Layout({
   logoSize = "medium"
 }: LayoutProps) {
   const [showNav, setShowNav] = useState(false);
-  const pathname = usePathname();
-  
-  // Charger Background Three.js uniquement sur homepage
-  const isHomepage = pathname === "/" || pathname === "/en";
   
   const logoSizes = {
     small: { width: 80, height: 40 },
@@ -49,7 +44,7 @@ export default function Layout({
   return (
     <div className={`${styles.pageLayout} ${className}`} data-lang={lang}>
       {/* Background conditionnel */}
-      {isHomepage && <Background />}
+      {<Background />}
       
       <CustomCursor />
       <Navbar showNav={showNav} setShowNav={setShowNav} lang={lang} />

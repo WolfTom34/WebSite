@@ -396,7 +396,7 @@
   .scrollIndicator {
     position: absolute;
     bottom: 40px;
-    left: 47,5vw;
+    left: 47.5vw;
     transform: translateX(-50%);
     background: none;
     border: none;
@@ -664,6 +664,7 @@
     
     .videoContainer {
       max-width: 100%;
+      margin-top: 0;
     }
     
     /* Logo et scroll restent centrés */

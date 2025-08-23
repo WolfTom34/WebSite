@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
 import { useLanguage } from "../hooks/useLanguage";
 import Image from "next/image";
 import videos from "../data/video.json";
@@ -13,13 +14,52 @@ interface Video {
   title: string;
   description: string;
   thumbnail: string;
+  category?: string;
+  duration?: string;
+  views?: string;
+  date?: string;
+  isNew?: boolean;
 }
+
+// Catégories de vidéos
+const categories = {
+  fr: ["Toutes", "Démonstrations", "Missions", "Technologies", "Formations"],
+  en: ["All", "Demonstrations", "Missions", "Technologies", "Training"]
+};
 
 export default function VideoGallery() {
   const { lang, setLang } = useLanguage();
   const [lightboxVideo, setLightboxVideo] = useState<Video | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Toutes");
+  const [isLoading, setIsLoading] = useState(true);
   const currentSEO = videoSEO[lang];
-  const structuredData = generateVideoGallerySchema(videos, lang);
+  
+  // Enrichir les vidéos avec des métadonnées (simulé)
+  const enrichedVideos = useMemo(() => {
+    return videos.map((video: any, index: number) => ({
+      ...video,
+      category: ["Démonstrations", "Missions", "Technologies"][index % 3],
+      duration: ["5:42", "8:15", "3:28", "6:30"][index % 4],
+      views: ["2.3k", "5.1k", "1.8k", "3.2k"][index % 4],
+      date: ["Il y a 2 jours", "Il y a 1 semaine", "Il y a 2 semaines", "Il y a 1 mois"][index % 4],
+      isNew: index === 0
+    }));
+  }, []);
+
+  // Filtrer les vidéos par catégorie
+  const filteredVideos = useMemo(() => {
+    if (selectedCategory === "Toutes" || selectedCategory === "All") {
+      return enrichedVideos;
+    }
+    return enrichedVideos.filter(video => video.category === selectedCategory);
+  }, [selectedCategory, enrichedVideos]);
+
+  const structuredData = generateVideoGallerySchema(filteredVideos, lang);
+
+  useEffect(() => {
+    // Simuler le chargement
+    setTimeout(() => setIsLoading(false), 800);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = lightboxVideo ? "hidden" : "auto";
@@ -33,13 +73,41 @@ export default function VideoGallery() {
     };
   }, [lightboxVideo]);
 
+  // Fonction de partage
+  const handleShare = (platform: string, video: Video) => {
+    const url = `https://www.safevalleysve.com/video/${video.id}`;
+    const text = `Découvrez cette vidéo : ${video.title}`;
+    
+    switch(platform) {
+      case 'twitter':
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        break;
+      case 'linkedin':
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+        break;
+      case 'copy':
+        navigator.clipboard.writeText(url);
+        alert(lang === "fr" ? "Lien copié !" : "Link copied!");
+        break;
+    }
+  };
+
   return (
     <>
       <SEOHead seoData={currentSEO} lang={lang} structuredData={structuredData} pageType="video" />
       <Layout lang={lang} setLang={setLang}>
         <main className={styles.content}>
           <div className="container">
-            <header>
+            <motion.header 
+              className={styles.pageHeader}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className={styles.categoryBadge}>
+                <span>📹</span>
+                <span>{lang === "fr" ? "Galerie Vidéo" : "Video Gallery"}</span>
+              </div>
               <h1>{currentSEO.h1}</h1>
               <p>
                 {lang === "fr" 
@@ -47,35 +115,185 @@ export default function VideoGallery() {
                   : "Discover Safe Valley technology through our video demonstrations: Maverick ecosystem, Hive station, and drone swarms on mission."
                 }
               </p>
-            </header>
-            <section className={styles.grid} aria-label={lang === "fr" ? "Galerie vidéo" : "Video gallery"}>
-              {videos.map((video: Video) => (
-                <article className={`${styles.videoCard} card`} key={video.id}>
-                  <div className={styles.thumbnail} onClick={() => setLightboxVideo(video)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxVideo(video); } }}>
-                    <Image src={video.thumbnail} alt={`Démonstration ${video.title} - Safe Valley`} width={400} height={225} loading="lazy" className={styles.thumbnailImg} />
-                    <div className={styles.play} aria-label="Lire la vidéo">▶</div>
-                  </div>
-                  <div className={styles.info}>
-                    <h2>{video.title}</h2>
-                    <p>{video.description}</p>
-                    <button onClick={() => setLightboxVideo(video)} aria-label={`Regarder ${video.title}`} className={styles.watchBtn}>
-                      {lang === "fr" ? "Regarder" : "Watch"}
-                    </button>
-                  </div>
-                </article>
+            </motion.header>
+
+            {/* Barre de filtres */}
+            <motion.div 
+              className={styles.filterBar}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              {categories[lang].map((category) => (
+                <button
+                  key={category}
+                  className={`${styles.filterBtn} ${selectedCategory === category ? styles.active : ''}`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </button>
               ))}
-            </section>
+            </motion.div>
+
+            {/* Grille de vidéos */}
+            {isLoading ? (
+              <div className={styles.loading}>
+                <div className={styles.loadingSpinner}></div>
+              </div>
+            ) : filteredVideos.length > 0 ? (
+              <motion.section 
+                className={styles.grid} 
+                aria-label={lang === "fr" ? "Galerie vidéo" : "Video gallery"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                {filteredVideos.map((video: Video, index: number) => (
+                  <motion.article 
+                    className={`${styles.videoCard} card`} 
+                    key={video.id}
+                    style={{ '--card-index': index } as any}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                  >
+                    <div 
+                      className={styles.thumbnail} 
+                      onClick={() => setLightboxVideo(video)} 
+                      role="button" 
+                      tabIndex={0} 
+                      onKeyDown={(e) => { 
+                        if (e.key === 'Enter' || e.key === ' ') { 
+                          e.preventDefault(); 
+                          setLightboxVideo(video); 
+                        } 
+                      }}
+                    >
+                      <Image 
+                        src={video.thumbnail} 
+                        alt={`Démonstration ${video.title} - Safe Valley`} 
+                        width={400} 
+                        height={225} 
+                        loading="lazy" 
+                        className={styles.thumbnailImg} 
+                      />
+                      {video.isNew && (
+                        <span className={styles.newBadge}>
+                          {lang === "fr" ? "Nouveau" : "New"}
+                        </span>
+                      )}
+                      {video.duration && (
+                        <span className={styles.videoDuration}>
+                          {video.duration}
+                        </span>
+                      )}
+                      <div className={styles.play} aria-label="Lire la vidéo">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div className={styles.info}>
+                      <h2>{video.title}</h2>
+                      {video.views && video.date && (
+                        <div className={styles.videoMeta}>
+                          <span>👁 {video.views} vues</span>
+                          <span>•</span>
+                          <span>{video.date}</span>
+                        </div>
+                      )}
+                      <p>{video.description}</p>
+                      <button 
+                        onClick={() => setLightboxVideo(video)} 
+                        aria-label={`Regarder ${video.title}`} 
+                        className={styles.watchBtn}
+                      >
+                        <span>{lang === "fr" ? "Regarder" : "Watch"}</span>
+                        <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                          <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </motion.article>
+                ))}
+              </motion.section>
+            ) : (
+              <div className={styles.emptyState}>
+                <h2>{lang === "fr" ? "Aucune vidéo trouvée" : "No videos found"}</h2>
+                <p>
+                  {lang === "fr" 
+                    ? "Essayez de sélectionner une autre catégorie"
+                    : "Try selecting another category"
+                  }
+                </p>
+              </div>
+            )}
           </div>
         </main>
+
+        {/* Lightbox améliorée */}
         {lightboxVideo && (
-          <div className={styles.lightbox} onClick={() => setLightboxVideo(null)} role="dialog" aria-modal="true" aria-labelledby="video-title">
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-              <button className={styles.close} onClick={() => setLightboxVideo(null)} aria-label="Fermer la vidéo">×</button>
-              <iframe src={`https://www.youtube.com/embed/${lightboxVideo.id}?autoplay=1&rel=0`} title={lightboxVideo.title} allow="autoplay; fullscreen" allowFullScreen width="100%" height="400" />
+          <motion.div 
+            className={styles.lightbox} 
+            onClick={() => setLightboxVideo(null)} 
+            role="dialog" 
+            aria-modal="true" 
+            aria-labelledby="video-title"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div 
+              className={styles.modal} 
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <button 
+                className={styles.close} 
+                onClick={() => setLightboxVideo(null)} 
+                aria-label="Fermer la vidéo"
+              >
+                ×
+              </button>
+              <iframe 
+                src={`https://www.youtube.com/embed/${lightboxVideo.id}?autoplay=1&rel=0`} 
+                title={lightboxVideo.title} 
+                allow="autoplay; fullscreen" 
+                allowFullScreen 
+                width="100%" 
+                height="400" 
+              />
               <h3 id="video-title">{lightboxVideo.title}</h3>
               <p>{lightboxVideo.description}</p>
-            </div>
-          </div>
+              
+              {/* Boutons de partage */}
+              <div className={styles.shareButtons}>
+                <button 
+                  className={styles.shareBtn}
+                  onClick={() => handleShare('twitter', lightboxVideo)}
+                  aria-label="Partager sur Twitter"
+                >
+                  🐦 Twitter
+                </button>
+                <button 
+                  className={styles.shareBtn}
+                  onClick={() => handleShare('linkedin', lightboxVideo)}
+                  aria-label="Partager sur LinkedIn"
+                >
+                  💼 LinkedIn
+                </button>
+                <button 
+                  className={styles.shareBtn}
+                  onClick={() => handleShare('copy', lightboxVideo)}
+                  aria-label="Copier le lien"
+                >
+                  🔗 {lang === "fr" ? "Copier le lien" : "Copy link"}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </Layout>
     </>
