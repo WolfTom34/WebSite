@@ -1,187 +1,173 @@
+// components/carousel.tsx - Version améliorée avec préchargement
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import styles from "../styles/carousel.module.css";
 
 const slides = [
-  { id: 1, image: "/slides/1.png", title: "Smart Agriculture" },
-  { id: 2, image: "/slides/2.png", title: "Industrial Inspection" },
-  { id: 3, image: "/slides/3.png", title: "Military & Defense" },
+  { 
+    id: 1, 
+    image: "/slides/1.png", 
+    title: "Agriculture Intelligente",
+    titleEn: "Smart Agriculture",
+    desc: "Surveillance des cultures et détection précoce",
+    descEn: "Crop monitoring and early detection"
+  },
+  { 
+    id: 2, 
+    image: "/slides/2.png", 
+    title: "Inspection Industrielle",
+    titleEn: "Industrial Inspection",
+    desc: "Maintenance prédictive des infrastructures",
+    descEn: "Predictive infrastructure maintenance"
+  },
+  { 
+    id: 3, 
+    image: "/slides/3.png", 
+    title: "Défense & Sécurité",
+    titleEn: "Defense & Security",
+    desc: "Protection périmétrique avancée",
+    descEn: "Advanced perimeter protection"
+  },
 ];
 
 export default function Carousel({ lang }: { lang: "fr" | "en" }) {
-  const [index, setIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    const timer = setInterval(() => setIndex((i) => (i + 1) % slides.length), 6000);
+    if (!isAutoPlaying) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % slides.length);
+    }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isAutoPlaying]);
 
-  const prev = () => setIndex((i) => (i - 1 + slides.length) % slides.length);
-  const next = () => setIndex((i) => (i + 1) % slides.length);
+  const handlePrev = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((i) => (i - 1 + slides.length) % slides.length);
+  };
 
-  // indices for background slides
-  const prevIndex = (index - 1 + slides.length) % slides.length;
-  const nextIndex = (index + 1) % slides.length;
+  const handleNext = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((i) => (i + 1) % slides.length);
+  };
+
+  const handleDotClick = (index: number) => {
+    setIsAutoPlaying(false);
+    setCurrentIndex(index);
+  };
+
+  // Indices pour les slides d'arrière-plan
+  const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+  const nextIndex = (currentIndex + 1) % slides.length;
 
   return (
-    <div>
-      <div className="carousel-container">
-        <div className="carousel-wrapper">
-          <button className="nav left" onClick={prev}>‹</button>
-
-          <div className="carousel-window">
-            {/* blurred background slides with depth */}
-            <div className="bg-slides">
-              <img
-                src={slides[prevIndex].image}
-                alt="prev background"
-                className="bg-img prev"
-              />
-              <img
-                src={slides[nextIndex].image}
-                alt="next background"
-                className="bg-img next"
-              />
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={slides[index].id}
-                className="carousel-slide"
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.8 }}
-              >
-                <img src={slides[index].image} alt="slide" />
-                <div className="caption">
-                  <h3>
-                    {lang === "fr"
-                      ? slides[index].title
-                      : slides[index].title}
-                  </h3>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+    <div className={styles.carouselContainer}>
+      <div className={styles.carouselWrapper}>
+        <div className={styles.carouselWindow}>
+          {/* Images floues en arrière-plan avec profondeur */}
+          <div className={styles.bgSlides}>
+            <img
+              src={slides[prevIndex].image}
+              alt="prev background"
+              className={`${styles.bgImg} ${styles.bgPrev}`}
+            />
+            <img
+              src={slides[nextIndex].image}
+              alt="next background"
+              className={`${styles.bgImg} ${styles.bgNext}`}
+            />
           </div>
 
-          <button className="nav right" onClick={next}>›</button>
+          {/* Slide principal animé */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              className={styles.slideMain}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+            >
+              <img 
+                src={slides[currentIndex].image} 
+                alt={lang === "fr" ? slides[currentIndex].title : slides[currentIndex].titleEn}
+                className={styles.mainImage}
+              />
+              <div className={styles.slideInfo}>
+                <motion.span 
+                  className={styles.slideNumber}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  0{currentIndex + 1} / 0{slides.length}
+                </motion.span>
+                <motion.h3 
+                  className={styles.slideTitle}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {lang === "fr" ? slides[currentIndex].title : slides[currentIndex].titleEn}
+                </motion.h3>
+                <motion.p 
+                  className={styles.slideDesc}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  {lang === "fr" ? slides[currentIndex].desc : slides[currentIndex].descEn}
+                </motion.p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Navigation buttons */}
+        <button 
+          className={`${styles.navButton} ${styles.navPrev}`}
+          onClick={handlePrev}
+          aria-label="Slide précédent"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button 
+          className={`${styles.navButton} ${styles.navNext}`}
+          onClick={handleNext}
+          aria-label="Slide suivant"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+
+        {/* Dots indicator */}
+        <div className={styles.dotsContainer}>
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`${styles.dot} ${index === currentIndex ? styles.dotActive : ''}`}
+              onClick={() => handleDotClick(index)}
+              aria-label={`Aller au slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Progress bar */}
+        <div className={styles.progressBar}>
+          <motion.div 
+            className={styles.progressFill}
+            initial={{ width: "0%" }}
+            animate={{ width: "100%" }}
+            transition={{ duration: 6, ease: "linear" }}
+            key={currentIndex}
+          />
         </div>
       </div>
-
-      <style jsx>{`
-        .carousel-container {
-          width: 90%;
-          max-width: 1000px;
-          margin: 60px auto;
-        }
-
-        .carousel-wrapper {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0 80px;
-        }
-
-        .carousel-window {
-          position: relative;
-          width: 100%;
-          height: 0;
-          padding-bottom: 56.25%;
-          overflow: visible;
-          perspective: 1200px;
-          transform-style: preserve-3d;
-        }
-
-        /* background blurred images with depth perspective */
-        .bg-slides {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 0;
-        }
-
-        .bg-img {
-          position: absolute;
-          top: 50%;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          filter: blur(5px) brightness(1);
-          opacity: 0.5;
-          transform-origin: center center;
-          transition: transform 0.5s ease;
-        }
-
-        .bg-img.prev {
-          transform: translate3d(-100%, -50%, -200px) scale(0.8);
-        }
-
-        .bg-img.next {
-          transform: translate3d(100%, -50%, -200px) scale(0.8);
-        }
-
-        .carousel-slide {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 1;
-          backface-visibility: hidden;
-        }
-
-        .carousel-slide img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          border-radius: 12px;
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .caption {
-          position: absolute;
-          bottom: 20px;
-          left: 30px;
-          color: white;
-          mix-blend-mode: difference;
-        }
-
-        .caption h3 {
-          font-size: 2rem;
-          margin: 0;
-        }
-
-        .nav {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(0, 0, 0, 0.3);
-          border: none;
-          color: white;
-          font-size: 2.5rem;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          cursor: pointer;
-          z-index: 5;
-        }
-
-        .nav.left {
-          left: -60px;
-        }
-
-        .nav.right {
-          right: -60px;
-        }
-
-        .nav:hover {
-          background: rgba(0, 0, 0, 0.6);
-        }
-      `}</style>
     </div>
   );
 }

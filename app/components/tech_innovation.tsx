@@ -1,246 +1,133 @@
-// components/tech_innovation.tsx
+// components/tech_innovation.tsx - Version améliorée
+import { motion } from "framer-motion";
+import styles from "../styles/tech.module.css";
+
 interface TechInnovationProps {
   lang: "fr" | "en";
 }
 
 export default function TechInnovation({ lang }: TechInnovationProps) {
+  const techData = {
+    fr: {
+      title: "Technologies de Pointe",
+      subtitle: "L'écosystème Maverick intègre les dernières avancées en IA et robotique pour une autonomie totale",
+      cards: [
+        {
+          icon: "🤖",
+          title: "Autonomie Complète",
+          desc: "Déploiement automatique en moins de 30 secondes, coordination intelligente d'essaims jusqu'à 8 drones simultanés.",
+          specs: ["45-60 min autonomie", "Portée 10 km", "Homologué DGAC"]
+        },
+        {
+          icon: "🧠",
+          title: "IA Embarquée",
+          desc: "Traitement temps réel des données, détection automatique d'intrusions, reconnaissance de formes et comportements suspects.",
+          specs: ["Vision 4K/thermique", "Détection 300m nuit", "Chiffrement AES-256"]
+        },
+        {
+          icon: "📡",
+          title: "Station Ruche",
+          desc: "Infrastructure automatisée gérant recharge, maintenance, et coordination. Intégration native avec systèmes de sécurité existants.",
+          specs: ["4-8 drones simultanés", "Recharge 35 min", "APIs ouvertes"]
+        }
+      ],
+      cta: {
+        title: "Documentation technique complète",
+        desc: "Accédez aux spécifications détaillées et guides d'intégration",
+        button: "Demander la documentation"
+      }
+    },
+    en: {
+      title: "Cutting-Edge Technologies",
+      subtitle: "The Maverick ecosystem integrates the latest advances in AI and robotics for total autonomy",
+      cards: [
+        {
+          icon: "🤖",
+          title: "Complete Autonomy",
+          desc: "Automatic deployment in under 30 seconds, intelligent swarm coordination up to 8 simultaneous drones.",
+          specs: ["45-60 min autonomy", "10 km range", "DGAC certified"]
+        },
+        {
+          icon: "🧠",
+          title: "Embedded AI",
+          desc: "Real-time data processing, automatic intrusion detection, recognition of suspicious shapes and behaviors.",
+          specs: ["4K/thermal vision", "300m night detection", "AES-256 encryption"]
+        },
+        {
+          icon: "📡",
+          title: "Hive Station",
+          desc: "Automated infrastructure managing charging, maintenance, and coordination. Native integration with existing security systems.",
+          specs: ["4-8 simultaneous drones", "35 min charging", "Open APIs"]
+        }
+      ],
+      cta: {
+        title: "Complete technical documentation",
+        desc: "Access detailed specifications and integration guides",
+        button: "Request documentation"
+      }
+    }
+  };
+
+  const data = techData[lang];
+
   return (
-    <section className="tech-innovation">
-      <div className="container">
-        <header className="tech-header">
-          <h2>
-            {lang === "fr" ? "Innovation technologique" : "Technological innovation"}
-          </h2>
-          <p>
-            {lang === "fr" 
-              ? "L'écosystème Maverick intègre les dernières avancées en intelligence artificielle et robotique pour une autonomie totale."
-              : "The Maverick ecosystem integrates the latest advances in artificial intelligence and robotics for total autonomy."
-            }
-          </p>
-        </header>
+    <section className={styles.techSection}>
+      <div className={styles.container}>
+        <motion.div 
+          className={styles.sectionHeader}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className={styles.sectionBadge}>Innovation</span>
+          <h2 className={styles.sectionTitle}>{data.title}</h2>
+          <p className={styles.sectionSubtitle}>{data.subtitle}</p>
+        </motion.div>
 
-        <div className="tech-grid">
-          <div className="tech-card">
-            <h3>
-              {lang === "fr" ? "Autonomie Complète" : "Complete Autonomy"}
-            </h3>
-            <p>
-              {lang === "fr" 
-                ? "Déploiement automatique en moins de 30 secondes, coordination intelligente d'essaims jusqu'à 8 drones simultanés."
-                : "Automatic deployment in under 30 seconds, intelligent swarm coordination up to 8 simultaneous drones."
-              }
-            </p>
-            <div className="tech-specs">
-              <span>• {lang === "fr" ? "45-60 min autonomie" : "45-60 min autonomy"}</span>
-              <span>• {lang === "fr" ? "Portée 10 km" : "10 km range"}</span>
-              <span>• {lang === "fr" ? "Homologué DGAC" : "DGAC certified"}</span>
-            </div>
-          </div>
-
-          <div className="tech-card">
-            <h3>
-              {lang === "fr" ? "IA Embarquée" : "Embedded AI"}
-            </h3>
-            <p>
-              {lang === "fr" 
-                ? "Traitement temps réel des données, détection automatique d'intrusions, reconnaissance de formes et comportements suspects."
-                : "Real-time data processing, automatic intrusion detection, recognition of suspicious shapes and behaviors."
-              }
-            </p>
-            <div className="tech-specs">
-              <span>• {lang === "fr" ? "Vision 4K/thermique" : "4K/thermal vision"}</span>
-              <span>• {lang === "fr" ? "Détection 300m nuit" : "300m night detection"}</span>
-              <span>• {lang === "fr" ? "Chiffrement AES-256" : "AES-256 encryption"}</span>
-            </div>
-          </div>
-
-          <div className="tech-card">
-            <h3>
-              {lang === "fr" ? "Station Ruche" : "Hive Station"}
-            </h3>
-            <p>
-              {lang === "fr" 
-                ? "Infrastructure automatisée gérant recharge, maintenance, et coordination. Intégration native avec systèmes de sécurité existants."
-                : "Automated infrastructure managing charging, maintenance, and coordination. Native integration with existing security systems."
-              }
-            </p>
-            <div className="tech-specs">
-              <span>• {lang === "fr" ? "4-8 drones simultanés" : "4-8 simultaneous drones"}</span>
-              <span>• {lang === "fr" ? "Recharge 35 min" : "35 min charging"}</span>
-              <span>• {lang === "fr" ? "APIs ouvertes" : "Open APIs"}</span>
-            </div>
-          </div>
+        <div className={styles.techGrid}>
+          {data.cards.map((card, idx) => (
+            <motion.div
+              key={idx}
+              className={styles.techCard}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              viewport={{ once: true }}
+            >
+              <div className={styles.techIcon}>{card.icon}</div>
+              <h3 className={styles.techTitle}>{card.title}</h3>
+              <p className={styles.techDesc}>{card.desc}</p>
+              <ul className={styles.techSpecs}>
+                {card.specs.map((spec, i) => (
+                  <li key={i} className={styles.specItem}>
+                    <span className={styles.specDot}></span>
+                    {spec}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
 
-        <div className="tech-cta">
-          <div className="tech-cta-content">
-            <h3>
-              {lang === "fr" ? "Documentation technique complète" : "Complete technical documentation"}
-            </h3>
-            <p>
-              {lang === "fr" 
-                ? "Accédez aux spécifications détaillées, études de cas et guides d'intégration sous accord de confidentialité."
-                : "Access detailed specifications, case studies and integration guides under confidentiality agreement."
-              }
-            </p>
-            <a href="/contact/" className="tech-cta-button">
-              {lang === "fr" ? "Demander la documentation" : "Request documentation"}
+        <motion.div 
+          className={styles.techCta}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
+          <div className={styles.ctaContent}>
+            <h3>{data.cta.title}</h3>
+            <p>{data.cta.desc}</p>
+            <a href="/contact/" className={styles.ctaButton}>
+              {data.cta.button}
+              <svg className={styles.ctaIcon} viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              </svg>
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
-
-      <style jsx>{`
-        .tech-innovation {
-          padding: 80px 0;
-          background: var(--bg-card);
-          border-top: 1px solid var(--border);
-          border-bottom: 1px solid var(--border);
-        }
-
-        .tech-header {
-          text-align: center;
-          margin-bottom: 50px;
-        }
-
-        .tech-header h2 {
-          font-size: var(--fs-h2);
-          margin-bottom: 16px;
-          font-weight: 600;
-        }
-
-        .tech-header p {
-          max-width: 60ch;
-          margin: 0 auto;
-          opacity: 0.9;
-          font-size: var(--fs-body);
-        }
-
-        .tech-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 30px;
-          margin-bottom: 50px;
-        }
-
-        .tech-card {
-          background: var(--bg-soft);
-          border: 1px solid var(--border-soft);
-          border-radius: 16px;
-          padding: 30px;
-          transition: all 0.3s ease;
-          border-top: 3px solid var(--accent);
-        }
-
-        .tech-card:hover {
-          transform: translateY(-4px);
-          border-color: var(--accent);
-          box-shadow: var(--shadow-glow-sm);
-        }
-
-        .tech-card h3 {
-          font-size: 20px;
-          margin-bottom: 12px;
-          color: var(--accent);
-          font-weight: 600;
-        }
-
-        .tech-card p {
-          margin-bottom: 20px;
-          line-height: 1.6;
-          opacity: 0.9;
-        }
-
-        .tech-specs {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .tech-specs span {
-          font-size: 14px;
-          color: rgba(255, 255, 255, 0.8);
-          padding-left: 8px;
-          position: relative;
-        }
-
-        .tech-specs span::before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 50%;
-          width: 4px;
-          height: 4px;
-          background: var(--accent);
-          border-radius: 50%;
-          transform: translateY(-50%);
-        }
-
-        .tech-cta {
-          text-align: center;
-        }
-
-        .tech-cta-content {
-          background: var(--bg-soft);
-          border: 2px solid var(--border);
-          border-radius: 16px;
-          padding: 30px;
-          max-width: 500px;
-          margin: 0 auto;
-          border-top: 3px solid var(--accent);
-        }
-
-        .tech-cta-content h3 {
-          margin: 0 0 12px;
-          font-size: 20px;
-          color: var(--accent);
-        }
-
-        .tech-cta-content p {
-          margin: 0 0 20px;
-          opacity: 0.9;
-          font-size: 14px;
-        }
-
-        .tech-cta-button {
-          display: inline-block;
-          background: transparent;
-          color: var(--accent);
-          border: 2px solid var(--accent);
-          padding: 12px 24px;
-          border-radius: 10px;
-          text-decoration: none;
-          font-weight: 600;
-          transition: all 0.3s ease;
-        }
-
-        .tech-cta-button:hover {
-          background: var(--accent);
-          color: white;
-          transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-          .tech-innovation {
-            padding: 60px 0;
-          }
-
-          .tech-grid {
-            grid-template-columns: 1fr;
-            gap: 20px;
-          }
-
-          .tech-card {
-            padding: 24px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .tech-innovation {
-            padding: 40px 0;
-          }
-        }
-      `}</style>
     </section>
   );
 }
