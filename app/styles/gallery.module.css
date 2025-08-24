@@ -4,7 +4,7 @@
    CONTENT WRAPPER
    ======================================== */
 .content {
-  padding: 140px 0 80px;
+  padding: 80px 0 80px;
   z-index: 10;
   position: relative;
   min-height: 100vh;
@@ -545,7 +545,7 @@
 
 @media (max-width: 768px) {
   .content {
-    padding: 120px 0 60px;
+    padding: 80px 0 60px;
   }
   
   .content h1 {
@@ -609,7 +609,7 @@
 
 @media (max-width: 480px) {
   .content {
-    padding: 100px 0 40px;
+    padding: 80px 0 40px;
   }
   
   .pageHeader {

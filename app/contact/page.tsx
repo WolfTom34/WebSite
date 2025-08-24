@@ -90,7 +90,7 @@ export default function ContactPage() {
   return (
     <>
       <SEOHead seoData={currentSEO} lang={lang} structuredData={structuredData} />
-      <Layout lang={lang} setLang={setLang}>
+      <Layout lang={lang} setLang={setLang} currentPage="/contact">
         {/* Hero Section avec formulaire */}
         <section className={styles.contactHero}>
           <div className={styles.heroBackground}>

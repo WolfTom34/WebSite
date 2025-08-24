@@ -82,7 +82,7 @@ export default function PartnersPage() {
   return (
     <>
       <SEOHead seoData={currentSEO} lang={lang} structuredData={structuredData} />
-      <Layout lang={lang} setLang={setLang}>
+      <Layout lang={lang} setLang={setLang} currentPage="/partners">
         
         {/* Hero Section */}
         <section className={styles.partnersHero}>

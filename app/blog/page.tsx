@@ -34,7 +34,7 @@ export default function BlogPage() {
         structuredData={structuredData} 
         pageType="article" 
       />
-      <Layout lang={lang} setLang={setLang} className="blog">
+      <Layout lang={lang} setLang={setLang} currentPage="/blog" className="blog">
         <main className={styles.blogContent}>
           <div className="container">
             {/* Header avec animation */}

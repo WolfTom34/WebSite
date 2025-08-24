@@ -1,11 +1,10 @@
-// components/layout.tsx - Version avec Header permanent
+// components/layout.tsx - Version avec Language Switcher en CSS pur
 "use client";
 import { useState, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import CustomCursor from "./custom_cursor";
-import LanguageSwitcher from "./language_switcher";
 import { navContent } from "../data/nav_content";
 import styles from "../styles/layout.module.css";
 
@@ -42,9 +41,37 @@ export default function Layout({
       {/* Header toujours affiché */}
       <header className={styles.header}>
         <div className={styles.headerContainer}>
-          {/* Sélecteur de langue à gauche - on utilise le composant existant */}
+          {/* Language Switcher en CSS pur à gauche */}
           <div className={styles.headerLeft}>
-            <LanguageSwitcher lang={lang} setLang={setLang} />
+            <div className={styles.languageSwitcher}>
+              <input 
+                type="radio" 
+                id="lang-fr" 
+                name="language" 
+                className={styles.langInput}
+                checked={lang === "fr"}
+                onChange={() => setLang("fr")}
+              />
+              <label htmlFor="lang-fr" className={styles.langLabel}>
+                <span className={styles.langFlag}>🇫🇷</span>
+                <span className={styles.langCode}>FR</span>
+              </label>
+              
+              <input 
+                type="radio" 
+                id="lang-en" 
+                name="language" 
+                className={styles.langInput}
+                checked={lang === "en"}
+                onChange={() => setLang("en")}
+              />
+              <label htmlFor="lang-en" className={styles.langLabel}>
+                <span className={styles.langFlag}>🇬🇧</span>
+                <span className={styles.langCode}>EN</span>
+              </label>
+              
+              <div className={styles.langSlider} data-lang={lang} />
+            </div>
           </div>
 
           {/* Logo centré */}
@@ -53,8 +80,8 @@ export default function Layout({
               <Image
                 src="/logo.png"
                 alt="Safe Valley SVE"
-                width={120}
-                height={60}
+                width={160}
+                height={80}
                 priority
                 className={styles.headerLogo}
               />
@@ -69,9 +96,8 @@ export default function Layout({
                 <Link
                   key={link.id}
                   href={link.id}
-                  className={`${styles.navLink} ${
-                    currentPage === link.id ? styles.navLinkActive : ""
-                  } ${link.id === "/contact" ? styles.navLinkContact : ""}`}
+                  className={`${styles.navLink} ${link.id === "/contact" ? styles.navLinkContact : ""}`}
+                  data-active={currentPage === link.id ? "true" : "false"}
                 >
                   {lang === "fr" ? link.labelFr : link.labelEn}
                 </Link>
@@ -92,23 +118,36 @@ export default function Layout({
         </div>
 
         {/* Menu mobile */}
-        <div className={`${styles.mobileMenu} ${showMobileMenu ? styles.mobileMenuActive : ""}`}>
-          <nav className={styles.mobileNav}>
-            {navContent.links.map((link) => (
-              <Link
-                key={link.id}
-                href={link.id}
-                className={`${styles.mobileNavLink} ${
-                  currentPage === link.id ? styles.mobileNavLinkActive : ""
-                }`}
-                onClick={() => setShowMobileMenu(false)}
-              >
-                {lang === "fr" ? link.labelFr : link.labelEn}
-              </Link>
-            ))}
-          </nav>
-        </div>
+        {showMobileMenu && (
+          <>
+            {/* Overlay */}
+            <div 
+              className={styles.mobileMenuOverlay}
+              onClick={() => setShowMobileMenu(false)}
+              style={{ opacity: 1, visibility: 'visible' }}
+            />
+            
+            {/* Menu panel */}
+            <div className={`${styles.mobileMenu} ${styles.mobileMenuActive}`}>
+              <nav className={styles.mobileNav}>
+                {navContent.links.map((link) => (
+                  <Link
+                    key={link.id}
+                    href={link.id}
+                    className={`${styles.mobileNavLink} ${
+                      currentPage === link.id ? styles.mobileNavLinkActive : ""
+                    }`}
+                    onClick={() => setShowMobileMenu(false)}
+                  >
+                    {lang === "fr" ? link.labelFr : link.labelEn}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </>
+        )}
       </header>
+
       <main className={styles.mainContent}>
         {children}
       </main>
@@ -121,7 +160,7 @@ export default function Layout({
           </address>
           <p className={styles.copyright}>
             © {new Date().getFullYear()} Safe Valley - SVE | {" "} 
-            {lang === "fr" ? "Tous droits réservés." : "All Rights Reserved."}
+            {lang === "fr" ? "Tous droits réservés" : "All Rights Reserved"}
           </p>
         </div>
       </footer>

@@ -28,8 +28,7 @@
   left: 0;
   right: 0;
   height: 70px;
-  background: rgba(10, 14, 39, 0.85);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 1000;
@@ -60,86 +59,128 @@
 }
 
 /* ========================================
-   SECTION GAUCHE - LANGUAGE SWITCHER
+   SECTION GAUCHE - LANGUAGE SWITCHER CSS PUR
    ======================================== */
 
 .headerLeft {
   display: flex;
   align-items: center;
-  width: 100px;
+  width: 120px;
 }
 
-/* Language Switcher intégré */
+/* Language Switcher Container */
 .languageSwitcher {
   position: relative;
-  width: 72px;
+  display: flex;
+  align-items: center;
   height: 36px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 18px;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 20px;
+  padding: 3px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .languageSwitcher:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12));
   border-color: rgba(0, 102, 255, 0.3);
-  transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 102, 255, 0.2);
+  transform: scale(1.02);
 }
 
-.languageSwitcher:focus-visible {
+/* Radio inputs cachés */
+.langInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Labels pour les langues */
+.langLabel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.3s ease;
+  border-radius: 17px;
+}
+
+.langLabel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.langFlag {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.langCode {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease;
+}
+
+/* Style quand sélectionné - utilise l'attribut data-lang */
+.langLabel:first-of-type .langCode {
+  color: white;
+}
+
+.languageSwitcher[data-lang="en"] .langLabel:first-of-type .langCode {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.languageSwitcher[data-lang="en"] .langLabel:last-of-type .langCode {
+  color: white;
+}
+
+/* Slider animé */
+.langSlider {
+  position: absolute;
+  width: calc(50% - 3px);
+  height: 30px;
+  background: linear-gradient(135deg, #0066FF, #00D4FF);
+  border-radius: 17px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 2px 8px rgba(0, 102, 255, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  left: 3px;
+  pointer-events: none;
+}
+
+/* Position du slider selon la langue avec data-attribute */
+.langSlider[data-lang="fr"] {
+  transform: translateX(0);
+}
+
+.langSlider[data-lang="en"] {
+  transform: translateX(calc(100% + 3px));
+}
+
+/* Animation au changement */
+.languageSwitcher:has(.langInput:focus-visible) {
   outline: 2px solid #0066FF;
   outline-offset: 3px;
 }
 
-.languageSwitcher:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-.languageTrack {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  background: linear-gradient(135deg, #0066FF, #00D4FF);
-  border-radius: 14px;
-  box-shadow: 
-    0 2px 8px rgba(0, 102, 255, 0.4),
-    inset 0 1px 2px rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.languageLabel {
-  flex: 1;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.4);
-  z-index: 1;
-  transition: color 0.3s ease;
-  user-select: none;
-}
-
-.languageLabelActive {
-  color: white;
-}
-
-.languageAnimating {
-  animation: pulse 0.3s ease;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
+/* Effet de pulse au clic */
+@keyframes langPulse {
+  0% { transform: scale(1); }
   50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.langLabel:active {
+  transform: scale(0.95);
 }
 
 /* ========================================
@@ -166,8 +207,8 @@
 }
 
 .headerLogo {
-  width: 100px !important;
-  height: 50px !important;
+  width: 140px !important;
+  height: 70px !important;
   object-fit: contain;
   filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.1));
 }
@@ -218,11 +259,12 @@
   width: 100%;
 }
 
-.navLinkActive {
+/* Style pour le lien actif avec data-attribute */
+.navLink[data-active="true"] {
   color: #00D4FF;
 }
 
-.navLinkActive::after {
+.navLink[data-active="true"]::after {
   width: 100%;
 }
 
@@ -242,6 +284,12 @@
 
 .navLinkContact:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+  color: white !important;
+}
+
+.navLinkContact[data-active="true"] {
+  background: linear-gradient(135deg, #00D4FF, #0066FF);
   box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
   color: white !important;
 }
@@ -340,7 +388,8 @@
   border-color: rgba(0, 102, 255, 0.2);
 }
 
-.mobileNavLinkActive {
+/* Style pour le lien mobile actif avec data-attribute */
+.mobileNavLink[data-active="true"] {
   background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 212, 255, 0.15));
   color: #00D4FF;
   border-color: rgba(0, 102, 255, 0.3);
@@ -451,17 +500,25 @@
   }
 
   .languageSwitcher {
-    width: 64px;
     height: 32px;
+    padding: 2px;
   }
   
-  .languageTrack {
-    width: 24px;
-    height: 24px;
+  .langLabel {
+    padding: 5px 8px;
   }
-  
-  .languageLabel {
-    font-size: 12px;
+
+  .langFlag {
+    font-size: 14px;
+  }
+
+  .langCode {
+    font-size: 11px;
+  }
+
+  .langSlider {
+    height: 28px;
+    left: 2px;
   }
 
   .headerLogo {
@@ -503,18 +560,26 @@
   }
 
   .languageSwitcher {
-    width: 60px;
     height: 30px;
-    padding: 3px;
+    padding: 2px;
   }
   
-  .languageTrack {
-    width: 22px;
-    height: 22px;
+  .langLabel {
+    padding: 4px 6px;
+    gap: 2px;
   }
-  
-  .languageLabel {
-    font-size: 11px;
+
+  .langFlag {
+    font-size: 14px;
+  }
+
+  .langCode {
+    font-size: 10px;
+  }
+
+  .langSlider {
+    height: 26px;
+    left: 2px;
   }
 
   .headerLogo {

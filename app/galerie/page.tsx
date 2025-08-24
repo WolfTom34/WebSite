@@ -84,7 +84,7 @@ export default function VideoGallery() {
   return (
     <>
       <SEOHead seoData={currentSEO} lang={lang} structuredData={structuredData} pageType="video" />
-      <Layout lang={lang} setLang={setLang}>
+      <Layout lang={lang} setLang={setLang} currentPage="/galerie">
         <main className={styles.content}>
           <div className="container">
             <motion.header 

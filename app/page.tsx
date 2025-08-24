@@ -33,7 +33,7 @@ export default function Page() {
   return (
     <>
       <SEOHead seoData={currentSEO} lang={lang} />
-      <Layout lang={lang} setLang={setLang} showLogo={false} showNavButton={true}>
+      <Layout lang={lang} setLang={setLang} currentPage="/">
         <motion.div 
           className={styles.scrollBar} 
           style={{ scaleX: scrollYProgress }} 
