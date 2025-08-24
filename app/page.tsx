@@ -168,13 +168,6 @@ export default function Page() {
                       <div className={styles.loaderSpinner} />
                     </div>
                   )}
-                  <div className={`${styles.videoOverlay} ${isHovering ? styles.overlayHidden : ''}`}>
-                    <button className={styles.playButton} aria-label="Voir la vidéo">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </button>
-                  </div>
                 </div>
               </motion.div>
             </div>
