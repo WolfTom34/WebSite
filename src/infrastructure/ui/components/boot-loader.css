@@ -1,0 +1,192 @@
+/* --- BOOT LOADER (THE PANEL) --- */
+.boot-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3000;
+    /* Highest priority */
+    background: #020406;
+    /* Deep Void */
+    color: #00D1FF;
+    font-family: 'Rajdhani', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: opacity 0.8s ease-out, visibility 0.8s;
+}
+
+.boot-loader-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* --- LAYOUT GRID --- */
+.boot-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    width: 90%;
+    height: 80%;
+    max-width: 1400px;
+}
+
+/* --- CENTER SPINNER --- */
+.boot-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.spinner-ring {
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(0, 209, 255, 0.2);
+    border-radius: 50%;
+    position: relative;
+    animation: spin 10s linear infinite;
+}
+
+.spinner-ring::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: #00D1FF;
+    box-shadow: 0 0 10px #00D1FF;
+    border-radius: 50%;
+}
+
+.spinner-ring::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    right: 50%;
+    width: 4px;
+    height: 4px;
+    background: #00D1FF;
+    box-shadow: 0 0 10px #00D1FF;
+    border-radius: 50%;
+}
+
+.spinner-label {
+    margin-top: 40px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* --- LEFT CODE SCROLL --- */
+.boot-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 100px;
+    font-size: 10px;
+    opacity: 0.7;
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.code-line {
+    font-family: 'JetBrains Mono', monospace;
+    /* or fallback */
+    color: rgba(0, 209, 255, 0.6);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    animation: fadeIn 0.1s ease-out;
+}
+
+/* --- RIGHT STATUS --- */
+.boot-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding-top: 50px;
+}
+
+.protocol-box {
+    border: 1px solid rgba(0, 209, 255, 0.3);
+    padding: 20px;
+    width: 150px;
+}
+
+.p-label {
+    font-size: 8px;
+    opacity: 0.5;
+    margin-bottom: 5px;
+}
+
+.p-value {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* --- CORNER ACCENTS --- */
+.corner-frame {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(0, 209, 255, 0.2);
+    transition: all 0.5s;
+}
+
+.tl {
+    top: 20px;
+    left: 20px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.tr {
+    top: 20px;
+    right: 20px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.bl {
+    bottom: 20px;
+    left: 20px;
+    border-right: none;
+    border-top: none;
+}
+
+.br {
+    bottom: 20px;
+    right: 20px;
+    border-left: none;
+    border-top: none;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

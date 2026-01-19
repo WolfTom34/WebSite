@@ -1,0 +1,343 @@
+/* --- TRANSMISSION / ENCYCLOPEDIA MODAL --- */
+.transmission-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* --- MAIN CONTAINER --- */
+.transmission-terminal {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: rgba(10, 20, 30, 0.95);
+    border: 1px solid rgba(0, 209, 255, 0.3);
+    box-shadow: 0 0 30px rgba(0, 209, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Corner Accents (Pseudo-borders) */
+    clip-path: polygon(0 0,
+            100% 0,
+            100% 100%,
+            0 100%);
+    transform: scale(0.95);
+    animation: modalBoot 0.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* --- HEADER --- */
+.terminal-header {
+    height: 50px;
+    background: rgba(0, 209, 255, 0.15);
+    /* Muted Teal Header */
+    border-bottom: 1px solid rgba(0, 209, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.terminal-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #00D1FF;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.terminal-title::before {
+    content: "ℹ";
+    /* Icon placeholder */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: #00D1FF;
+    color: #000;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.terminal-close {
+    cursor: pointer;
+    color: #00D1FF;
+    font-size: 20px;
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.terminal-close:hover {
+    opacity: 1;
+    text-shadow: 0 0 10px #00D1FF;
+    transform: rotate(90deg);
+}
+
+/* --- BODY (LIST) --- */
+.terminal-body {
+    padding: 0;
+    /* No padding, list items stretch full width */
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- LIST ITEMS (ENCYCLOPEDIA STYLE) --- */
+.transmission-item {
+    position: relative;
+    /* For corner brackets */
+    display: flex;
+    align-items: center;
+    height: 80px;
+    /* Tall rows */
+    border-bottom: 1px solid rgba(0, 209, 255, 0.15);
+    padding: 0 30px;
+    transition: background 0.3s;
+
+    /* Staggered Entrance Animation */
+    opacity: 0;
+    animation: slideInRight 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+
+.transmission-item:hover {
+    background: rgba(0, 209, 255, 0.05);
+}
+
+.transmission-item:last-child {
+    border-bottom: none;
+}
+
+/* Item Index [ 01 ] */
+.item-index {
+    font-family: 'Rajdhani', monospace;
+    font-size: 18px;
+    color: rgba(0, 209, 255, 0.8);
+    margin-right: 25px;
+    border: 1px solid rgba(0, 209, 255, 0.3);
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Bracket accents around index */
+.item-index::before,
+.item-index::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border: 1px solid #00D1FF;
+    transition: all 0.3s;
+}
+
+.item-index::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.item-index::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+}
+
+.transmission-item:hover .item-index::before {
+    width: 100%;
+    height: 100%;
+    border-color: #00D1FF;
+}
+
+.transmission-item:hover .item-index::after {
+    width: 100%;
+    height: 100%;
+    border-color: #00D1FF;
+}
+
+/* Item Content (Input Area) */
+.item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-label {
+    font-size: 10px;
+    color: rgba(0, 209, 255, 0.5);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.terminal-input {
+    background: transparent;
+    border: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #FFF;
+    width: 100%;
+    outline: none;
+    letter-spacing: 1px;
+}
+
+.terminal-input::placeholder {
+    color: rgba(255, 255, 255, 0.15);
+    text-transform: uppercase;
+}
+
+/* --- ARROW ACTION (Right Side) --- */
+.item-action {
+    color: rgba(0, 209, 255, 0.4);
+    font-size: 24px;
+    transform: rotate(-45deg);
+    /* Arrow Pointing Top-Right like image */
+    transition: all 0.3s;
+}
+
+.transmission-item:hover .item-action {
+    color: #00D1FF;
+    transform: rotate(0deg) scale(1.2);
+    text-shadow: 0 0 8px #00D1FF;
+}
+
+/* --- SEND BUTTON (Special Item) --- */
+.transmission-item.action-row {
+    cursor: pointer;
+    justify-content: center;
+    background: rgba(0, 209, 255, 0.1);
+    border-top: 1px solid #00D1FF;
+}
+
+.transmission-item.action-row:hover {
+    background: rgba(0, 209, 255, 0.2);
+}
+
+.send-label {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #00D1FF;
+}
+
+.transmission-item.action-row.sending .send-label {
+    animation: blink 0.5s infinite;
+}
+
+/* --- SCANNING EFFECT --- */
+.scan-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Thinner Gradient Trail */
+    height: 6px;
+    /* Soft Gradient Trail */
+    background: linear-gradient(to bottom,
+            rgba(0, 209, 255, 0) 0%,
+            rgba(0, 209, 255, 0.1) 50%,
+            rgba(0, 209, 255, 0.5) 100%);
+    box-shadow: 0 0 10px rgba(0, 209, 255, 0.3);
+    z-index: 10;
+    pointer-events: none;
+    animation: scanLoop 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    opacity: 0.5;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalBoot {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scanLoop {
+    0% {
+        top: -10%;
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 110%;
+        opacity: 0;
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* --- SUCCESS STATE --- */
+.success-message {
+    padding: 60px;
+    text-align: center;
+    color: #00D1FF;
+    animation: fadeIn 0.5s ease;
+}
+
+.success-message h2 {
+    font-size: 24px;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #00D1FF;
+}

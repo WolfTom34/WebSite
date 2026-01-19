@@ -1,0 +1,278 @@
+.neural-command-bar {
+    position: fixed;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    /* Dynamic width */
+    max-width: 600px;
+    /* Cap at original width */
+    height: 36px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--primary, #00D1FF);
+    letter-spacing: 0.15em;
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    pointer-events: auto;
+    cursor: default;
+}
+
+.neural-command-bar:hover {
+    width: 95%;
+    max-width: 850px;
+    height: 52px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .neural-command-bar {
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        height: 32px;
+    }
+
+    .neural-command-bar:hover {
+        height: 44px;
+        font-size: 10px;
+    }
+}
+
+.bar-glass {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 6, 8, 0.95);
+    /* Deeper black */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 209, 255, 0.3);
+    /* Subtle all-around border */
+    border-bottom: 2px solid rgba(0, 209, 255, 0.6);
+    clip-path: polygon(0% 0%, 100% 0%, 99% 100%, 1% 100%);
+    /* Sharper taper */
+    z-index: -1;
+    transition: all 0.5s ease;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+}
+
+.neural-command-bar:hover .bar-glass {
+    border-color: rgba(255, 0, 0, 0.4);
+    border-bottom-color: rgba(255, 0, 0, 0.8);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(255, 0, 0, 0.1);
+    background: rgba(12, 1, 1, 0.98);
+}
+
+.bar-content {
+    display: flex;
+    width: 96%;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    transition: all 0.5s ease;
+    height: 100%;
+}
+
+.kolth-branding {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    height: 100%;
+    /* Ensure it takes up the center space fully */
+    flex: 1;
+}
+
+.bar-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Prevent side sections from collapsing and pushing the center off-balance */
+    flex: 1;
+}
+
+.bar-section.left {
+    justify-content: flex-start;
+}
+
+.bar-section.right {
+    justify-content: flex-end;
+}
+
+.bar-section.center {
+    flex: 2;
+    /* Gives center section more space to anchor the branding */
+    justify-content: center;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.system-status .dot {
+    width: 6px;
+    height: 6px;
+    background: #00D1FF;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00D1FF;
+}
+
+.neural-command-bar:hover .system-status .dot {
+    background: #FF0000;
+    box-shadow: 0 0 12px #FF0000;
+    animation: pulse-red 1s infinite alternate;
+}
+
+@keyframes pulse-red {
+    from {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.sector-id {
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 209, 255, 0.5);
+    transition: all 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.kolth-title {
+    font-size: 18px !important;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9), 0 0 5px #FFFFFF;
+}
+
+.toroidal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF0000;
+    filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8));
+}
+
+.toroidal-icon svg g {
+    transform-origin: center;
+}
+
+@keyframes banner-flicker {
+
+    0%,
+    100% {
+        opacity: 0.95;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    52% {
+        opacity: 0.8;
+    }
+
+    54% {
+        opacity: 1;
+    }
+}
+
+.neural-command-bar:hover .sector-id {
+    color: #FF0000;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    transform: scale(1.02);
+}
+
+.system-clock {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    opacity: 0.9;
+    background: rgba(0, 209, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 2px;
+}
+
+.neural-command-bar:hover .system-clock {
+    background: rgba(255, 0, 0, 0.15);
+    color: #FF0000;
+}
+
+.bit-feed {
+    width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0.6;
+    font-size: 10px;
+}
+
+.scrolling-bits {
+    animation: scrollBits 15s linear infinite;
+    display: inline-block;
+    color: #FF0000;
+    font-weight: 700;
+}
+
+@keyframes scrollBits {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Accent Brackets */
+.bar-accent {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 2px solid rgba(0, 209, 255, 0.6);
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+.top-left {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+.top-right {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+
+.bottom-left {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+
+.bottom-right {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+.neural-command-bar:hover .bar-accent {
+    border-color: rgba(255, 0, 0, 0.8);
+    width: 15px;
+    height: 15px;
+}

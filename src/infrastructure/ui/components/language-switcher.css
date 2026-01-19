@@ -1,0 +1,31 @@
+.language-switcher {
+    display: flex;
+    gap: 5px;
+    pointer-events: auto;
+    /* Ensure clickable even if in HUD */
+}
+
+.lang-btn {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #666;
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
+}
+
+.lang-btn:hover {
+    border-color: #00D1FF;
+    color: #00D1FF;
+}
+
+.lang-btn.active {
+    background: rgba(0, 209, 255, 0.1);
+    border-color: #00D1FF;
+    color: #00D1FF;
+    box-shadow: 0 0 10px rgba(0, 209, 255, 0.2);
+    text-shadow: 0 0 5px #00D1FF;
+}

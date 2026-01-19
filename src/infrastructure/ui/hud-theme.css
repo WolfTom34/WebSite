@@ -1,0 +1,428 @@
+/* HUD Theme & Visuals */
+
+/* --- SCREEN FX (Scanlines & Vignette) --- */
+/* STATIC LAYER: Simulation of the physical screen/monitor */
+.hud-screen-fx {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 20;
+    /* Overlay ON TOP of everything (UI + Scene) */
+
+    /* Scanlines */
+    background:
+        repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15) 0px,
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px),
+        /* Vignette */
+        radial-gradient(circle at 50% 50%,
+            transparent 50%,
+            rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* Base Text Styles - TRANSFORMED LAYER */
+.os-hud-container {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--primary);
+    user-select: none;
+    letter-spacing: 0.1em;
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow:
+        0 0 5px rgba(0, 209, 255, 0.5),
+        0 0 10px rgba(0, 209, 255, 0.3);
+}
+
+/* --- COMMON TYPOGRAPHY --- */
+.label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: var(--secondary);
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(0, 209, 255, 0.6);
+    opacity: 0.8;
+}
+
+.data {
+    font-size: 24px;
+    color: var(--primary);
+    font-weight: 600;
+    text-shadow:
+        0 0 10px rgba(0, 209, 255, 0.8),
+        0 0 20px rgba(0, 209, 255, 0.4);
+    line-height: 1;
+}
+
+.legal-notice {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: var(--primary);
+    opacity: 0.75;
+    text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    margin-top: 4px;
+    white-space: nowrap;
+    text-shadow: 0 0 6px rgba(0, 209, 255, 0.4);
+}
+
+/* --- TOP BAR --- */
+.top-bar {
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.2) 20%,
+            rgba(255, 255, 255, 0.2) 80%,
+            transparent 100%);
+}
+
+.top-bar::after {
+    background-color: var(--primary);
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(0, 209, 255, 0.4);
+}
+
+/* BOOT SEQUENCE ANIMATIONS */
+@keyframes scan-red {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.hud-overlay {
+    opacity: 0;
+    transition: opacity 0.2s steps(4);
+}
+
+.hud-overlay.boot-active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Slide Offsets for Animation */
+.hud-overlay.boot-active .top-left {
+    --slide-x: -20px;
+    --slide-y: -20px;
+}
+
+.hud-overlay.boot-active .top-right {
+    --slide-x: 20px;
+    --slide-y: -20px;
+}
+
+.hud-overlay.boot-active .bottom-left {
+    --slide-x: -20px;
+    --slide-y: 20px;
+}
+
+.hud-overlay.boot-active .bottom-right {
+    --slide-x: 20px;
+    --slide-y: 20px;
+}
+
+.hud-overlay.boot-active .hud-corner {
+    animation: bootSlide 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes bootSlide {
+    0% {
+        opacity: 0;
+        transform: translate(var(--slide-x), var(--slide-y));
+        filter: blur(10px);
+    }
+
+    50% {
+        opacity: 0.5;
+        filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+        filter: blur(0);
+    }
+}
+
+/* Brackets Visuals */
+/* Bolder Tactical Brackets */
+/* Bolder Tactical Brackets -- HIGH CONTRAST */
+.hud-corner::before {
+    border: 3px solid rgba(0, 209, 255, 1.0);
+    /* Thicker, fully opaque */
+    box-shadow: 0 0 15px rgba(0, 209, 255, 0.8), inset 0 0 10px rgba(0, 209, 255, 0.4);
+    /* Stronger outer + inner glow */
+    transition: all 0.5s ease;
+    width: 24px !important;
+    /* Slightly larger */
+    height: 24px !important;
+    background: rgba(0, 20, 40, 0.4);
+    /* Subtle backing for the bracket itself */
+}
+
+/* --- GROUPS TEMPLATE (Tactical Panels) --- */
+.hud-group {
+    background: linear-gradient(135deg, rgba(2, 4, 6, 0.85) 0%, rgba(0, 10, 20, 0.95) 100%);
+    /* Much darker, almost opaque */
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(0, 209, 255, 0.3);
+    border-radius: 2px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+    /* Deep shadow */
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Internal Scanlines for HUD Panels */
+.hud-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 209, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hud-group:hover {
+    border-color: rgba(0, 209, 255, 0.6);
+    box-shadow: 0 0 25px rgba(0, 209, 255, 0.25);
+    background: rgba(2, 4, 6, 0.75);
+}
+
+/* --- ANIMATION --- */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+
+    50% {
+        opacity: 0.4;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+}
+
+.status-indicator {
+    background-color: var(--primary, #FFFFFF);
+    border-radius: 50%;
+    animation: blink 3s text-shadow ease-in-out infinite;
+}
+
+/* --- MOBILE THEME OVERRIDES --- */
+@media (max-width: 768px) {
+    .data {
+        font-size: 18px;
+    }
+
+    .label {
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+
+    .hud-group {
+        backdrop-filter: blur(16px);
+        background: rgba(0, 10, 20, 0.7);
+    }
+
+    /* Disable Scanlines on Mobile to save battery/perf */
+    .hud-screen-fx {
+        background: radial-gradient(circle at 50% 50%,
+                transparent 50%,
+                rgba(0, 0, 0, 0.8) 100%);
+    }
+}
+
+/* --- CTA BUTTON (Holographic) --- */
+.cta-button {
+    cursor: pointer;
+    border: 1px solid rgba(0, 209, 255, 0.8);
+    padding: 10px 24px;
+    background: rgba(0, 10, 20, 0.9);
+    color: #FFFFFF;
+    /* White-Hot text for high visibility */
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 15px;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(0, 209, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    text-shadow: 0 0 10px rgba(0, 209, 255, 0.8), 0 0 5px #FFFFFF;
+}
+
+.cta-button:hover {
+    background: rgba(0, 209, 255, 0.3);
+    box-shadow: 0 0 40px rgba(0, 209, 255, 0.8), inset 0 0 20px rgba(0, 209, 255, 0.4);
+    text-shadow: 0 0 15px #FFFFFF, 0 0 30px rgba(0, 209, 255, 1);
+    letter-spacing: 4px;
+    border-color: #FFFFFF;
+}
+
+.cta-button.pulse {
+    animation: ctaPulse 2s infinite;
+}
+
+@keyframes ctaPulse {
+    0% {
+        box-shadow: 0 0 15px 0 rgba(0, 209, 255, 0.6);
+        border-color: rgba(0, 209, 255, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 35px 10px rgba(0, 209, 255, 0.4);
+        border-color: #FFFFFF;
+    }
+
+    100% {
+        box-shadow: 0 0 15px 0 rgba(0, 209, 255, 0.6);
+        border-color: rgba(0, 209, 255, 0.5);
+    }
+}
+
+/* --- GLITCH FX (JUICE) --- */
+/* Base Glitch Animation */
+@keyframes glitch-skew {
+    0% {
+        transform: skew(0deg);
+    }
+
+    10% {
+        transform: skew(-2deg);
+    }
+
+    20% {
+        transform: skew(2deg);
+    }
+
+    30% {
+        transform: skew(0deg);
+    }
+
+    40% {
+        transform: skew(1deg);
+    }
+
+    50% {
+        transform: skew(-1deg);
+    }
+
+    60% {
+        transform: skew(0deg);
+    }
+
+    100% {
+        transform: skew(0deg);
+    }
+}
+
+@keyframes glitch-anim-1 {
+    0% {
+        clip: rect(20px, 9999px, 15px, 0);
+    }
+
+    20% {
+        clip: rect(50px, 9999px, 60px, 0);
+    }
+
+    40% {
+        clip: rect(10px, 9999px, 30px, 0);
+    }
+
+    60% {
+        clip: rect(40px, 9999px, 80px, 0);
+    }
+
+    80% {
+        clip: rect(70px, 9999px, 20px, 0);
+    }
+
+    100% {
+        clip: rect(30px, 9999px, 50px, 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(50px, 9999px, 20px, 0);
+    }
+
+    20% {
+        clip: rect(10px, 9999px, 80px, 0);
+    }
+
+    40% {
+        clip: rect(30px, 9999px, 10px, 0);
+    }
+
+    60% {
+        clip: rect(60px, 9999px, 50px, 0);
+    }
+
+    80% {
+        clip: rect(20px, 9999px, 70px, 0);
+    }
+
+    100% {
+        clip: rect(80px, 9999px, 30px, 0);
+    }
+}
+
+/* Interactive Glitch Class */
+.hud-group:hover .data,
+.cta-button:hover {
+    position: relative;
+    animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    color: #FFFFFF;
+    /* Flash White on Glitch */
+    text-shadow: 2px 0 #FF0000, -2px 0 #00D1FF;
+    /* Chromatic Split */
+}
+
+/* Pseudo-elements for the Clip Glitch (The "Tearing") */
+.hud-group:hover .data::before,
+.cta-button:hover::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    text-shadow: -2px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.hud-group:hover .data::after,
+.cta-button:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    text-shadow: -2px 0 #00fff9;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}

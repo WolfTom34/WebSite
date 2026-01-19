@@ -1,0 +1,43 @@
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.partner-card {
+    display: block;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.partner-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: #FFFFFF;
+}
+
+.partner-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.4rem;
+    margin: 0 0 5px 0;
+    letter-spacing: 1px;
+}
+
+.partner-role {
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.8rem;
+    color: #A0A0A0;
+    /* Soft Silver */
+    margin-bottom: 10px;
+}
+
+.partner-desc {
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}

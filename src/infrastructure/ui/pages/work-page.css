@@ -1,0 +1,117 @@
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    /* Ice White Tint */
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.id-tag {
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.8rem;
+    color: #666;
+    letter-spacing: 2px;
+}
+
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px currentColor;
+    background: currentColor;
+}
+
+.status-dot.on {
+    color: #00FF41;
+}
+
+.status-dot.off {
+    color: #FFD700;
+}
+
+.fleet-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.unit-footer {
+    margin-top: 20px;
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.8rem;
+    color: #666;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+}
+
+.project-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.tech-stack {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tech-tag {
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.75rem;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.requisition-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.requisition-btn:hover {
+    background: #FFFFFF;
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
