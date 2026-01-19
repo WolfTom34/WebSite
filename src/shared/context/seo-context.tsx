@@ -7,9 +7,9 @@ interface SEOState {
 }
 
 const defaultState: SEOState = {
-    title: "Orbital OS",
-    description: "Advanced Robotics & Defense Systems",
-    setSEO: () => { }
+    title: 'Orbital OS',
+    description: 'Advanced Robotics & Defense Systems',
+    setSEO: () => {}
 };
 
 export const SEOContext = createContext<SEOState>(defaultState);
@@ -24,9 +24,7 @@ export const SEOProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <SEOContext.Provider value={{ title, description, setSEO }}>
-            {children}
-        </SEOContext.Provider>
+        <SEOContext.Provider value={{ title, description, setSEO }}>{children}</SEOContext.Provider>
     );
 };
 

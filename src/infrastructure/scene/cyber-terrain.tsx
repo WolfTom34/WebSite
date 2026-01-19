@@ -1,24 +1,26 @@
-
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import vertexShader from './shaders/CyberTerrain.vert?raw';
 import fragmentShader from './shaders/CyberTerrain.frag?raw';
-import { THEME } from '../../shared/constants/theme';
+
 
 export const CyberTerrain = () => {
     const meshRef = useRef<THREE.Mesh>(null);
 
     // Uniforms
-    const uniforms = useMemo(() => ({
-        uTime: { value: 0 },
-        uScrollSpeed: { value: 2.0 }, // Flight speed
-        uTerrainHeight: { value: 4.5 }, // Reduced height for gentler inclination
-        uColorGrid: { value: new THREE.Color('#00D1FF') }, // Cyan
-        uGridThickness: { value: 0.05 },
-        uMouse: { value: new THREE.Vector3(0, 0, 0) }, // Added for interaction
-        uVelocity: { value: new THREE.Vector2(0, 0) }, // Added for interaction
-    }), []);
+    const uniforms = useMemo(
+        () => ({
+            uTime: { value: 0 },
+            uScrollSpeed: { value: 2.0 }, // Flight speed
+            uTerrainHeight: { value: 4.5 }, // Reduced height for gentler inclination
+            uColorGrid: { value: new THREE.Color('#00D1FF') }, // Cyan
+            uGridThickness: { value: 0.05 },
+            uMouse: { value: new THREE.Vector3(0, 0, 0) }, // Added for interaction
+            uVelocity: { value: new THREE.Vector2(0, 0) } // Added for interaction
+        }),
+        []
+    );
 
     const lastMouse = useRef(new THREE.Vector2(0, 0));
 
@@ -40,7 +42,7 @@ export const CyberTerrain = () => {
 
             // Pass Uniforms
             // We map Y screen coord to Z world coord because terrain is rotated
-            // But wait, the terrain rotation handles that? 
+            // But wait, the terrain rotation handles that?
             // In vertex shader 'position' is local.
             // Let's pass the raw "World at Z=0" coordinates and let the shader solve the distance.
             material.uniforms.uMouse.value.set(x, y, 0);

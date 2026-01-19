@@ -30,8 +30,8 @@ Object.defineProperty(window, 'matchMedia', {
     value: function () {
         return {
             matches: false,
-            addListener: function () { },
-            removeListener: function () { }
+            addListener: function () {},
+            removeListener: function () {}
         };
     }
 });

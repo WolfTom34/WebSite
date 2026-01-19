@@ -4,20 +4,20 @@ import { MiniLatticeWidget } from './mini-lattice-widget';
 import './boot-loader.css';
 
 const CODE_SNIPPETS = [
-    "INITIALIZING CORE LATTICE...",
-    "LOADING NEURAL PHYSICS MODULE...",
-    "HANDSHAKE PROTOCOL: ACCEPTED",
-    "DECRYPTING SECURE SECTOR 04...",
-    "MOUNTING ATMOSPHERE LAYERS...",
-    "CHECKING PERIPHERAL VISION...",
-    "CALIBRATING GYROSCOPE...",
-    "ESTABLISHING UPLINK...",
-    "SYSTEM OPTIMIZATION: 98%",
-    "RENDER PIPELINE: ACTIVE",
-    "LOADING ASSETS: [TEXTURES, MESHES, SOUNDS]",
-    "BUFFER CLEARED.",
-    "EXECUTING MAIN LOOP...",
-    "WELCOME COMMANDER."
+    'INITIALIZING CORE LATTICE...',
+    'LOADING NEURAL PHYSICS MODULE...',
+    'HANDSHAKE PROTOCOL: ACCEPTED',
+    'DECRYPTING SECURE SECTOR 04...',
+    'MOUNTING ATMOSPHERE LAYERS...',
+    'CHECKING PERIPHERAL VISION...',
+    'CALIBRATING GYROSCOPE...',
+    'ESTABLISHING UPLINK...',
+    'SYSTEM OPTIMIZATION: 98%',
+    'RENDER PIPELINE: ACTIVE',
+    'LOADING ASSETS: [TEXTURES, MESHES, SOUNDS]',
+    'BUFFER CLEARED.',
+    'EXECUTING MAIN LOOP...',
+    'WELCOME COMMANDER.'
 ];
 
 export const BootLoader: React.FC = () => {
@@ -34,7 +34,7 @@ export const BootLoader: React.FC = () => {
         let index = 0;
         const interval = setInterval(() => {
             if (index < CODE_SNIPPETS.length) {
-                setLines(prev => [...prev.slice(-15), CODE_SNIPPETS[index]]);
+                setLines((prev) => [...prev.slice(-15), CODE_SNIPPETS[index]]);
                 index++;
             }
         }, 100); // Speed of scroll
@@ -64,7 +64,8 @@ export const BootLoader: React.FC = () => {
                 <div className="boot-center">
                     <div className="spinner-ring" />
                     <div className="spinner-label">
-                        TRAVEL ARRANGEMENTS IN PROGRESS<br />
+                        TRAVEL ARRANGEMENTS IN PROGRESS
+                        <br />
                         SYSTEM STATUS CHECKING
                     </div>
                 </div>
@@ -75,11 +76,22 @@ export const BootLoader: React.FC = () => {
                         <div className="p-label">PROTOCOL</div>
                         <div className="p-value">453.541.2090</div>
                     </div>
-                    <div className="protocol-box" style={{ marginTop: '20px', borderColor: 'rgba(0, 209, 255, 0.1)' }}>
+                    <div
+                        className="protocol-box"
+                        style={{ marginTop: '20px', borderColor: 'rgba(0, 209, 255, 0.1)' }}
+                    >
                         <div className="p-label">MEMORY</div>
                         <div className="p-value">16.0 EB</div>
                     </div>
-                    <div className="protocol-box" style={{ marginTop: 'auto', border: 'none', display: 'flex', justifyContent: 'center' }}>
+                    <div
+                        className="protocol-box"
+                        style={{
+                            marginTop: 'auto',
+                            border: 'none',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}
+                    >
                         <MiniLatticeWidget />
                     </div>
                 </div>

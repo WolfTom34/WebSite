@@ -5,13 +5,13 @@ export const THEME = {
         PLASMA_BLUE: '#00D1FF',
         SPACE_GRAY: '#1A1A1A',
         THERMAL_GOLD: 'rgba(255, 215, 0, 0.15)', // 15% opacity as per Master Guideline
-        CRIMSON_ALERT: '#FF3E3E', // High-visibility tactical red
+        CRIMSON_ALERT: '#FF3E3E' // High-visibility tactical red
     },
     FONTS: {
-        PRIMARY: 'TT Octosquares Trial Thin',
+        PRIMARY: 'TT Octosquares Trial Thin'
     },
     RENDERING: {
         LINE_WIDTH: 0.5,
-        TARGET_FPS: 60,
+        TARGET_FPS: 60
     }
 } as const;

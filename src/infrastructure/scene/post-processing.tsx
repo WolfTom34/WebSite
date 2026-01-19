@@ -20,13 +20,10 @@ export const PostProcessing = ({ tier }: PostProcessingProps) => {
         <EffectComposer enableNormalPass={false}>
             {/* TIER 3 (ULTRA) ONLY: Depth of Field */}
             {tier === 'ULTRA' ? (
-                <DepthOfField
-                    target={[0, 0, 0]}
-                    focalLength={0.02}
-                    bokehScale={0}
-                    height={480}
-                />
-            ) : <group />}
+                <DepthOfField target={[0, 0, 0]} focalLength={0.02} bokehScale={0} height={480} />
+            ) : (
+                <group />
+            )}
 
             {/* TIER 2 & 3: Standard Bloom. TIER 1 (ECO): Substantial reduction */}
             <Bloom
@@ -39,17 +36,15 @@ export const PostProcessing = ({ tier }: PostProcessingProps) => {
             {/* PERFORMANCE: Disable Noise & Aberration on ECO tier */}
             {tier !== 'ECO' ? (
                 <>
-                    <Noise
-                        opacity={0.01}
-                        blendFunction={BlendFunction.OVERLAY}
-                        premultiply
-                    />
+                    <Noise opacity={0.01} blendFunction={BlendFunction.OVERLAY} premultiply />
                     <ChromaticAberration
                         blendFunction={BlendFunction.NORMAL}
                         offset={new THREE.Vector2(0.001, 0.001)}
                     />
                 </>
-            ) : <group />}
+            ) : (
+                <group />
+            )}
         </EffectComposer>
     );
 };

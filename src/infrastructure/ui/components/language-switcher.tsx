@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useLanguage } from '../../../shared/context/language-context';
 import { Language } from '../../../shared/i18n/translations';

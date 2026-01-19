@@ -4,7 +4,8 @@ import { useFPSMonitor } from './use-fps-monitor';
 
 // Mock useFrame since we are testing outside Canvas
 vi.mock('@react-three/fiber', () => ({
-    useFrame: (callback: (state: unknown, delta: number) => void) => callback({ clock: { elapsedTime: 100 } }, 0.016),
+    useFrame: (callback: (state: unknown, delta: number) => void) =>
+        callback({ clock: { elapsedTime: 100 } }, 0.016)
 }));
 
 describe('useFPSMonitor', () => {

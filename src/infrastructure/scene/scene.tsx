@@ -15,9 +15,8 @@ import { SEOContext } from '../../shared/context/seo-context';
 import { CyberTerrain } from './cyber-terrain';
 import { CursorLight } from './lighting/cursor-light';
 
-
 const FPSDisplayEdge = () => {
-    const fps = useFPSMonitor();
+    useFPSMonitor();
     return null; // Hidden for now, but monitoring active
 };
 
@@ -33,7 +32,7 @@ export const Scene = ({ children }: { children: React.ReactNode }) => {
     );
 
     const audioCheck = React.useContext(GlobalAudioContext);
-    console.log("SCENE DEBUG: Audio Context Value:", audioCheck);
+    console.log('SCENE DEBUG: Audio Context Value:', audioCheck);
 
     const tier = useDeviceTier();
 
@@ -44,8 +43,8 @@ export const Scene = ({ children }: { children: React.ReactNode }) => {
                 dpr={tier === 'ECO' ? 1 : [1, 2]} // Lock 1x res on Mobile
                 gl={{
                     antialias: true,
-                    powerPreference: "high-performance",
-                    alpha: false,
+                    powerPreference: 'high-performance',
+                    alpha: false
                 }}
                 camera={{ position: [0, 10, 160], fov: 65 }}
                 onCreated={({ gl }) => {

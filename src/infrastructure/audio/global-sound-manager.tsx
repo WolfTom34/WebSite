@@ -17,7 +17,7 @@ export const GlobalSoundManager = () => {
 
             // Auto-play attempt if not muted
             if (!isMuted && ambientRef.current.paused) {
-                ambientRef.current.play().catch(e => console.log("Audio Autoplay prevented:", e));
+                ambientRef.current.play().catch((e) => console.log('Audio Autoplay prevented:', e));
             } else if (isMuted) {
                 ambientRef.current.pause();
             }
@@ -30,7 +30,7 @@ export const GlobalSoundManager = () => {
         if (clickRef.current && !isMuted) {
             clickRef.current.currentTime = 0;
             clickRef.current.volume = volume;
-            clickRef.current.play().catch(() => { });
+            clickRef.current.play().catch(() => {});
         }
     }, [location, isMuted, volume]);
 
@@ -39,17 +39,8 @@ export const GlobalSoundManager = () => {
             {/* Hidden Audio Elements */}
             <Html>
                 <div style={{ display: 'none' }}>
-                    <audio
-                        ref={ambientRef}
-                        src="/audio/ambient.mp3"
-                        loop
-                        crossOrigin="anonymous"
-                    />
-                    <audio
-                        ref={clickRef}
-                        src="/audio/click.mp3"
-                        crossOrigin="anonymous"
-                    />
+                    <audio ref={ambientRef} src="/audio/ambient.mp3" loop crossOrigin="anonymous" />
+                    <audio ref={clickRef} src="/audio/click.mp3" crossOrigin="anonymous" />
                 </div>
             </Html>
         </group>

@@ -9,13 +9,15 @@
     /* Highest priority */
     background: #020406;
     /* Deep Void */
-    color: #00D1FF;
+    color: #00d1ff;
     font-family: 'Rajdhani', monospace;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    transition: opacity 0.8s ease-out, visibility 0.8s;
+    transition:
+        opacity 0.8s ease-out,
+        visibility 0.8s;
 }
 
 .boot-loader-overlay.hidden {
@@ -58,8 +60,8 @@
     left: 50%;
     width: 4px;
     height: 4px;
-    background: #00D1FF;
-    box-shadow: 0 0 10px #00D1FF;
+    background: #00d1ff;
+    box-shadow: 0 0 10px #00d1ff;
     border-radius: 50%;
 }
 
@@ -70,8 +72,8 @@
     right: 50%;
     width: 4px;
     height: 4px;
-    background: #00D1FF;
-    box-shadow: 0 0 10px #00D1FF;
+    background: #00d1ff;
+    box-shadow: 0 0 10px #00d1ff;
     border-radius: 50%;
 }
 

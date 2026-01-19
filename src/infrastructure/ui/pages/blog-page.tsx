@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { OSWindow } from '../layout/os-window';
 import './blog-page.css';

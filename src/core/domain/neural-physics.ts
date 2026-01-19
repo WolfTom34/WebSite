@@ -3,7 +3,7 @@ import * as THREE from 'three';
 /**
  * Generates a random point within a defined volumetric sphere.
  * Uses uniform distribution math to avoid clumping at center.
- * 
+ *
  * @param radius Radius of the volume
  * @returns THREE.Vector3
  */

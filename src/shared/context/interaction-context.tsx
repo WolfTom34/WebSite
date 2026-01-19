@@ -6,7 +6,7 @@ export type InteractionMode = 'IDLE' | 'HOVER' | 'CLICK';
 
 export interface HoverTarget {
     position: THREE.Vector3; // World space position
-    width: number;           // For the rect frame
+    width: number; // For the rect frame
     height: number;
 }
 

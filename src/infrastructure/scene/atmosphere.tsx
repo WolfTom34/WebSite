@@ -182,12 +182,15 @@ export const Atmosphere = () => {
         shaderRef.current.uniforms.uOpacity.value = currentOpacity.current;
     });
 
-    const uniforms = useMemo(() => ({
-        uTime: { value: 0 },
-        uMouse: { value: new THREE.Vector3(0, 0, 0) },
-        uVelocity: { value: new THREE.Vector2(0, 0) },
-        uOpacity: { value: 0.0 } // Init invisible
-    }), []);
+    const uniforms = useMemo(
+        () => ({
+            uTime: { value: 0 },
+            uMouse: { value: new THREE.Vector3(0, 0, 0) },
+            uVelocity: { value: new THREE.Vector2(0, 0) },
+            uOpacity: { value: 0.0 } // Init invisible
+        }),
+        []
+    );
 
     return (
         <points>

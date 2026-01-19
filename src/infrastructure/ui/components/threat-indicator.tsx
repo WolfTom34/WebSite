@@ -7,18 +7,15 @@ interface ThreatIndicatorProps {
     subText?: string;
 }
 
-export const ThreatIndicator: React.FC<ThreatIndicatorProps> = ({ 
+export const ThreatIndicator: React.FC<ThreatIndicatorProps> = ({
     isCritical = false,
-    statusText = "THREAT_SCAN: STANDBY",
-    subText = "CLEAN_ENVIRONMENT_DETECTED"
+    statusText = 'THREAT_SCAN: STANDBY'
 }) => {
     return (
         <div className={`threat-indicator ${isCritical ? 'critical' : ''}`}>
             <div className="threat-scanline" />
-            
-            <div className="threat-icon-wrapper">
-                {isCritical ? '!' : 'OK'}
-            </div>
+
+            <div className="threat-icon-wrapper">{isCritical ? '!' : 'OK'}</div>
 
             <div className="threat-text">
                 <span className="threat-label">

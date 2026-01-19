@@ -16,7 +16,7 @@ export const useBootSequence = () => useContext(BootSequenceContext);
 export const BootSequenceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [stage, setStage] = useState<BootStage>('VOID');
 
-    // Animation Values (could be driven by useSpring in components, 
+    // Animation Values (could be driven by useSpring in components,
     // but simple state triggers are enough for the orchestrator)
     const [latticeVisible, setLatticeVisible] = useState(false);
     const [atmosphereVisible, setAtmosphereVisible] = useState(false);
@@ -51,12 +51,14 @@ export const BootSequenceProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }, []);
 
     return (
-        <BootSequenceContext.Provider value={{
-            stage,
-            latticeOpacity: latticeVisible ? 1 : 0,
-            atmosphereOpacity: atmosphereVisible ? 1 : 0,
-            isHudActive: hudActive
-        }}>
+        <BootSequenceContext.Provider
+            value={{
+                stage,
+                latticeOpacity: latticeVisible ? 1 : 0,
+                atmosphereOpacity: atmosphereVisible ? 1 : 0,
+                isHudActive: hudActive
+            }}
+        >
             {children}
         </BootSequenceContext.Provider>
     );

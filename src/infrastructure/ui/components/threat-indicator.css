@@ -20,17 +20,23 @@
 .threat-indicator:hover {
     border-color: rgba(255, 62, 62, 0.8);
     background: rgba(12, 1, 1, 0.98);
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(255, 0, 0, 0.1);
+    box-shadow:
+        0 0 25px rgba(255, 0, 0, 0.3),
+        inset 0 0 15px rgba(255, 0, 0, 0.1);
 }
 
 .threat-indicator.critical {
     animation: threat-vibrate 0.1s infinite alternate;
-    border-color: #FF0000;
+    border-color: #ff0000;
 }
 
 @keyframes threat-vibrate {
-    from { transform: translate(0, 0); }
-    to { transform: translate(1px, 1px); }
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(1px, 1px);
+    }
 }
 
 .threat-scanline {
@@ -45,8 +51,12 @@
 }
 
 @keyframes threat-scan {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .threat-icon-wrapper {
@@ -55,18 +65,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #FF0000;
+    border: 2px solid #ff0000;
     border-radius: 50%;
     font-size: 18px;
-    color: #FF0000;
+    color: #ff0000;
     font-weight: 700;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     animation: threat-blink 2s infinite;
 }
 
 @keyframes threat-blink {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.9); }
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(0.9);
+    }
 }
 
 .threat-text {
@@ -76,7 +93,7 @@
 
 .threat-label {
     font-size: 10px;
-    color: #FF0000;
+    color: #ff0000;
     letter-spacing: 2px;
     font-weight: 900;
     text-transform: uppercase;
@@ -84,7 +101,7 @@
 
 .threat-status {
     font-size: 14px;
-    color: #FFFFFF;
+    color: #ffffff;
     letter-spacing: 1px;
     text-transform: uppercase;
     font-weight: 600;
@@ -101,10 +118,30 @@
     transition: all 0.5s ease;
 }
 
-.threat-accent.top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
-.threat-accent.top-right { top: 0; right: 0; border-left: none; border-bottom: none; }
-.threat-accent.bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
-.threat-accent.bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
+.threat-accent.top-left {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+.threat-accent.top-right {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+.threat-accent.bottom-left {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+.threat-accent.bottom-right {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
 
 .threat-indicator:hover .threat-accent {
     width: 15px;

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { OSWindow } from '../layout/os-window';
 import './gallery-page.css';
@@ -28,19 +27,35 @@ export const GalleryPage = () => {
                     <div className="caption">{t('gallery.captions.video_uplink')}</div>
                 </div>
                 <div className="gallery-item">
-                    <img src="/assets/images/gallery_uav_spectre.png" alt="UAV Spectre" className="gallery-image" />
+                    <img
+                        src="/assets/images/gallery_uav_spectre.png"
+                        alt="UAV Spectre"
+                        className="gallery-image"
+                    />
                     <div className="caption">{t('gallery.captions.uav')}</div>
                 </div>
                 <div className="gallery-item">
-                    <img src="/assets/images/gallery_ugv_grizzly.png" alt="UGV Grizzly" className="gallery-image" />
+                    <img
+                        src="/assets/images/gallery_ugv_grizzly.png"
+                        alt="UGV Grizzly"
+                        className="gallery-image"
+                    />
                     <div className="caption">{t('gallery.captions.ugv')}</div>
                 </div>
                 <div className="gallery-item">
-                    <img src="/assets/images/gallery_umv_abyss.png" alt="UMV Abyss" className="gallery-image" />
+                    <img
+                        src="/assets/images/gallery_umv_abyss.png"
+                        alt="UMV Abyss"
+                        className="gallery-image"
+                    />
                     <div className="caption">{t('gallery.captions.umv')}</div>
                 </div>
                 <div className="gallery-item">
-                    <img src="/assets/images/gallery_interface_nexus.png" alt="Interface Nexus" className="gallery-image" />
+                    <img
+                        src="/assets/images/gallery_interface_nexus.png"
+                        alt="Interface Nexus"
+                        className="gallery-image"
+                    />
                     <div className="caption">{t('gallery.captions.interface')}</div>
                 </div>
             </div>

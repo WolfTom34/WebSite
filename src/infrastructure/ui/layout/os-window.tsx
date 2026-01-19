@@ -1,9 +1,9 @@
-import { Html } from "@react-three/drei";
+import { Html } from '@react-three/drei';
 import React from 'react';
 import { useLocation } from 'wouter';
-import { THEME } from '../../../shared/constants/theme';
+
 import './os-window.css'; // We'll create this corresponding CSS
-import { useLanguage } from "../../../shared/context/language-context";
+
 
 interface OSWindowProps {
     title: string;
@@ -12,12 +12,21 @@ interface OSWindowProps {
 
 export const OSWindow: React.FC<OSWindowProps> = ({ title, children }) => {
     const [, setLocation] = useLocation();
-    const { t } = useLanguage();
+
 
     return (
         <group>
             {/* Fullscreen HTML overlay positioned in 3D scene but rendered as DOM */}
-            <Html fullscreen style={{ pointerEvents: 'none', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Html
+                fullscreen
+                style={{
+                    pointerEvents: 'none',
+                    zIndex: 2000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
                 <div className="os-window-container" style={{ pointerEvents: 'auto' }}>
                     {/* Background Reticle */}
                     <div className="os-background-reticle" />
@@ -44,9 +53,7 @@ export const OSWindow: React.FC<OSWindowProps> = ({ title, children }) => {
                     </div>
 
                     {/* Content Area */}
-                    <div className="os-window-content custom-scrollbar">
-                        {children}
-                    </div>
+                    <div className="os-window-content custom-scrollbar">{children}</div>
 
                     {/* Decorative Footer */}
                     <div className="os-window-footer">

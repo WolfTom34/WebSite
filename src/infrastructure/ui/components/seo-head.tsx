@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+
 import { useSEO } from '../../../shared/context/seo-context';
 
 interface SEOHeadProps {
@@ -9,10 +9,7 @@ interface SEOHeadProps {
     type?: 'website' | 'article';
 }
 
-export const SEOHead: React.FC<SEOHeadProps> = ({
-    title,
-    description,
-}) => {
+export const SEOHead: React.FC<SEOHeadProps> = ({ title, description }) => {
     const { setSEO } = useSEO();
 
     useEffect(() => {

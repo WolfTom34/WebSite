@@ -18,7 +18,9 @@ export const useDeviceTier = (): DeviceTier => {
         const handleResize = () => {
             const width = window.innerWidth;
             const ua = navigator.userAgent.toLowerCase();
-            const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
+            const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+                ua
+            );
 
             let newTier: DeviceTier = 'HIGH';
             if (isMobile || width < 768) newTier = 'ECO';

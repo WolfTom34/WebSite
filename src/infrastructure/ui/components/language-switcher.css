@@ -18,14 +18,14 @@
 }
 
 .lang-btn:hover {
-    border-color: #00D1FF;
-    color: #00D1FF;
+    border-color: #00d1ff;
+    color: #00d1ff;
 }
 
 .lang-btn.active {
     background: rgba(0, 209, 255, 0.1);
-    border-color: #00D1FF;
-    color: #00D1FF;
+    border-color: #00d1ff;
+    color: #00d1ff;
     box-shadow: 0 0 10px rgba(0, 209, 255, 0.2);
-    text-shadow: 0 0 5px #00D1FF;
+    text-shadow: 0 0 5px #00d1ff;
 }

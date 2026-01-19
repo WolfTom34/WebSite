@@ -1,10 +1,10 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Text, Line, Sphere } from '@react-three/drei';
+import { Text, Line } from '@react-three/drei';
 import * as THREE from 'three';
 import { THEME } from '../../shared/constants/theme';
 
-import { useLocation } from "wouter";
+import { useLocation } from 'wouter';
 import { useLanguage } from '../../shared/context/language-context';
 import { useGyroscope } from '../../shared/hooks/use-gyroscope';
 import { useDeviceTier } from '../../shared/hooks/use-device-tier';
@@ -20,11 +20,24 @@ interface NavNode {
 const NODES: NavNode[] = [
     { id: '2', label: 'UNIT DATABASE', position: new THREE.Vector3(-25, 15, -5), path: '/work' },
     { id: '3', label: 'OPTIC ARCHIVE', position: new THREE.Vector3(25, 15, 5), path: '/gallery' },
-    { id: '4', label: 'STRATEGIC NETWORK', position: new THREE.Vector3(-18, -12, 0), path: '/partners' },
-    { id: '5', label: 'NEURAL FEED', position: new THREE.Vector3(18, -12, -5), path: '/blog' },
+    {
+        id: '4',
+        label: 'STRATEGIC NETWORK',
+        position: new THREE.Vector3(-18, -12, 0),
+        path: '/partners'
+    },
+    { id: '5', label: 'NEURAL FEED', position: new THREE.Vector3(18, -12, -5), path: '/blog' }
 ];
 
-const StarNode = ({ node, mouseRef, label }: { node: NavNode, mouseRef: React.MutableRefObject<THREE.Vector3>, label: string }) => {
+const StarNode = ({
+    node,
+    mouseRef,
+    label
+}: {
+    node: NavNode;
+    mouseRef: React.MutableRefObject<THREE.Vector3>;
+    label: string;
+}) => {
     const groupRef = useRef<THREE.Group>(null!);
     const [hovered, setHovered] = useState(false);
     const [, setLocation] = useLocation();
@@ -56,15 +69,21 @@ const StarNode = ({ node, mouseRef, label }: { node: NavNode, mouseRef: React.Mu
     return (
         <group
             ref={groupRef}
-            onPointerOver={() => { document.body.style.cursor = 'pointer'; setHovered(true); }}
-            onPointerOut={() => { document.body.style.cursor = 'auto'; setHovered(false); }}
+            onPointerOver={() => {
+                document.body.style.cursor = 'pointer';
+                setHovered(true);
+            }}
+            onPointerOut={() => {
+                document.body.style.cursor = 'auto';
+                setHovered(false);
+            }}
             onClick={() => setLocation(node.path)}
         >
             {/* The Neural Node (Pulsing Diamond Center) */}
             <mesh rotation={[Math.PI / 4, 0, Math.PI / 4]}>
                 <octahedronGeometry args={[0.5, 0]} />
                 <meshBasicMaterial
-                    color={hovered ? "#ff0000" : THEME.COLORS.PLASMA_BLUE}
+                    color={hovered ? '#ff0000' : THEME.COLORS.PLASMA_BLUE}
                     transparent
                     opacity={1.0}
                 />
@@ -76,7 +95,7 @@ const StarNode = ({ node, mouseRef, label }: { node: NavNode, mouseRef: React.Mu
                 <mesh>
                     <planeGeometry args={[label.length * 1.5 + 4, 4.5]} />
                     <meshBasicMaterial
-                        color={hovered ? "#150000" : "#050505"}
+                        color={hovered ? '#150000' : '#050505'}
                         transparent
                         opacity={0.85} // Solid enough to block noise, but remains "smoky"
                         depthWrite={false}
@@ -145,22 +164,38 @@ const StarNode = ({ node, mouseRef, label }: { node: NavNode, mouseRef: React.Mu
                 {hovered && (
                     <group position={[0, 0, 0.3]}>
                         <Line
-                            points={[[-label.length * 0.75 - 3.2, 2.6, 0], [-label.length * 0.75 - 3.2, 3.2, 0], [-label.length * 0.75 - 2.6, 3.2, 0]]}
+                            points={[
+                                [-label.length * 0.75 - 3.2, 2.6, 0],
+                                [-label.length * 0.75 - 3.2, 3.2, 0],
+                                [-label.length * 0.75 - 2.6, 3.2, 0]
+                            ]}
                             color={THEME.COLORS.CRIMSON_ALERT}
                             lineWidth={2.5}
                         />
                         <Line
-                            points={[[label.length * 0.75 + 3.2, 2.6, 0], [label.length * 0.75 + 3.2, 3.2, 0], [label.length * 0.75 + 2.6, 3.2, 0]]}
+                            points={[
+                                [label.length * 0.75 + 3.2, 2.6, 0],
+                                [label.length * 0.75 + 3.2, 3.2, 0],
+                                [label.length * 0.75 + 2.6, 3.2, 0]
+                            ]}
                             color={THEME.COLORS.CRIMSON_ALERT}
                             lineWidth={2.5}
                         />
                         <Line
-                            points={[[-label.length * 0.75 - 3.2, -2.6, 0], [-label.length * 0.75 - 3.2, -3.2, 0], [-label.length * 0.75 - 2.6, -3.2, 0]]}
+                            points={[
+                                [-label.length * 0.75 - 3.2, -2.6, 0],
+                                [-label.length * 0.75 - 3.2, -3.2, 0],
+                                [-label.length * 0.75 - 2.6, -3.2, 0]
+                            ]}
                             color={THEME.COLORS.CRIMSON_ALERT}
                             lineWidth={2.5}
                         />
                         <Line
-                            points={[[label.length * 0.75 + 3.2, -2.6, 0], [label.length * 0.75 + 3.2, -3.2, 0], [label.length * 0.75 + 2.6, -3.2, 0]]}
+                            points={[
+                                [label.length * 0.75 + 3.2, -2.6, 0],
+                                [label.length * 0.75 + 3.2, -3.2, 0],
+                                [label.length * 0.75 + 2.6, -3.2, 0]
+                            ]}
                             color={THEME.COLORS.CRIMSON_ALERT}
                             lineWidth={2.5}
                         />
@@ -196,37 +231,47 @@ export const ConstellationNav = () => {
             inputY = state.mouse.y;
         }
 
-        mouseWorldRef.current.set(
-            (inputX * width) / 2,
-            (inputY * height) / 2,
-            0
-        );
+        mouseWorldRef.current.set((inputX * width) / 2, (inputY * height) / 2, 0);
     });
 
-    const userLinePoints = useMemo(() => {
-        return NODES.map(n => n.position);
-    }, []);
+
 
     const getLabel = (id: string) => {
         switch (id) {
-            case '2': return t('nav.fleet');
-            case '3': return t('nav.gallery');
-            case '4': return t('nav.partners');
-            case '5': return t('nav.blog');
-            default: return 'NODE';
+            case '2':
+                return t('nav.fleet');
+            case '3':
+                return t('nav.gallery');
+            case '4':
+                return t('nav.partners');
+            case '5':
+                return t('nav.blog');
+            default:
+                return 'NODE';
         }
     };
 
     return (
         <group ref={groupRef} position={[0, 10, 15]}>
             {/* Render Nodes */}
-            {NODES.map(node => (
-                <StarNode key={node.id} node={node} mouseRef={mouseWorldRef} label={getLabel(node.id)} />
+            {NODES.map((node) => (
+                <StarNode
+                    key={node.id}
+                    node={node}
+                    mouseRef={mouseWorldRef}
+                    label={getLabel(node.id)}
+                />
             ))}
 
             {/* Connection Lines (Tactical Quad-Loop) */}
             <Line
-                points={[NODES[0].position, NODES[1].position, NODES[3].position, NODES[2].position, NODES[0].position]}
+                points={[
+                    NODES[0].position,
+                    NODES[1].position,
+                    NODES[3].position,
+                    NODES[2].position,
+                    NODES[0].position
+                ]}
                 color={THEME.COLORS.CRIMSON_ALERT}
                 lineWidth={1}
                 dashed={true}

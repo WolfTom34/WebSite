@@ -29,10 +29,14 @@ export const fr = {
         title: 'COMMANDEMENT FLOTTE // BASE DE DONNÉES',
         status_active: 'ACTIF',
         status_prototype: 'PROTOTYPE',
-        uav_01_desc: 'Cellule à conception organique optimisée par IA pour les missions ISR, offrant une endurance de vol sans précédent.',
-        ugv_04_desc: 'Transporteur tactique de charges lourdes doté d\'un châssis génératif pour une efficacité structurelle extrême.',
-        umv_09_desc: 'Unité autonome de plongée profonde utilisant des structures en treillis complexes pour une résistance supérieure à la pression.',
-        uav_x_desc: 'Aethermind // Un système entièrement automatisé coordonnant l\'intelligence de nuée pour un déploiement tactique rapide.'
+        uav_01_desc:
+            'Cellule à conception organique optimisée par IA pour les missions ISR, offrant une endurance de vol sans précédent.',
+        ugv_04_desc:
+            "Transporteur tactique de charges lourdes doté d'un châssis génératif pour une efficacité structurelle extrême.",
+        umv_09_desc:
+            'Unité autonome de plongée profonde utilisant des structures en treillis complexes pour une résistance supérieure à la pression.',
+        uav_x_desc:
+            "Aethermind // Un système entièrement automatisé coordonnant l'intelligence de nuée pour un déploiement tactique rapide."
     },
     gallery: {
         title: 'ARCHIVES SCHÉMATIQUES // SVE',
@@ -56,20 +60,21 @@ export const fr = {
         mountain: {
             name: 'MOUNTAIN',
             role: 'INFRASTRUCTURE IA',
-            desc: 'Pionnier en solutions d\'IA edge et calcul neural haute performance.',
+            desc: "Pionnier en solutions d'IA edge et calcul neural haute performance.",
             url: 'https://www.mountainedge.ai'
         },
         firis: {
             name: 'FIRIS SA',
             role: 'AUTOMATISATION INDUSTRIELLE',
-            desc: 'Spécialisé dans la robotique industrielle avancée et l\'intégration d\'usines intelligentes.',
+            desc: "Spécialisé dans la robotique industrielle avancée et l'intégration d'usines intelligentes.",
             url: 'https://www.firis.lu'
         }
     },
     blog: {
         title: 'TRANSMISSIONS ENTRANTES',
         read_more: 'ACCÉDER AU JOURNAL >',
-        empty_state: 'Rien pour le moment, mais suivez-nous sur LinkedIn pour les dernières mises à jour !',
+        empty_state:
+            'Rien pour le moment, mais suivez-nous sur LinkedIn pour les dernières mises à jour !',
         linkedin_link: 'SUIVEZ-NOUS SUR LINKEDIN',
         linkedin_url: 'https://www.linkedin.com/company/safevalleysve/'
     },

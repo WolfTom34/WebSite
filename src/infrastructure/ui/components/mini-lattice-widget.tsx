@@ -29,13 +29,16 @@ const RotatingLattice = () => {
 export const MiniLatticeWidget = () => {
     return (
         <div style={{ width: '80px', height: '80px', opacity: 0.8 }}>
-            <div style={{
-                width: '100%',
-                height: '100%',
-                background: 'radial-gradient(circle at center, rgba(0, 209, 255, 0.15) 0%, transparent 70%)',
-                borderRadius: '50%', // Keep the round shape for the gradient
-                boxShadow: '0 0 30px rgba(0, 209, 255, 0.3)'
-            }}>
+            <div
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    background:
+                        'radial-gradient(circle at center, rgba(0, 209, 255, 0.15) 0%, transparent 70%)',
+                    borderRadius: '50%', // Keep the round shape for the gradient
+                    boxShadow: '0 0 30px rgba(0, 209, 255, 0.3)'
+                }}
+            >
                 <Canvas
                     gl={{ alpha: true, antialias: true }}
                     camera={{ position: [0, 0, 5], fov: 45 }}

@@ -1,6 +1,6 @@
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Line } from '@react-three/drei';
+
 import * as THREE from 'three';
 import { THEME } from '../../shared/constants/theme';
 import { useBootSequence } from '../../shared/context/boot-sequence-context';
@@ -9,8 +9,7 @@ import { getVolumetricPoint } from '../../core/domain/neural-physics';
 
 import birthVertexShader from '../shaders/birth.vertex.glsl?raw';
 import birthFragmentShader from '../shaders/birth.fragment.glsl?raw';
-import lineVertexShader from '../shaders/line.vertex.glsl?raw';
-import lineFragmentShader from '../shaders/line.fragment.glsl?raw';
+
 
 import { useDeviceTier } from '../../shared/hooks/use-device-tier';
 
@@ -42,14 +41,17 @@ export const CoreLattice = () => {
         return { nodes: points, connections: lines };
     }, [nodeCount]);
 
-    const nodePositions = useMemo(() => new Float32Array(nodes.flatMap(v => [v.x, v.y, v.z])), [nodes]);
+    const nodePositions = useMemo(
+        () => new Float32Array(nodes.flatMap((v) => [v.x, v.y, v.z])),
+        [nodes]
+    );
 
     const shaderRef = useRef<THREE.ShaderMaterial>(null!);
     const groupRef = useRef<THREE.Group>(null!);
     const lastMouse = useRef(new THREE.Vector2(0, 0));
     const { latticeOpacity } = useBootSequence();
 
-    const lineShaderRef = useRef<THREE.ShaderMaterial>(null!);
+
 
     const linesGeometry = useMemo(() => {
         // Flatten connections into a single Float32Array for lineSegments
@@ -100,15 +102,7 @@ export const CoreLattice = () => {
             // Sync lastMouse only once
             // (We set it here, but updateUniforms reads current state)
         }
-        if (lineShaderRef.current) {
-            // Pass same uniforms to lines
-            // We need to pass mouse/velocity again because they are independent shader instances
-            lineShaderRef.current.uniforms.uTime.value = t;
-            lineShaderRef.current.uniforms.uMouse.value.copy(shaderRef.current.uniforms.uMouse.value);
-            lineShaderRef.current.uniforms.uVelocity.value.copy(shaderRef.current.uniforms.uVelocity.value);
-            lineShaderRef.current.uniforms.uProgress.value = shaderRef.current.uniforms.uProgress.value;
-            lineShaderRef.current.uniforms.uOpacity.value = latticeOpacity; // For Fade
-        }
+
 
         // Update mouse ref at end of frame
         const x = (state.mouse.x * state.viewport.width) / 2;
@@ -116,47 +110,50 @@ export const CoreLattice = () => {
         lastMouse.current.set(x, y);
     });
 
-    const uniforms = useMemo(() => ({
-        uTime: { value: 0 },
-        uProgress: { value: 0.0 },
-        uMouse: { value: new THREE.Vector3(0, 0, 0) },
-        uVelocity: { value: new THREE.Vector2(0, 0) },
-        uOpacity: { value: 0 }
-    }), []);
+    const uniforms = useMemo(
+        () => ({
+            uTime: { value: 0 },
+            uProgress: { value: 0.0 },
+            uMouse: { value: new THREE.Vector3(0, 0, 0) },
+            uVelocity: { value: new THREE.Vector2(0, 0) },
+            uOpacity: { value: 0 }
+        }),
+        []
+    );
 
     return (
         <group ref={groupRef} position={[0, 10, 15]}>
             <points>
                 <bufferGeometry>
-                    <bufferAttribute
-                        attach="attributes-position"
-                        args={[nodePositions, 3]}
-                    />
+                    <bufferAttribute attach="attributes-position" args={[nodePositions, 3]} />
                     <bufferAttribute
                         attach="attributes-color"
-                        args={[new Float32Array(nodeCount * 3).fill(0).map((_, i) => {
-                            // Generate color per vertex (r, g, b)
-                            // We need to group by 3 to ensure r,g,b belong to same node
-                            const index = Math.floor(i / 3);
-                            const component = i % 3;
+                        args={[
+                            new Float32Array(nodeCount * 3).fill(0).map((_, i) => {
+                                // Generate color per vertex (r, g, b)
+                                // We need to group by 3 to ensure r,g,b belong to same node
+                                const index = Math.floor(i / 3);
+                                const component = i % 3;
 
-                            // Deterministic random per node for consistency
-                            const rand = Math.sin(index * 12.9898 + 78.233) * 43758.5453;
-                            const r = rand - Math.floor(rand);
+                                // Deterministic random per node for consistency
+                                const rand = Math.sin(index * 12.9898 + 78.233) * 43758.5453;
+                                const r = rand - Math.floor(rand);
 
-                            let c;
-                            if (r > 0.95) {
-                                c = new THREE.Color(THEME.COLORS.CRIMSON_ALERT); // Tactical Red Spikes (5%)
-                            } else if (r > 0.90) {
-                                c = new THREE.Color('#FFFFFF'); // White Hot Highlights (5%)
-                            } else if (r > 0.75) {
-                                c = new THREE.Color('#BD00FF'); // Electric Purple/Neural (15%)
-                            } else {
-                                c = new THREE.Color(THEME.COLORS.PLASMA_BLUE); // Base Blue (75%)
-                            }
+                                let c;
+                                if (r > 0.95) {
+                                    c = new THREE.Color(THEME.COLORS.CRIMSON_ALERT); // Tactical Red Spikes (5%)
+                                } else if (r > 0.9) {
+                                    c = new THREE.Color('#FFFFFF'); // White Hot Highlights (5%)
+                                } else if (r > 0.75) {
+                                    c = new THREE.Color('#BD00FF'); // Electric Purple/Neural (15%)
+                                } else {
+                                    c = new THREE.Color(THEME.COLORS.PLASMA_BLUE); // Base Blue (75%)
+                                }
 
-                            return component === 0 ? c.r : component === 1 ? c.g : c.b;
-                        }), 3]}
+                                return component === 0 ? c.r : component === 1 ? c.g : c.b;
+                            }),
+                            3
+                        ]}
                     />
                 </bufferGeometry>
                 <shaderMaterial
@@ -173,10 +170,7 @@ export const CoreLattice = () => {
             {/* SYNCHRONIZED LINES */}
             <lineSegments>
                 <bufferGeometry>
-                    <bufferAttribute
-                        attach="attributes-position"
-                        args={[linesGeometry, 3]}
-                    />
+                    <bufferAttribute attach="attributes-position" args={[linesGeometry, 3]} />
                 </bufferGeometry>
                 <lineBasicMaterial
                     color={THEME.COLORS.TITANIUM}

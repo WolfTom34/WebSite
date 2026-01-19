@@ -1,28 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 @font-face {
-  font-family: 'TT Octosquares Trial Thin';
-  src: url('/fonts/TT Octosquares Trial Thin.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'TT Octosquares Trial Thin';
+    src: url('/fonts/TT Octosquares Trial Thin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 :root {
-  font-family: 'TT Octosquares Trial Thin', monospace;
-  background-color: #000000;
-  color: #a0a0a0;
-  --primary: #00D1FF;
-  --secondary: #FFFFFF;
+    font-family: 'TT Octosquares Trial Thin', monospace;
+    background-color: #000000;
+    color: #a0a0a0;
+    --primary: #00d1ff;
+    --secondary: #ffffff;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .orbital-os-container {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }

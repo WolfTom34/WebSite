@@ -25,20 +25,22 @@ export const AudioUnlockOverlay: React.FC = () => {
     };
 
     return (
-        <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'rgba(0,0,0,0.9)',
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            fontFamily: 'Rajdhani, sans-serif'
-        }}>
+        <div
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: 'rgba(0,0,0,0.9)',
+                zIndex: 9999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                fontFamily: 'Rajdhani, sans-serif'
+            }}
+        >
             <button
                 onClick={handleUnlock}
                 style={{
@@ -55,13 +57,15 @@ export const AudioUnlockOverlay: React.FC = () => {
             >
                 Initialize System
             </button>
-            <p style={{
-                color: '#B0B0B0',
-                marginTop: '2rem',
-                fontSize: '0.8rem',
-                letterSpacing: '2px',
-                opacity: 0.7
-            }}>
+            <p
+                style={{
+                    color: '#B0B0B0',
+                    marginTop: '2rem',
+                    fontSize: '0.8rem',
+                    letterSpacing: '2px',
+                    opacity: 0.7
+                }}
+            >
                 TAP TO ENGAGE NEURAL LINK
             </p>
         </div>

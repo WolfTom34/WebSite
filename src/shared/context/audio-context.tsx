@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useRef, ReactNode } from 'react';
 
 interface AudioContextType {
     isMuted: boolean;
@@ -30,11 +30,13 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const toggleMute = () => {
-        setIsMuted(prev => !prev);
+        setIsMuted((prev) => !prev);
         if (contextRef.current) {
-            if (!isMuted) { // Muting
+            if (!isMuted) {
+                // Muting
                 contextRef.current.suspend();
-            } else { // Unmuting
+            } else {
+                // Unmuting
                 contextRef.current.resume();
             }
         }
@@ -47,16 +49,18 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    console.log("AudiProvider: Rendered");
+    console.log('AudiProvider: Rendered');
     return (
-        <GlobalAudioContext.Provider value={{
-            isMuted,
-            toggleMute,
-            volume,
-            setVolume,
-            audioContext,
-            resumeAudio
-        }}>
+        <GlobalAudioContext.Provider
+            value={{
+                isMuted,
+                toggleMute,
+                volume,
+                setVolume,
+                audioContext,
+                resumeAudio
+            }}
+        >
             {children}
         </GlobalAudioContext.Provider>
     );
@@ -69,7 +73,7 @@ export const useAudio = () => {
         console.warn('useAudio must be used within an AudioProvider. Using mock context.');
         return {
             isMuted: true,
-            toggleMute: () => console.log("Audio Mock Toggle (Context Missing)"),
+            toggleMute: () => console.log('Audio Mock Toggle (Context Missing)'),
             volume: 0.0,
             setVolume: () => { },
             audioContext: null,

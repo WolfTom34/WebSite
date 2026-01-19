@@ -22,8 +22,8 @@ export const CursorLight = () => {
         <pointLight
             ref={lightRef}
             color={THEME.COLORS.TITANIUM} // White/Blueish tint
-            intensity={5.0}              // Bright enough to cast visible light
-            distance={100}               // Range of influence
+            intensity={5.0} // Bright enough to cast visible light
+            distance={100} // Range of influence
             decay={2}
         />
     );

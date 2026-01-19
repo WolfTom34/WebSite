@@ -14,15 +14,14 @@
 
     /* Scanlines */
     background:
-        repeating-linear-gradient(0deg,
+        repeating-linear-gradient(
+            0deg,
             rgba(0, 0, 0, 0.15) 0px,
             rgba(0, 0, 0, 0.15) 1px,
             transparent 1px,
-            transparent 2px),
-        /* Vignette */
-        radial-gradient(circle at 50% 50%,
-            transparent 50%,
-            rgba(0, 0, 0, 0.7) 100%);
+            transparent 2px
+        ),
+        /* Vignette */ radial-gradient(circle at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 /* Base Text Styles - TRANSFORMED LAYER */
@@ -74,11 +73,13 @@
 
 /* --- TOP BAR --- */
 .top-bar {
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.2) 20%,
-            rgba(255, 255, 255, 0.2) 80%,
-            transparent 100%);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.2) 80%,
+        transparent 100%
+    );
 }
 
 .top-bar::after {
@@ -157,9 +158,11 @@
 /* Bolder Tactical Brackets */
 /* Bolder Tactical Brackets -- HIGH CONTRAST */
 .hud-corner::before {
-    border: 3px solid rgba(0, 209, 255, 1.0);
+    border: 3px solid rgba(0, 209, 255, 1);
     /* Thicker, fully opaque */
-    box-shadow: 0 0 15px rgba(0, 209, 255, 0.8), inset 0 0 10px rgba(0, 209, 255, 0.4);
+    box-shadow:
+        0 0 15px rgba(0, 209, 255, 0.8),
+        inset 0 0 10px rgba(0, 209, 255, 0.4);
     /* Stronger outer + inner glow */
     transition: all 0.5s ease;
     width: 24px !important;
@@ -206,7 +209,6 @@
 
 /* --- ANIMATION --- */
 @keyframes blink {
-
     0%,
     100% {
         opacity: 1;
@@ -220,7 +222,7 @@
 }
 
 .status-indicator {
-    background-color: var(--primary, #FFFFFF);
+    background-color: var(--primary, #ffffff);
     border-radius: 50%;
     animation: blink 3s text-shadow ease-in-out infinite;
 }
@@ -243,9 +245,7 @@
 
     /* Disable Scanlines on Mobile to save battery/perf */
     .hud-screen-fx {
-        background: radial-gradient(circle at 50% 50%,
-                transparent 50%,
-                rgba(0, 0, 0, 0.8) 100%);
+        background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.8) 100%);
     }
 }
 
@@ -255,7 +255,7 @@
     border: 1px solid rgba(0, 209, 255, 0.8);
     padding: 10px 24px;
     background: rgba(0, 10, 20, 0.9);
-    color: #FFFFFF;
+    color: #ffffff;
     /* White-Hot text for high visibility */
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
@@ -267,15 +267,21 @@
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(8px);
-    text-shadow: 0 0 10px rgba(0, 209, 255, 0.8), 0 0 5px #FFFFFF;
+    text-shadow:
+        0 0 10px rgba(0, 209, 255, 0.8),
+        0 0 5px #ffffff;
 }
 
 .cta-button:hover {
     background: rgba(0, 209, 255, 0.3);
-    box-shadow: 0 0 40px rgba(0, 209, 255, 0.8), inset 0 0 20px rgba(0, 209, 255, 0.4);
-    text-shadow: 0 0 15px #FFFFFF, 0 0 30px rgba(0, 209, 255, 1);
+    box-shadow:
+        0 0 40px rgba(0, 209, 255, 0.8),
+        inset 0 0 20px rgba(0, 209, 255, 0.4);
+    text-shadow:
+        0 0 15px #ffffff,
+        0 0 30px rgba(0, 209, 255, 1);
     letter-spacing: 4px;
-    border-color: #FFFFFF;
+    border-color: #ffffff;
 }
 
 .cta-button.pulse {
@@ -290,7 +296,7 @@
 
     50% {
         box-shadow: 0 0 35px 10px rgba(0, 209, 255, 0.4);
-        border-color: #FFFFFF;
+        border-color: #ffffff;
     }
 
     100% {
@@ -392,9 +398,11 @@
 .cta-button:hover {
     position: relative;
     animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-    color: #FFFFFF;
+    color: #ffffff;
     /* Flash White on Glitch */
-    text-shadow: 2px 0 #FF0000, -2px 0 #00D1FF;
+    text-shadow:
+        2px 0 #ff0000,
+        -2px 0 #00d1ff;
     /* Chromatic Split */
 }
 

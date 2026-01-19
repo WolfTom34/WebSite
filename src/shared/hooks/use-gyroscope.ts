@@ -32,9 +32,14 @@ export const useGyroscope = () => {
     }, []);
 
     const requestAccess = async () => {
-        if (typeof (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission === 'function') {
+        if (
+            typeof (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS)
+                .requestPermission === 'function'
+        ) {
             try {
-                const permissionState = await (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission!();
+                const permissionState = await (
+                    DeviceOrientationEvent as unknown as DeviceOrientationEventiOS
+                ).requestPermission!();
                 if (permissionState === 'granted') {
                     setPermissionGranted(true);
                 }

@@ -1,17 +1,17 @@
-import React from "react";
-import "./hud.css";
-import { useUIFPSMonitor } from "../../shared/hooks/use-ui-fps-monitor";
+import React from 'react';
+import './hud.css';
+import { useUIFPSMonitor } from '../../shared/hooks/use-ui-fps-monitor';
 
-import { useBootSequence } from "../../shared/context/boot-sequence-context";
-import { useAudio } from "../../shared/context/audio-context";
-import { LanguageSwitcher } from "./components/language-switcher";
-import { useLanguage } from "../../shared/context/language-context";
-import { useTransmission } from "../../shared/context/transmission-context";
-import { RadarWidget } from "./components/radar-widget";
-import { StatusModule } from "./components/status-module";
-import { MiniLatticeWidget } from "./components/mini-lattice-widget";
-import { NeuralCommandBar } from "./components/neural-command-bar";
-import { ThreatIndicator } from "./components/threat-indicator";
+import { useBootSequence } from '../../shared/context/boot-sequence-context';
+import { useAudio } from '../../shared/context/audio-context';
+import { LanguageSwitcher } from './components/language-switcher';
+import { useLanguage } from '../../shared/context/language-context';
+import { useTransmission } from '../../shared/context/transmission-context';
+import { RadarWidget } from './components/radar-widget';
+import { StatusModule } from './components/status-module';
+import { MiniLatticeWidget } from './components/mini-lattice-widget';
+import { NeuralCommandBar } from './components/neural-command-bar';
+import { ThreatIndicator } from './components/threat-indicator';
 
 export const GamifiedHUD: React.FC = () => {
     const fps = useUIFPSMonitor();
@@ -23,8 +23,10 @@ export const GamifiedHUD: React.FC = () => {
     return (
         <>
             <div className="hud-screen-fx" />
-            <div className={`hud-overlay ${isHudActive ? 'boot-active' : ''}`} style={{ pointerEvents: 'none' }}>
-
+            <div
+                className={`hud-overlay ${isHudActive ? 'boot-active' : ''}`}
+                style={{ pointerEvents: 'none' }}
+            >
                 {/* --- CENTRAL TOP: NEURAL COMMAND BAR --- */}
                 <NeuralCommandBar />
                 {/* --- TOP LEFT: MINI LATTICE --- */}
@@ -32,10 +34,16 @@ export const GamifiedHUD: React.FC = () => {
                     <MiniLatticeWidget />
                 </div>
 
-
-
                 {/* --- TOP RIGHT: STATUS MODULE (Audio) --- */}
-                <div className="hud-corner top-right" style={{ pointerEvents: 'auto', flexDirection: 'column', alignItems: 'flex-end', gap: '10px' }}>
+                <div
+                    className="hud-corner top-right"
+                    style={{
+                        pointerEvents: 'auto',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        gap: '10px'
+                    }}
+                >
                     {/* AUDIO STATUS BOX */}
                     <div onClick={toggleMute} style={{ cursor: 'pointer' }}>
                         <StatusModule
@@ -70,31 +78,36 @@ export const GamifiedHUD: React.FC = () => {
 
                 {/* --- BOTTOM RIGHT: VERSION & LANG --- */}
                 <div className="hud-corner bottom-right">
-                    <div className="hud-group pointer-events-auto" style={{ pointerEvents: 'auto' }}>
+                    <div
+                        className="hud-group pointer-events-auto"
+                        style={{ pointerEvents: 'auto' }}
+                    >
                         <LanguageSwitcher />
                     </div>
                     <div className="hud-group">
                         <div className="label">BUILD</div>
-                        <div className="data" style={{ fontSize: '14px' }}>v0.2.0-BETA</div>
-                        <div className="legal-notice">© 2026 Safe Valley - SVE | All Rights Reserved</div>
+                        <div className="data" style={{ fontSize: '14px' }}>
+                            v0.2.0-BETA
+                        </div>
+                        <div className="legal-notice">
+                            © 2026 Safe Valley - SVE | All Rights Reserved
+                        </div>
                     </div>
                 </div>
 
                 {/* --- BOTTOM CENTER: THREAT MONITOR --- */}
-                <div style={{
-                    position: 'fixed',
-                    bottom: '20px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    pointerEvents: 'auto',
-                    zIndex: 10
-                }}>
-                    <ThreatIndicator
-                        isCritical={false}
-                        statusText="THREAT_SCAN: STANDBY"
-                    />
+                <div
+                    style={{
+                        position: 'fixed',
+                        bottom: '20px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        pointerEvents: 'auto',
+                        zIndex: 10
+                    }}
+                >
+                    <ThreatIndicator isCritical={false} statusText="THREAT_SCAN: STANDBY" />
                 </div>
-
             </div>
         </>
     );

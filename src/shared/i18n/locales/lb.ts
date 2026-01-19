@@ -29,7 +29,8 @@ export const lb = {
         title: 'FLOTTEKOMMANDO //EENHEET DATEBANK',
         status_active: 'AKTIV',
         status_prototype: 'PROTOTYP',
-        uav_01_desc: 'Héich-Héicht autonom Iwwerwaachungsdrone. Laangstrecken Telemetrie an thermesch Imaging.',
+        uav_01_desc:
+            'Héich-Héicht autonom Iwwerwaachungsdrone. Laangstrecken Telemetrie an thermesch Imaging.',
         ugv_04_desc: 'Schwéier onbemannt Terrain Gefier fir rau Terrainen.',
         umv_09_desc: 'Taucht autonom Eenheet fir Ënnerwaasser Infrastruktur Inspektioun.',
         uav_x_desc: 'Vernetzt Mikro-Dronen déi als Schwarmverstand funktionéieren.'
@@ -51,7 +52,7 @@ export const lb = {
         cyber: {
             name: 'CYBERNETICS INC.',
             role: 'HARDWARE LIWWERANT',
-            desc: 'Héichwäerteg Servomotoren a Sensorarrays fir d\'UAV Flott.'
+            desc: "Héichwäerteg Servomotoren a Sensorarrays fir d'UAV Flott."
         },
         aethel: {
             name: 'AETHELGARD SYSTEMS',
@@ -70,20 +71,23 @@ export const lb = {
         posts: {
             p1: {
                 title: 'FLOTT DEPLOYMENT: PHASE 1',
-                excerpt: 'Initial Kalibratioun vun den UGV-04 Eenheeten ass erfollegräich ofgeschloss. Terrain Traversal Algorithmen weisen eng 15% Effizienz Erhéijung.',
+                excerpt:
+                    'Initial Kalibratioun vun den UGV-04 Eenheeten ass erfollegräich ofgeschloss. Terrain Traversal Algorithmen weisen eng 15% Effizienz Erhéijung.',
                 tag: 'DEVLOG'
             },
             p2: {
                 title: 'MATERIAL UPGRADES',
-                excerpt: 'Wiessel op Kuelestofffaser verstäerkt Filamenter fir d\'Haapt Chassis Komponenten. Stress Tester weisen 3x Haltbarkeet.',
+                excerpt:
+                    "Wiessel op Kuelestofffaser verstäerkt Filamenter fir d'Haapt Chassis Komponenten. Stress Tester weisen 3x Haltbarkeet.",
                 tag: 'MATERIAL'
             },
             p3: {
                 title: 'KÄRN NETZWIERK ONLINE',
-                excerpt: 'Den Neural Nexus Visualiséierungssystem gouf an den Haapt OS integréiert. Mir verfollegen elo 15.000 aktiv Kniet an Echtzäit.',
+                excerpt:
+                    'Den Neural Nexus Visualiséierungssystem gouf an den Haapt OS integréiert. Mir verfollegen elo 15.000 aktiv Kniet an Echtzäit.',
                 tag: 'SYSTEM'
             }
-        },
+        }
     },
     cta: {
         uplink: 'VERBINDUNG STARTEN',

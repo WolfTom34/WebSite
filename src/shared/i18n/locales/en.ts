@@ -29,10 +29,14 @@ export const en = {
         title: 'FLEET COMMAND // UNIT DATABASE',
         status_active: 'ACTIVE',
         status_prototype: 'PROTOTYPE',
-        uav_01_desc: 'Organic design airframe optimized via AI for advanced ISR missions, delivering unprecedented flight endurance.',
-        ugv_04_desc: 'Heavy-load tactical carrier featuring a generatively designed chassis for extreme structural efficiency.',
-        umv_09_desc: 'Deep-dive autonomous unit utilizing complex additive lattice structures for superior pressure resistance.',
-        uav_x_desc: 'Aethermind // A fully automated system coordinating micro-swarm intelligence for rapid tactical deployment.'
+        uav_01_desc:
+            'Organic design airframe optimized via AI for advanced ISR missions, delivering unprecedented flight endurance.',
+        ugv_04_desc:
+            'Heavy-load tactical carrier featuring a generatively designed chassis for extreme structural efficiency.',
+        umv_09_desc:
+            'Deep-dive autonomous unit utilizing complex additive lattice structures for superior pressure resistance.',
+        uav_x_desc:
+            'Aethermind // A fully automated system coordinating micro-swarm intelligence for rapid tactical deployment.'
     },
     gallery: {
         title: 'SCHEMATIC ARCHIVE // SVE',

@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    color: #00D1FF;
+    color: #00d1ff;
     font-family: 'Rajdhani', monospace;
     overflow: hidden;
 
@@ -114,9 +114,7 @@
     padding: 0 30px;
     border-bottom: 1px solid rgba(0, 209, 255, 0.2);
     /* Gradient fade for header */
-    background: linear-gradient(90deg,
-            rgba(0, 209, 255, 0.05) 0%,
-            transparent 50%);
+    background: linear-gradient(90deg, rgba(0, 209, 255, 0.05) 0%, transparent 50%);
     z-index: 2;
     /* Above grid */
 }
@@ -153,7 +151,7 @@
 
 .os-close-btn:hover {
     opacity: 1;
-    border-color: #00D1FF;
+    border-color: #00d1ff;
     background: rgba(0, 209, 255, 0.2);
     box-shadow: 0 0 15px rgba(0, 209, 255, 0.3);
 }
@@ -177,9 +175,9 @@
 }
 
 .os-window-content::-webkit-scrollbar-thumb {
-    background: #00D1FF;
+    background: #00d1ff;
     border-radius: 3px;
-    box-shadow: 0 0 5px #00D1FF;
+    box-shadow: 0 0 5px #00d1ff;
 }
 
 /* --- FOOTER --- */

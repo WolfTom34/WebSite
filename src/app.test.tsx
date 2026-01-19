@@ -7,8 +7,11 @@ import { HelmetProvider } from 'react-helmet-async';
 vi.mock('@react-three/fiber', () => ({
     Canvas: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     useFrame: vi.fn(),
-    useThree: () => ({ camera: { position: { z: 5 } }, gl: { domElement: document.createElement('canvas') } }),
-    extend: vi.fn(),
+    useThree: () => ({
+        camera: { position: { z: 5 } },
+        gl: { domElement: document.createElement('canvas') }
+    }),
+    extend: vi.fn()
 }));
 
 vi.mock('@react-three/drei', () => ({
@@ -24,7 +27,9 @@ vi.mock('@react-three/drei', () => ({
     meshTransmissionMaterial: () => null,
     Html: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     Icosahedron: () => null,
-    useContextBridge: () => ({ children }: { children: React.ReactNode }) => <>{children}</>,
+    useContextBridge:
+        () =>
+        ({ children }: { children: React.ReactNode }) => <>{children}</>
 }));
 
 vi.mock('@react-three/postprocessing', () => ({
@@ -33,7 +38,7 @@ vi.mock('@react-three/postprocessing', () => ({
     Noise: () => null,
     Vignette: () => null,
     DepthOfField: () => null,
-    ChromaticAberration: () => null,
+    ChromaticAberration: () => null
 }));
 
 describe('App', () => {

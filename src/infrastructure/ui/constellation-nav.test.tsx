@@ -7,21 +7,23 @@ import { LanguageProvider } from '../../shared/context/language-context';
 vi.mock('@react-three/fiber', () => ({
     useFrame: vi.fn(),
     useThree: () => ({ viewport: { width: 10, height: 10 } }),
-    extend: vi.fn(),
+    extend: vi.fn()
 }));
 
 // Mock Drei
 vi.mock('@react-three/drei', () => ({
-    Text: ({ children }: { children: React.ReactNode }) => <div data-testid="nav-text">{children}</div>,
+    Text: ({ children }: { children: React.ReactNode }) => (
+        <div data-testid="nav-text">{children}</div>
+    ),
     Sphere: () => <div data-testid="nav-star" />,
-    Line: () => <div data-testid="nav-line" />,
+    Line: () => <div data-testid="nav-line" />
 }));
 
 // Mock Context
 vi.mock('../../shared/context/interaction-context', () => ({
     useInteraction: () => ({
-        mouse: { x: 0, y: 0 },
-    }),
+        mouse: { x: 0, y: 0 }
+    })
 }));
 
 describe('ConstellationNav', () => {

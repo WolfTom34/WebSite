@@ -9,7 +9,11 @@ interface TransmissionModalProps {
     initialSubject?: string;
 }
 
-export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, onClose, initialSubject = '' }) => {
+export const TransmissionModal: React.FC<TransmissionModalProps> = ({
+    isOpen,
+    onClose,
+    initialSubject = ''
+}) => {
     const { t } = useLanguage();
 
     // Form State
@@ -41,7 +45,7 @@ export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, on
         if (!name || !email || !message) return;
         setIsSending(true);
         // Simulate Transmission Latency
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise((r) => setTimeout(r, 2000));
         setIsSending(false);
         setIsSuccess(true);
         setTimeout(() => onClose(), 1500);
@@ -51,7 +55,7 @@ export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, on
 
     return (
         <div className="transmission-modal-overlay" onClick={onClose}>
-            <div className="transmission-terminal" onClick={e => e.stopPropagation()}>
+            <div className="transmission-terminal" onClick={(e) => e.stopPropagation()}>
                 {/* Scanning Laser Effect */}
                 <div className="scan-overlay" />
 
@@ -60,7 +64,9 @@ export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, on
                     <div className="terminal-title">
                         {isSuccess ? 'TRANSMISSION COMPLETE' : 'ENCYCLOPEDIA: MODE ON'}
                     </div>
-                    <div className="terminal-close" onClick={onClose}>✕</div>
+                    <div className="terminal-close" onClick={onClose}>
+                        ✕
+                    </div>
                 </div>
 
                 {/* Body Content */}
@@ -77,7 +83,7 @@ export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, on
                                         className="terminal-input"
                                         placeholder="OPERATOR NAME"
                                         value={name}
-                                        onChange={e => setName(e.target.value)}
+                                        onChange={(e) => setName(e.target.value)}
                                         autoFocus
                                     />
                                 </div>
@@ -94,7 +100,7 @@ export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, on
                                         className="terminal-input"
                                         placeholder="SECURE FREQUENCY"
                                         value={email}
-                                        onChange={e => setEmail(e.target.value)}
+                                        onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
                                 <div className="item-action">➜</div>
@@ -110,14 +116,17 @@ export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, on
                                         className="terminal-input"
                                         placeholder="MISSION PARAMETER"
                                         value={subject}
-                                        onChange={e => setSubject(e.target.value)}
+                                        onChange={(e) => setSubject(e.target.value)}
                                     />
                                 </div>
                                 <div className="item-action">➜</div>
                             </div>
 
                             {/* ITEM 04: PACKET */}
-                            <div className="transmission-item" style={{ animationDelay: '0.4s', height: '120px' }}>
+                            <div
+                                className="transmission-item"
+                                style={{ animationDelay: '0.4s', height: '120px' }}
+                            >
                                 <div className="item-index">04</div>
                                 <div className="item-content">
                                     <div className="item-label">{t('cta.form.message')}</div>
@@ -126,7 +135,7 @@ export const TransmissionModal: React.FC<TransmissionModalProps> = ({ isOpen, on
                                         style={{ resize: 'none', height: '80px' }}
                                         placeholder="DATA CONTENT..."
                                         value={message}
-                                        onChange={e => setMessage(e.target.value)}
+                                        onChange={(e) => setMessage(e.target.value)}
                                     />
                                 </div>
                                 <div className="item-action">➜</div>

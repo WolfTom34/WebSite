@@ -12,7 +12,7 @@
 }
 
 .gallery-item:hover {
-    border-color: #FFFFFF;
+    border-color: #ffffff;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
@@ -54,7 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: 'Rajdhani', monospace;
     letter-spacing: 2px;
     margin-bottom: 10px;
